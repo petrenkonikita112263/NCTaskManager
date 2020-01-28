@@ -27,7 +27,7 @@ public class Tasks implements Serializable {
     public static Iterable<Task> incoming(Iterable<Task> tasks,
                                           LocalDateTime start,
                                           LocalDateTime end) {
-        AbstractTaskList tempListTask = new LinkedTaskList();
+        AbstractTaskList tempListTask = new ArrayTaskList();
         LocalDateTime dateOfTask;
         for (Task smth : tasks) {
             dateOfTask = smth.nextTimeAfter(start);

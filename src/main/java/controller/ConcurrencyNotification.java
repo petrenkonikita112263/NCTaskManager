@@ -66,8 +66,8 @@ public class ConcurrencyNotification extends Thread {
      */
     @Override
     public void run() {
-        notify = false;
         while (true) {
+            notify = false;
             LocalDateTime startNotify = (LocalDateTime.now()
                     .minusSeconds(DEFAULT_TIME));
             LocalDateTime endNotify = LocalDateTime.now()
