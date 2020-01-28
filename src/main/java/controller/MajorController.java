@@ -86,27 +86,28 @@ public class MajorController implements CoreController {
     @Override
     public void runMainApplication() throws IOException {
         log.info("The main menu was called");
-        view.displayInfo();
+//        view.displayInfo();
         int defaultNumber_1 = getUserInput();
         log.info("Console was called");
         switch (defaultNumber_1) {
             case 1:
                 continueWork();
-                view.displayAdditionalInfo();
+//                view.displayAdditionalInfo();
                 runSecondaryMenu();
                 break;
             case 2:
                 readFileWithTasks();
-                view.displayAdditionalInfo();
+//                view.displayAdditionalInfo();
                 runSecondaryMenu();
                 break;
             case 3:
                 createEmptyList();
-                view.displayAdditionalInfo();
+//                view.displayAdditionalInfo();
                 runSecondaryMenu();
                 break;
             case 4:
-                return;
+                System.exit(0);
+//                return;
             default:
                 log.error("Wrong input by user!!!!" + new AssertionError());
         }
