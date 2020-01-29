@@ -10,6 +10,8 @@ import view.PrimaryView;
 
 import java.io.*;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Set;
 import java.util.SortedMap;
 
@@ -23,7 +25,7 @@ public class MajorController implements CoreController {
     /**
      * Adding logger to the class.
      */
-    private static final Logger logger = LogManager.getLogger(TaskIO.class);
+    private static final Logger logger = LogManager.getLogger(MajorController.class);
 
     /**
      * Instead of using Scanner, use BufferedReader for input.
@@ -167,55 +169,99 @@ public class MajorController implements CoreController {
     /**
      * Implementing (override) addSomeTask() method
      * from interface.
-     *
-     * @throws IOException - input|output exception, failure during reading,
-     *                     writing information
      */
     @Override
-    public void addSomeTask() throws IOException {
-        System.out.println("Enter the id of the task: \n");
-        int id = Integer.parseInt(bufReader.readLine());
-        System.out.println("Enter the title for task: ");
-        String title = bufReader.readLine();
+    public void addSomeTask() {
+        int id = 0;
+        System.out.println("Enter the id of the task: \r");
+        try {
+            id = Integer.parseInt(bufReader.readLine());
+        } catch (IOException exp) {
+            logger.error("Please write only number value", exp);
+        }
+        String title = null;
+        System.out.println("Enter the title for task: \r");
+        try {
+            title = bufReader.readLine();
+        } catch (IOException exp) {
+            logger.error("Please write the word for title", exp);
+        }
+        String wordAnswer = null;
         System.out.println("What type of task it will be "
-                + "repeative or not? (yes/no)\r");
-        String wordAnswer = bufReader.readLine();
+                + "repeative or not? (yes/no) \r");
+        try {
+            wordAnswer = bufReader.readLine();
+        } catch (IOException exp) {
+            logger.error("Please type only 'yes' or 'no' " + exp);
+        }
         if (wordAnswer.toLowerCase().equals("no")) {
+            DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+            LocalDateTime someTime = null;
             System.out.println("Enter the date "
                     + "(year = 2020, month = 12, "
                     + "day = 31(30)(28)(29), hour = 24,"
-                    + " minute = 60)\n");
-            LocalDateTime someTime = LocalDateTime.of(Integer
-                            .parseInt(bufReader.readLine()),
-                    Integer.parseInt(bufReader.readLine()),
-                    Integer.parseInt(bufReader.readLine()),
-                    Integer.parseInt(bufReader.readLine()),
-                    Integer.parseInt(bufReader.readLine()));
+                    + " minute = 60): \r");
+            try {
+                someTime = LocalDateTime.parse(bufReader.readLine(), timeFormatter);
+            } catch (IOException exp) {
+                logger.error(exp);
+            } catch (DateTimeParseException otherExp) {
+                System.out.println("Please input only number, in other case it can't be "
+                        + "transformed to LocalDateTime format");
+                logger.error(otherExp);
+            }
+            if (someTime == null) {
+                System.out.println("Empty LocalDateTime field");
+                return;
+            }
             Task someTask = new Task(id, title, someTime);
             addTask(someTask);
             logger.info("The not-repeated task was created and added to the list");
         } else if (wordAnswer.toLowerCase().equals("yes")) {
+            DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+            LocalDateTime start = null;
             System.out.println("First please write start time for "
                     + "your task " + "like this "
                     + "(yyyy,mm,dd,hh,mm): \r");
-            LocalDateTime start = LocalDateTime.of(Integer
-                            .parseInt(bufReader.readLine()),
-                    Integer.parseInt(bufReader.readLine()),
-                    Integer.parseInt(bufReader.readLine()),
-                    Integer.parseInt(bufReader.readLine()),
-                    Integer.parseInt(bufReader.readLine()));
+            try {
+                start = LocalDateTime.parse(bufReader.readLine(), timeFormatter);
+            } catch (IOException exp) {
+                logger.error(exp);
+            } catch (DateTimeParseException otherExp) {
+                System.out.println("Please input only number, in other case it can't be "
+                        + "transformed to LocalDateTime format");
+                logger.error(otherExp);
+            }
+            if ((start == null)) {
+                System.out.println("Empty LocalDateTime field");
+                return;
+            }
+            LocalDateTime end = null;
             System.out.println("Secondly, type the end time for "
                     + "this task "
                     + "like start time: \r");
-            LocalDateTime end = LocalDateTime.of(Integer
-                            .parseInt(bufReader.readLine()),
-                    Integer.parseInt(bufReader.readLine()),
-                    Integer.parseInt(bufReader.readLine()),
-                    Integer.parseInt(bufReader.readLine()),
-                    Integer.parseInt(bufReader.readLine()));
+            try {
+                end = LocalDateTime.parse(bufReader.readLine(), timeFormatter);
+            } catch (IOException exp) {
+                logger.error(exp);
+            } catch (DateTimeParseException otherExp) {
+                System.out.println("Please input only number, in other case it can't be "
+                        + "transformed to LocalDateTime format");
+                logger.error(otherExp);
+            }
+            if ((end == null)) {
+                System.out.println("Empty LocalDateTime field");
+                return;
+            }
+            int taskInterval = 0;
             System.out.println("At last enter the interval "
                     + "" + "for this task (integer value): \r");
-            int taskInterval = Integer.parseInt(bufReader.readLine());
+            try {
+                taskInterval = Integer.parseInt(bufReader.readLine());
+            } catch (IOException exp) {
+                logger.error(exp);
+            }
+
             Task someTask = new Task(id, title, start, end, taskInterval);
             addTask(someTask);
             logger.info("The repeated task was created and added to the list");
@@ -235,7 +281,7 @@ public class MajorController implements CoreController {
     private int addTask(Task task) {
         listOfTasks.add(task);
         logger.info("The task was successfully added");
-        saveFileWithTasks();
+//        saveFileWithTasks();
         return count();
     }
 
@@ -251,16 +297,18 @@ public class MajorController implements CoreController {
     /**
      * Implementing (override) removeSomeTask() method
      * from interface.
-     *
-     * @throws IOException - input|output exception, failure during reading,
-     *                     writing information
      */
     @Override
-    public void removeSomeTask() throws IOException {
+    public void removeSomeTask() {
         view.displayListOfTasks(listOfTasks);
+        int id = 0;
         System.out.println("Please write the id number of your task, "
                 + "that you want to delete");
-        int id = Integer.parseInt(bufReader.readLine());
+        try {
+            id = Integer.parseInt(bufReader.readLine());
+        } catch (IOException exp) {
+            logger.error(exp);
+        }
         boolean result = removeTask(id);
         if (result) {
             logger.info("The task was removed");
@@ -301,56 +349,86 @@ public class MajorController implements CoreController {
     @Override
     public void changeTask() throws IOException {
         logger.info("The process of changing task was started");
-        int taskId;
-        String taskName;
-        int taskInterval;
-        int taskStatus;
         view.changeOptions();
         int optionValue = getUserInput();
         logger.info("The console was called");
         for (Task smth : listOfTasks) {
             switch (optionValue) {
                 case 1:
+                    int taskId = 0;
                     System.out.println("Enter the id of the task: \r");
-                    taskId = Integer.parseInt(bufReader.readLine());
+                    try {
+                        taskId = Integer.parseInt(bufReader.readLine());
+                    } catch (IOException exp) {
+                        logger.error(exp);
+                    }
                     smth.setId(taskId);
                     logger.info("The id of the task was changed");
                     break;
                 case 2:
+                    String taskName = null;
                     System.out.println("First you need name "
                             + "it by title (only string type): \r");
-                    taskName = bufReader.readLine();
+                    try {
+                        taskName = bufReader.readLine();
+                    } catch (IOException exp) {
+                        logger.error(exp);
+                    }
                     smth.setTitle(taskName);
                     logger.info("The title of the task was changed");
                     break;
                 case 3:
+                    String answer = null;
                     System.out.println("You want to change repeative or no "
                             + "repeative task: (yes\no)\r");
-                    String answer = bufReader.readLine();
+                    try {
+                        answer = bufReader.readLine();
+                    } catch (IOException exp) {
+                        logger.error(exp);
+                    }
                     if (answer.toLowerCase().equals("yes")) {
+                        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+                        LocalDateTime start = null;
                         System.out.println("First please write start time for "
                                 + "your task " + "like this "
                                 + "(yyyy,mm,dd,hh,mm): \r");
-                        LocalDateTime start = LocalDateTime.of(Integer
-                                        .parseInt(bufReader.readLine()),
-                                Integer.parseInt(bufReader.readLine()),
-                                Integer.parseInt(bufReader.readLine()),
-                                Integer.parseInt(bufReader.readLine()),
-                                Integer.parseInt(bufReader.readLine()));
+                        try {
+                            start = LocalDateTime.parse(bufReader.readLine(), timeFormatter);
+                        } catch (IOException exp) {
+                            logger.error(exp);
+                        } catch (DateTimeParseException otherExp) {
+                            System.out.println("Please input only number, in other case it can't be "
+                                    + "transformed to LocalDateTime format");
+                            logger.error(otherExp);
+                        }
+                        LocalDateTime end = null;
                         System.out.println("Secondly, type the end time for "
                                 + "this task "
                                 + "like start time: \r");
-                        LocalDateTime end = LocalDateTime.of(Integer
-                                        .parseInt(bufReader.readLine()),
-                                Integer.parseInt(bufReader.readLine()),
-                                Integer.parseInt(bufReader.readLine()),
-                                Integer.parseInt(bufReader.readLine()),
-                                Integer.parseInt(bufReader.readLine()));
-                        System.out.println("At last enter the interval "
-                                + "" + "for this task (integer value): \r");
-                        taskInterval = Integer.parseInt(bufReader.readLine());
-                        smth.setTime(start, end, taskInterval);
-                        logger.info("The repeated time and interval were changed");
+                        try {
+                            end = LocalDateTime.parse(bufReader.readLine(), timeFormatter);
+                        } catch (IOException exp) {
+                            logger.error(exp);
+                        } catch (DateTimeParseException otherExp) {
+                            System.out.println("Please input only number, in other case it can't be "
+                                    + "transformed to LocalDateTime format");
+                            logger.error(otherExp);
+                        }
+                        int taskInterval = 0;
+                        System.out.println("Enter the interval for your task\r");
+                        try {
+                            taskInterval = Integer.parseInt(bufReader.readLine());
+                        } catch (IOException exp) {
+                            logger.error(exp);
+                        }
+                        if ((start == null) || (end == null)
+                                || (taskInterval == 0)) {
+                            System.out.println("Worng input make sure try again");
+                            return;
+                        } else {
+                            smth.setTime(start, end, taskInterval);
+                            logger.info("The repeated time and interval were changed");
+                        }
                     } else if (answer.toLowerCase().equals("no")) {
                         System.out.println("Please write the time for "
                                 + "your task"
@@ -369,9 +447,14 @@ public class MajorController implements CoreController {
                         changeTask();
                     }
                 case 4:
+                    int taskStatus = 0;
                     System.out.println("Set the status of your task\n "
                             + "1 - active; 0 - notactive: \r");
-                    taskStatus = Integer.parseInt(bufReader.readLine());
+                    try {
+                        taskStatus = Integer.parseInt(bufReader.readLine());
+                    } catch (IOException exp) {
+                        logger.error(exp);
+                    }
                     if (taskStatus == 1) {
                         smth.setActive(true);
                         logger.info("The task is now active");
@@ -382,6 +465,7 @@ public class MajorController implements CoreController {
                         logger.error("Wrong input, make "
                                 + "sure that you enter number 1 or 0!!");
                         changeTask();
+                        return;
                     }
                 default:
                     logger.error("Wrong input by user!!!!" + new AssertionError());
@@ -440,14 +524,20 @@ public class MajorController implements CoreController {
         for (int i = 0; i < listOfTasks.size(); i++) {
             Task t = listOfTasks.getTask(i);
             if (t.isRepeated()) {
-                System.out.println(t.getTitle() + "\t"
-                        + t.getStartTime() + "\t" + t.getEndTime() + "\t"
-                        + t.getRepeatInterval());
+                System.out.printf("Id : %d\n" + t.getId());
+                System.out.printf("Title : %s\n" + t.getTitle());
+                System.out.printf("Start Time : %s\n" + t.getStartTime());
+                System.out.printf("End Time : %s\n" + t.getEndTime());
+                System.out.printf("Repetition of period : %s\n" + t.getRepeatInterval());
             } else if (!t.isActive()) {
-                System.out.println(t.getTitle() + "\t" + t.getTime());
+                System.out.printf("Id : %d\n" + t.getId());
+                System.out.printf("Title : %s\n" + t.getTitle());
+                System.out.printf("Task Time : %s\n" + t.getTime());
             } else {
-                System.out.println(t.getTitle() + "\t" + t.getStartTime() + "\t"
-                        + t.getEndTime());
+                System.out.printf("Id : %d\n" + t.getId());
+                System.out.printf("Title : %s\n" + t.getTitle());
+                System.out.printf("Start Time : %s\n" + t.getStartTime());
+                System.out.printf("End Time : %s\n" + t.getEndTime());
             }
         }
     }
@@ -543,7 +633,7 @@ public class MajorController implements CoreController {
      */
     @Override
     public void createEmptyList() {
-        ArrayTaskList newTaskList = new ArrayTaskList();
+        new ArrayTaskList();
     }
 
     /**

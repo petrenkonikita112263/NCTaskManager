@@ -20,11 +20,8 @@ public interface CoreController {
 
     /**
      * Method that allow add task to the list.
-     *
-     * @throws IOException - input|output exception, failure during reading,
-     *                     writing information
      */
-    void addSomeTask() throws IOException;
+    void addSomeTask();
 
     /**
      * Method that allow to change all information about task
