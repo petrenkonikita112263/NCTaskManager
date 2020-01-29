@@ -23,8 +23,7 @@ public class MajorController implements CoreController {
     /**
      * Adding logger to the class.
      */
-    private static final Logger log =
-            LogManager.getLogger("info.log");
+    private static final Logger logger = LogManager.getLogger(TaskIO.class);
 
     /**
      * Instead of using Scanner, use BufferedReader for input.
@@ -60,7 +59,7 @@ public class MajorController implements CoreController {
         ConcurrencyNotification notificationThread =
                 new ConcurrencyNotification(listOfTasks, this);
         notificationThread.start();
-        log.info("The thread is running. Notification works");
+        logger.info("The thread is running. Notification works");
     }
 
     /**
@@ -71,7 +70,7 @@ public class MajorController implements CoreController {
      *                     writing information
      */
     private int getUserInput() throws IOException {
-        log.info("User start works with console");
+        logger.info("User start works with console");
         bufReader = new BufferedReader(new InputStreamReader(System.in));
         return Integer.parseInt(bufReader.readLine());
     }
@@ -85,10 +84,10 @@ public class MajorController implements CoreController {
      */
     @Override
     public void runMainApplication() throws IOException {
-        log.info("The main menu was called");
+        logger.info("The main menu was called");
 //        view.displayInfo();
         int defaultNumber_1 = getUserInput();
-        log.info("Console was called");
+        logger.info("Console was called");
         switch (defaultNumber_1) {
             case 1:
                 continueWork();
@@ -109,7 +108,7 @@ public class MajorController implements CoreController {
                 System.exit(0);
 //                return;
             default:
-                log.error("Wrong input by user!!!!" + new AssertionError());
+                logger.error("Wrong input by user!!!!" + new AssertionError());
         }
     }
 
@@ -120,10 +119,10 @@ public class MajorController implements CoreController {
      *                     writing information
      */
     private void runSecondaryMenu() throws IOException {
-        log.info("The additional menu was called");
+        logger.info("The additional menu was called");
         view.displayAdditionalInfo();
         int defaultNumber = getUserInput();
-        log.info("Console was called");
+        logger.info("Console was called");
         switch (defaultNumber) {
             case 1:
                 addSomeTask();
@@ -153,7 +152,7 @@ public class MajorController implements CoreController {
                         Integer.parseInt(bufReader.readLine()),
                         Integer.parseInt(bufReader.readLine()));
                 createCalendar(someTime);
-                log.info("The calendar was created");
+                logger.info("The calendar was created");
                 break;
             case 7:
                 saveWorkSession();
@@ -161,7 +160,7 @@ public class MajorController implements CoreController {
             case 8:
                 return;
             default:
-                log.error("Wrong input by user!!!!" + new AssertionError());
+                logger.error("Wrong input by user!!!!" + new AssertionError());
         }
     }
 
@@ -194,7 +193,7 @@ public class MajorController implements CoreController {
                     Integer.parseInt(bufReader.readLine()));
             Task someTask = new Task(id, title, someTime);
             addTask(someTask);
-            log.info("The not-repeated task was created and added to the list");
+            logger.info("The not-repeated task was created and added to the list");
         } else if (wordAnswer.toLowerCase().equals("yes")) {
             System.out.println("First please write start time for "
                     + "your task " + "like this "
@@ -219,9 +218,9 @@ public class MajorController implements CoreController {
             int taskInterval = Integer.parseInt(bufReader.readLine());
             Task someTask = new Task(id, title, start, end, taskInterval);
             addTask(someTask);
-            log.info("The repeated task was created and added to the list");
+            logger.info("The repeated task was created and added to the list");
         } else {
-            log.error("Wrong input, make "
+            logger.error("Wrong input, make "
                     + "sure that you enter the word yes or no!!");
             addSomeTask();
         }
@@ -235,7 +234,7 @@ public class MajorController implements CoreController {
      */
     private int addTask(Task task) {
         listOfTasks.add(task);
-        log.info("The task was successfully added");
+        logger.info("The task was successfully added");
         saveFileWithTasks();
         return count();
     }
@@ -264,9 +263,9 @@ public class MajorController implements CoreController {
         int id = Integer.parseInt(bufReader.readLine());
         boolean result = removeTask(id);
         if (result) {
-            log.info("The task was removed");
+            logger.info("The task was removed");
         } else {
-            log.error("You try to delete task that doesn't exist");
+            logger.error("You try to delete task that doesn't exist");
         }
     }
 
@@ -301,28 +300,28 @@ public class MajorController implements CoreController {
      */
     @Override
     public void changeTask() throws IOException {
-        log.info("The process of changing task was started");
+        logger.info("The process of changing task was started");
         int taskId;
         String taskName;
         int taskInterval;
         int taskStatus;
         view.changeOptions();
         int optionValue = getUserInput();
-        log.info("The console was called");
+        logger.info("The console was called");
         for (Task smth : listOfTasks) {
             switch (optionValue) {
                 case 1:
                     System.out.println("Enter the id of the task: \r");
                     taskId = Integer.parseInt(bufReader.readLine());
                     smth.setId(taskId);
-                    log.info("The id of the task was changed");
+                    logger.info("The id of the task was changed");
                     break;
                 case 2:
                     System.out.println("First you need name "
                             + "it by title (only string type): \r");
                     taskName = bufReader.readLine();
                     smth.setTitle(taskName);
-                    log.info("The title of the task was changed");
+                    logger.info("The title of the task was changed");
                     break;
                 case 3:
                     System.out.println("You want to change repeative or no "
@@ -351,7 +350,7 @@ public class MajorController implements CoreController {
                                 + "" + "for this task (integer value): \r");
                         taskInterval = Integer.parseInt(bufReader.readLine());
                         smth.setTime(start, end, taskInterval);
-                        log.info("The repeated time and interval were changed");
+                        logger.info("The repeated time and interval were changed");
                     } else if (answer.toLowerCase().equals("no")) {
                         System.out.println("Please write the time for "
                                 + "your task"
@@ -363,9 +362,9 @@ public class MajorController implements CoreController {
                                 Integer.parseInt(bufReader.readLine()),
                                 Integer.parseInt(bufReader.readLine()));
                         smth.setTime(time);
-                        log.info("The time of the task was changed");
+                        logger.info("The time of the task was changed");
                     } else {
-                        log.error("Wrong input, make sure "
+                        logger.error("Wrong input, make sure "
                                 + "that you write yes or no!!!");
                         changeTask();
                     }
@@ -375,17 +374,17 @@ public class MajorController implements CoreController {
                     taskStatus = Integer.parseInt(bufReader.readLine());
                     if (taskStatus == 1) {
                         smth.setActive(true);
-                        log.info("The task is now active");
+                        logger.info("The task is now active");
                     } else if (taskStatus == 0) {
                         smth.setActive(false);
-                        log.info("The task turn off");
+                        logger.info("The task turn off");
                     } else {
-                        log.error("Wrong input, make "
+                        logger.error("Wrong input, make "
                                 + "sure that you enter number 1 or 0!!");
                         changeTask();
                     }
                 default:
-                    log.error("Wrong input by user!!!!" + new AssertionError());
+                    logger.error("Wrong input by user!!!!" + new AssertionError());
             }
         }
     }
@@ -399,7 +398,7 @@ public class MajorController implements CoreController {
         try {
             TaskIO.writeText(listOfTasks, dataHoldingFile);
         } catch (IOException e) {
-            log.error("Error with writing process to the file" + e);
+            logger.error("Error with writing process to the file" + e);
         }
     }
 
@@ -412,7 +411,7 @@ public class MajorController implements CoreController {
         try {
             TaskIO.readText(listOfTasks, dataHoldingFile);
         } catch (IOException e) {
-            log.error("Error with reading process from the file" + e);
+            logger.error("Error with reading process from the file" + e);
         }
     }
 
@@ -488,7 +487,7 @@ public class MajorController implements CoreController {
     public void saveWorkSession() throws IOException {
         createFolder(dirPath);
         writeToFile();
-        log.info("The session was saved");
+        logger.info("The session was saved");
     }
 
     /**
@@ -499,21 +498,21 @@ public class MajorController implements CoreController {
     private void writeToFile() throws IOException {
         try {
             File fileTxt = new File(pathForFile);
-            log.info("The file starts creating.........");
+            logger.info("The file starts creating.........");
             if (fileTxt.createNewFile()) {
-                log.info("Your file is created here '"
+                logger.info("Your file is created here '"
                         + pathForFile + "'");
             } else {
-                log.info("File've already existed");
+                logger.info("File've already existed");
                 PrintWriter writer = new PrintWriter(pathForFile);
                 writer.print("");
                 writer.close();
             }
             TaskIO.writeText(listOfTasks, fileTxt);
-            log.info("The process of "
+            logger.info("The process of "
                     + "writing was successfully completed");
         } finally {
-            log.info("The process "
+            logger.info("The process "
                     + "of saved session was successfully completed");
         }
     }
@@ -526,16 +525,16 @@ public class MajorController implements CoreController {
     private static void createFolder(String dirPath) {
         File fileDirectory = new File(dirPath);
         if (!fileDirectory.exists()) {
-            log.info("The directory starts creating........");
+            logger.info("The directory starts creating........");
             if (fileDirectory.mkdir()) {
-                log.info("The directory '"
+                logger.info("The directory '"
                         + dirPath + "' is created");
             } else {
-                log.error("Don't enough "
+                logger.error("Don't enough "
                         + "permission to create directory");
             }
         }
-        log.info("\nThe process of creating folder was finished");
+        logger.info("\nThe process of creating folder was finished");
     }
 
     /**
