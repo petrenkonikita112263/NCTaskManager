@@ -79,13 +79,15 @@ public class TaskIO {
 
 //            catch clauses - or add exception to the main method
         } catch (Exception mainExp) {
-            mainExp.printStackTrace();
+            logger.error("Error in writing data information about task ", mainExp);
         } finally {
             try {
 
 //                clear the buffer
                 dataOutputStream.flush();
             } catch (IOException e_1) {
+                logger.error("Error in flushing the content of the buffer "
+                        + "to the output stream ", e_1);
                 e_1.printStackTrace();
             }
             try {
@@ -93,7 +95,7 @@ public class TaskIO {
 //                close the stream
                 dataOutputStream.close();
             } catch (IOException e_2) {
-                e_2.printStackTrace();
+                logger.error("Error in closing the output stream ", e_2);
             }
         }
     }
@@ -168,12 +170,12 @@ public class TaskIO {
                 }
             }
         } catch (Exception mainExp) {
-            mainExp.printStackTrace();
+            logger.error("Error in reading data information about task ", mainExp);
         } finally {
             try {
                 dataInputStream.close();
             } catch (IOException e) {
-                e.printStackTrace();
+                logger.error("Error in closing the input stream ", e);
             }
         }
     }
@@ -275,7 +277,7 @@ public class TaskIO {
             printWriter = new PrintWriter(
                     new BufferedWriter(new FileWriter(file)));
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("Error writing content to the file ", e);
         }
         try {
             printWriter.write(gson
