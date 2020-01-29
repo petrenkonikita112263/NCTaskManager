@@ -102,7 +102,7 @@ public class MajorController implements CoreController {
                 runSecondaryMenu();
                 break;
             case 3:
-                createEmptyList();
+                new ArrayTaskList();
 //                view.displayAdditionalInfo();
                 runSecondaryMenu();
                 break;
@@ -629,15 +629,6 @@ public class MajorController implements CoreController {
             }
         }
         logger.info("\nThe process of creating folder was finished");
-    }
-
-    /**
-     * Implementing (override) createEmptyList() method
-     * from interface.
-     */
-    @Override
-    public void createEmptyList() {
-        new ArrayTaskList();
     }
 
     /**

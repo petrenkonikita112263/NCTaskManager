@@ -79,11 +79,6 @@ public interface CoreController {
     void saveWorkSession() throws IOException;
 
     /**
-     * Method that allow to create empty array list.
-     */
-    void createEmptyList();
-
-    /**
      * Method that allow to continue work with application
      * from previous session.
      *
