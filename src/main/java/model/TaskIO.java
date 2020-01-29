@@ -1,6 +1,8 @@
 package model;
 
 import com.google.gson.Gson;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.*;
 import java.lang.reflect.Type;
@@ -16,6 +18,11 @@ import java.time.ZoneOffset;
  * @author Nikita
  */
 public class TaskIO {
+
+    /**
+     * Adding logger to the class.
+     */
+    private static final Logger logger = LogManager.getLogger(TaskIO.class);
 
     /**
      * Static method that write list into the stream.
@@ -141,7 +148,7 @@ public class TaskIO {
 //                            atZone(ZoneId.systemDefault()).toLocalDateTime();
                     LocalDateTime endDateTime = LocalDateTime
                             .ofEpochSecond(dataInputStream.readLong(),
-                            0, ZoneOffset.UTC);
+                                    0, ZoneOffset.UTC);
                     Task newTask = new Task(idTask, titleOfTask, startDateTime,
                             endDateTime, valueOfInterval);
 
@@ -177,7 +184,7 @@ public class TaskIO {
      * @param taskList - list of the tasks
      * @param file     - name of the file, which store our list
      * @throws IOException - input|output exception, failure during reading,
-     * writing and searching file
+     *                     writing and searching file
      */
     public static void writeBinary(AbstractTaskList taskList,
                                    File file) throws IOException {
@@ -195,7 +202,7 @@ public class TaskIO {
      * @param taskList - list of the tasks
      * @param file     - name of the file, from which read the list
      * @throws IOException - input|output exception, failure during reading,
-     * writing and searching file
+     *                     writing and searching file
      */
     public static void readBinary(AbstractTaskList taskList,
                                   File file) throws IOException {
@@ -215,7 +222,7 @@ public class TaskIO {
      * @param taskList - list of the tasks
      * @param writer   - writing text, that is based on characters
      * @throws IOException - input|output exception, failure
-     * during reading, writing and searching file
+     *                     during reading, writing and searching file
      */
     public static void write(AbstractTaskList taskList,
                              Writer writer) throws IOException {
@@ -234,7 +241,7 @@ public class TaskIO {
      * @param taskList - list of the tasks
      * @param reader   - reading text, that is based on characters
      * @throws IOException - input|output exception, failure
-     * during reading, writing and searching file
+     *                     during reading, writing and searching file
      */
     public static void read(AbstractTaskList taskList,
                             Reader reader) throws IOException {
@@ -256,7 +263,7 @@ public class TaskIO {
      * @param taskList - list of the tasks
      * @param file     - to which file write the whole list
      * @throws IOException - input|output exception, failure
-     * during reading, writing and searching file
+     *                     during reading, writing and searching file
      */
     public static void writeText(AbstractTaskList taskList,
                                  File file) throws IOException {
@@ -285,7 +292,7 @@ public class TaskIO {
      * @param taskList - list of the tasks
      * @param file     - from which file read the whole list
      * @throws IOException - input|output exception, failure during reading,
-     * writing and searching file
+     *                     writing and searching file
      */
     public static void readText(AbstractTaskList taskList,
                                 File file) throws IOException {
