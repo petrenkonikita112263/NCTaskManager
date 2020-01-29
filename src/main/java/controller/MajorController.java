@@ -110,7 +110,7 @@ public class MajorController implements CoreController {
                 System.exit(0);
 //                return;
             default:
-                logger.error("Wrong input by user!!!!" + new AssertionError());
+                System.out.println("Wrong input by user!!!!" + new AssertionError());
         }
     }
 
