@@ -162,7 +162,7 @@ public class MajorController implements CoreController {
             case 8:
                 return;
             default:
-                logger.error("Wrong input by user!!!!" + new AssertionError());
+                System.out.println("Wrong input by user!!!!" + new AssertionError());
         }
     }
 
@@ -177,14 +177,14 @@ public class MajorController implements CoreController {
         try {
             id = Integer.parseInt(bufReader.readLine());
         } catch (IOException exp) {
-            logger.error("Please write only number value", exp);
+            logger.error("Error in input number to the console", exp);
         }
         String title = null;
         System.out.println("Enter the title for task: \r");
         try {
             title = bufReader.readLine();
         } catch (IOException exp) {
-            logger.error("Please write the word for title", exp);
+            logger.error("Error in input word to the console", exp);
         }
         String wordAnswer = null;
         System.out.println("What type of task it will be "
@@ -192,7 +192,7 @@ public class MajorController implements CoreController {
         try {
             wordAnswer = bufReader.readLine();
         } catch (IOException exp) {
-            logger.error("Please type only 'yes' or 'no' " + exp);
+            logger.error("Error in input word to the console", exp);
         }
         if (wordAnswer.toLowerCase().equals("no")) {
             DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
@@ -204,11 +204,11 @@ public class MajorController implements CoreController {
             try {
                 someTime = LocalDateTime.parse(bufReader.readLine(), timeFormatter);
             } catch (IOException exp) {
-                logger.error(exp);
+                logger.error("Error in input date to the console", exp);
             } catch (DateTimeParseException otherExp) {
                 System.out.println("Please input only number, in other case it can't be "
                         + "transformed to LocalDateTime format");
-                logger.error(otherExp);
+                logger.error("Error in formatting input date to LocalDateTime", otherExp);
             }
             if (someTime == null) {
                 System.out.println("Empty LocalDateTime field");
@@ -226,11 +226,11 @@ public class MajorController implements CoreController {
             try {
                 start = LocalDateTime.parse(bufReader.readLine(), timeFormatter);
             } catch (IOException exp) {
-                logger.error(exp);
+                logger.error("Error in input date to the console", exp);
             } catch (DateTimeParseException otherExp) {
                 System.out.println("Please input only number, in other case it can't be "
                         + "transformed to LocalDateTime format");
-                logger.error(otherExp);
+                logger.error("Error in formatting input date to LocalDateTime", otherExp);
             }
             if ((start == null)) {
                 System.out.println("Empty LocalDateTime field");
@@ -243,11 +243,11 @@ public class MajorController implements CoreController {
             try {
                 end = LocalDateTime.parse(bufReader.readLine(), timeFormatter);
             } catch (IOException exp) {
-                logger.error(exp);
+                logger.error("Error in input date to the console", exp);
             } catch (DateTimeParseException otherExp) {
                 System.out.println("Please input only number, in other case it can't be "
                         + "transformed to LocalDateTime format");
-                logger.error(otherExp);
+                logger.error("Error in formatting input date to LocalDateTime", otherExp);
             }
             if ((end == null)) {
                 System.out.println("Empty LocalDateTime field");
@@ -259,9 +259,8 @@ public class MajorController implements CoreController {
             try {
                 taskInterval = Integer.parseInt(bufReader.readLine());
             } catch (IOException exp) {
-                logger.error(exp);
+                logger.error("Error in input number to the console", exp);
             }
-
             Task someTask = new Task(id, title, start, end, taskInterval);
             addTask(someTask);
             logger.info("The repeated task was created and added to the list");
@@ -307,7 +306,7 @@ public class MajorController implements CoreController {
         try {
             id = Integer.parseInt(bufReader.readLine());
         } catch (IOException exp) {
-            logger.error(exp);
+            logger.error("Error in input number to the console", exp);
         }
         boolean result = removeTask(id);
         if (result) {
@@ -360,7 +359,7 @@ public class MajorController implements CoreController {
                     try {
                         taskId = Integer.parseInt(bufReader.readLine());
                     } catch (IOException exp) {
-                        logger.error(exp);
+                        logger.error("Error in input number to the console", exp);
                     }
                     smth.setId(taskId);
                     logger.info("The id of the task was changed");
@@ -372,7 +371,7 @@ public class MajorController implements CoreController {
                     try {
                         taskName = bufReader.readLine();
                     } catch (IOException exp) {
-                        logger.error(exp);
+                        logger.error("Error in input word to the console", exp);
                     }
                     smth.setTitle(taskName);
                     logger.info("The title of the task was changed");
@@ -384,7 +383,7 @@ public class MajorController implements CoreController {
                     try {
                         answer = bufReader.readLine();
                     } catch (IOException exp) {
-                        logger.error(exp);
+                        logger.error("Error in input word to the console", exp);
                     }
                     if (answer.toLowerCase().equals("yes")) {
                         DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
@@ -395,11 +394,11 @@ public class MajorController implements CoreController {
                         try {
                             start = LocalDateTime.parse(bufReader.readLine(), timeFormatter);
                         } catch (IOException exp) {
-                            logger.error(exp);
+                            logger.error("Error in input date to the console", exp);
                         } catch (DateTimeParseException otherExp) {
                             System.out.println("Please input only number, in other case it can't be "
                                     + "transformed to LocalDateTime format");
-                            logger.error(otherExp);
+                            logger.error("Error in formatting input date to LocalDateTime", otherExp);
                         }
                         LocalDateTime end = null;
                         System.out.println("Secondly, type the end time for "
@@ -408,37 +407,42 @@ public class MajorController implements CoreController {
                         try {
                             end = LocalDateTime.parse(bufReader.readLine(), timeFormatter);
                         } catch (IOException exp) {
-                            logger.error(exp);
+                            logger.error("Error in input date to the console", exp);
                         } catch (DateTimeParseException otherExp) {
                             System.out.println("Please input only number, in other case it can't be "
                                     + "transformed to LocalDateTime format");
-                            logger.error(otherExp);
+                            logger.error("Error in formatting input date to LocalDateTime", otherExp);
                         }
                         int taskInterval = 0;
                         System.out.println("Enter the interval for your task\r");
                         try {
                             taskInterval = Integer.parseInt(bufReader.readLine());
                         } catch (IOException exp) {
-                            logger.error(exp);
+                            logger.error("Error in input number to the console", exp);
                         }
                         if ((start == null) || (end == null)
                                 || (taskInterval == 0)) {
-                            System.out.println("Worng input make sure try again");
+                            System.out.println("Wrong input make sure try again");
                             return;
                         } else {
                             smth.setTime(start, end, taskInterval);
                             logger.info("The repeated time and interval were changed");
                         }
                     } else if (answer.toLowerCase().equals("no")) {
+                        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+                        LocalDateTime time = null;
                         System.out.println("Please write the time for "
                                 + "your task"
                                 + "like this (yyyy,mm,dd,hh,mm): \r");
-                        LocalDateTime time = LocalDateTime.of(Integer
-                                        .parseInt(bufReader.readLine()),
-                                Integer.parseInt(bufReader.readLine()),
-                                Integer.parseInt(bufReader.readLine()),
-                                Integer.parseInt(bufReader.readLine()),
-                                Integer.parseInt(bufReader.readLine()));
+                        try {
+                            time = LocalDateTime.parse(bufReader.readLine(), timeFormatter);
+                        } catch (IOException exp) {
+                            logger.error("Error in input date to the console", exp);
+                        } catch (DateTimeParseException otherExp) {
+                            System.out.println("Please input only number, in other case it can't be "
+                                    + "transformed to LocalDateTime format");
+                            logger.error("Error in formatting input date to LocalDateTime", otherExp);
+                        }
                         smth.setTime(time);
                         logger.info("The time of the task was changed");
                     } else {
@@ -453,7 +457,7 @@ public class MajorController implements CoreController {
                     try {
                         taskStatus = Integer.parseInt(bufReader.readLine());
                     } catch (IOException exp) {
-                        logger.error(exp);
+                        logger.error("Error in input number to the console", exp);
                     }
                     if (taskStatus == 1) {
                         smth.setActive(true);
@@ -468,7 +472,7 @@ public class MajorController implements CoreController {
                         return;
                     }
                 default:
-                    logger.error("Wrong input by user!!!!" + new AssertionError());
+                    System.out.println("Wrong input by user!!!!" + new AssertionError());
             }
         }
     }
