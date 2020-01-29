@@ -263,7 +263,7 @@ public class TaskIO {
         Charset utf8 = StandardCharsets.UTF_8;
         PrintWriter printWriter = null;
         Gson gson = new Gson();
-        LinkedTaskList linkedTaskList = (LinkedTaskList) taskList;
+        ArrayTaskList arrayTaskList = (ArrayTaskList) taskList;
         try {
             printWriter = new PrintWriter(
                     new BufferedWriter(new FileWriter(file)));
@@ -272,7 +272,7 @@ public class TaskIO {
         }
         try {
             printWriter.write(gson
-                    .toJson(linkedTaskList, LinkedTaskList.class));
+                    .toJson(arrayTaskList, ArrayTaskList.class));
         } finally {
             printWriter.flush();
             printWriter.close();
@@ -291,11 +291,11 @@ public class TaskIO {
                                 File file) throws IOException {
         FileReader fileReader = null;
         Gson gson = new Gson();
-        LinkedTaskList linkedTaskList;
+        ArrayTaskList arrayTaskList;
         try {
             BufferedReader in = new BufferedReader(new FileReader(file));
-            linkedTaskList = gson.fromJson(in, (Type) taskList);
-            for (Task smth : linkedTaskList) {
+            arrayTaskList = gson.fromJson(in, (Type) taskList);
+            for (Task smth : arrayTaskList) {
                 taskList.add(smth);
             }
 //            gson.fromJson(fileReader, (Type) taskList);
