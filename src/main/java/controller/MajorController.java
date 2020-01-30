@@ -10,6 +10,7 @@ import view.PrimaryView;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.SortedMap;
@@ -34,7 +35,7 @@ public class MajorController implements CoreController {
     /**
      * Constant that holds name of the file for saving task list.
      */
-    private final String nameOfFile = "TaskManager.txt";
+    private final String nameOfFile = "TaskManagerList";
 
     /**
      * Instance of list.
@@ -96,7 +97,7 @@ public class MajorController implements CoreController {
         logger.info("Console was called");
         switch (defaultNumber_1) {
             case 1:
-//                continueWork();
+                continueWork();
 //                view.displayAdditionalInfo();
                 runSecondaryMenu();
                 break;
@@ -440,32 +441,37 @@ public class MajorController implements CoreController {
         readFileWithTasks(fileName);
     }
 
-//    /**
-//     * Private method that creates empty file and write the content to it.
-//     *
-//     * @throws IOException - failure during writing to the file
-//     */
-//    private void writeToFile() throws IOException {
-//        try {
-//            File fileTxt = new File(pathForFile);
+    /**
+     * Private method that creates empty file and write the content to it.
+     *
+     * @throws IOException - failure during writing to the file
+     */
+    private void processCreatingFile() throws IOException {
+        try {
+            String defaultFile = view.getFileName();
+            File fileTxt = new File(defaultFile);
+            System.out.println("The file starts creating.........");
 //            logger.info("The file starts creating.........");
-//            if (fileTxt.createNewFile()) {
-//                logger.info("Your file is created here '"
-//                        + pathForFile + "'");
-//            } else {
+            if (fileTxt.createNewFile()) {
+                System.out.println("Your file is created here '"
+                        + defaultFile + "'");
+            } else {
+                System.out.println("File've already existed");
 //                logger.info("File've already existed");
-//                PrintWriter writer = new PrintWriter(pathForFile);
-//                writer.print("");
-//                writer.close();
-//            }
+                PrintWriter writer = new PrintWriter(defaultFile);
+                writer.print("");
+                writer.close();
+            }
 //            TaskIO.writeText(listOfTasks, fileTxt);
+            System.out.println("The process of "
+                    + "writing was successfully completed");
 //            logger.info("The process of "
 //                    + "writing was successfully completed");
-//        } finally {
-//            logger.info("The process "
-//                    + "of saved session was successfully completed");
-//        }
-//    }
+        } finally {
+            logger.info("The process "
+                    + "of create default file was successfully completed");
+        }
+    }
 
     /**
      * Private static method that create empty folder by specified way.
@@ -493,16 +499,15 @@ public class MajorController implements CoreController {
         logger.info("\nThe process of creating folder was finished");
     }
 
-//    /**
-//     * Implementing (override) continueWork() method
-//     * from interface.
-//     *
-//     * @throws IOException - input|output exception, failure during reading,
-//     *                     writing text file
-//     */
-//    @Override
-//    public void continueWork() throws IOException {
-//        File fileTxt = new File(pathForFile);
-//        TaskIO.readText(listOfTasks, fileTxt);
-//    }
+    /**
+     * Implementing (override) continueWork() method
+     * from interface.
+     *
+     * @throws IOException - input|output exception, failure during reading,
+     *                     writing text file
+     */
+    @Override
+    public void continueWork() throws IOException {
+        processCreatingFile();
+    }
 }

@@ -64,12 +64,12 @@ public interface CoreController {
      */
     void processSavingWork() throws IOException;
 
-//    /**
-//     * Method that allow to continue work with application
-//     * from previous session.
-//     *
-//     * @throws IOException - input|output exception, failure during reading,
-//     *                     writing information
-//     */
-//    void continueWork() throws IOException;
+    /**
+     * Method that allow to continue work with application
+     * from previous session.
+     *
+     * @throws IOException - input|output exception, failure during reading,
+     *                     writing information
+     */
+    void continueWork() throws IOException;
 }

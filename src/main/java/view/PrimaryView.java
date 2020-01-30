@@ -352,14 +352,14 @@ public class PrimaryView implements CoreViewable {
 
     public LocalDateTime addTimeLimit() {
         DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        LocalDateTime limitdate = null;
+        LocalDateTime limitDate = null;
         System.out.println("Set the time period for which you want "
                 + "to get the calendar.\n"
                 + "Enter the date "
                 + "or just copy this (2020-01-29 19:46) without braces:"
                 + " and change numbers \r");
         try {
-            limitdate = LocalDateTime.parse(bufReader.readLine(), timeFormatter);
+            limitDate = LocalDateTime.parse(bufReader.readLine(), timeFormatter);
         } catch (IOException exp) {
             logger.error("Error in input date to the console", exp);
         } catch (DateTimeParseException otherExp) {
@@ -367,7 +367,7 @@ public class PrimaryView implements CoreViewable {
                     + "transformed to LocalDateTime format");
             logger.error("Error in formatting input date to LocalDateTime", otherExp);
         }
-        return limitdate;
+        return limitDate;
     }
 
     public int getAction() {
