@@ -171,40 +171,18 @@ public class MajorController implements CoreController {
         if (wordAnswer.toLowerCase().equals("no")) {
             LocalDateTime time = view.addTimeForTask();
             Task someTask = new Task(id, title, time);
-            addTask(someTask);
+            listOfTasks.add(someTask);
         } else if (wordAnswer.toLowerCase().equals("yes")) {
             LocalDateTime start = view.addStartTimeForTask();
             LocalDateTime end = view.addEndTimeForTask();
             int interval = view.addInterval();
             Task someTask = new Task(id, title, start, end, interval);
-            addTask(someTask);
+            listOfTasks.add(someTask);
         } else {
             logger.error("Wrong input, make "
                     + "sure that you enter the word yes or no!!");
             processAddingTask();
         }
-    }
-
-    /**
-     * Private method that add task to the list.
-     *
-     * @param task - take the task from addSomeTask()
-     * @return - the size of the list in number
-     */
-    private int addTask(Task task) {
-        listOfTasks.add(task);
-        logger.info("The task was successfully added");
-//        saveFileWithTasks();
-        return count();
-    }
-
-    /**
-     * Private method that count the size of the task list.
-     *
-     * @return - the size of the list in number
-     */
-    private int count() {
-        return listOfTasks.size();
     }
 
     /**
@@ -239,7 +217,7 @@ public class MajorController implements CoreController {
      */
     private boolean removeTask(int id) {
         int index = -1;
-        for (int i = 0, n = count(); i < n; i++) {
+        for (int i = 0, n = listOfTasks.size(); i < n; i++) {
             if (listOfTasks.getTask(i).getId() == id) {
                 index = i;
                 break;
