@@ -149,69 +149,24 @@ public class PrimaryView implements CoreViewable {
     }
 
     public LocalDateTime addTimeForTask() {
-        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        LocalDateTime someTime = null;
         System.out.println("Enter the date "
                 + "or just copy this (2020-01-29 19:46) without braces:"
                 + " and change numbers \r");
-        try {
-            someTime = LocalDateTime.parse(bufReader.readLine(), timeFormatter);
-        } catch (IOException exp) {
-            logger.error("Error in input date to the console", exp);
-        } catch (DateTimeParseException otherExp) {
-            System.out.println("Please input only number, in other case it can't be "
-                    + "transformed to LocalDateTime format");
-            logger.error("Error in formatting input date to LocalDateTime", otherExp);
-        }
-        if (someTime == null) {
-            System.out.println("Empty LocalDateTime field");
-            return addTimeForTask();
-        }
-        return someTime;
+        return inputDateTime();
     }
 
     public LocalDateTime addStartTimeForTask() {
-        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        LocalDateTime start = null;
         System.out.println("First please write start time for "
                 + "or just copy this (2020-01-29 19:46) without braces:"
                 + " and change numbers \r");
-        try {
-            start = LocalDateTime.parse(bufReader.readLine(), timeFormatter);
-        } catch (IOException exp) {
-            logger.error("Error in input date to the console", exp);
-        } catch (DateTimeParseException otherExp) {
-            System.out.println("Please input only number, in other case it can't be "
-                    + "transformed to LocalDateTime format");
-            logger.error("Error in formatting input date to LocalDateTime", otherExp);
-        }
-        if ((start == null)) {
-            System.out.println("Empty LocalDateTime field");
-            return addStartTimeForTask();
-        }
-        return start;
+        return inputDateTime();
     }
 
     public LocalDateTime addEndTimeForTask() {
-        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        LocalDateTime end = null;
         System.out.println("Secondly, type the end time for "
                 + "or just copy this (2020-01-29 19:46) without braces:"
                 + " and change numbers \r");
-        try {
-            end = LocalDateTime.parse(bufReader.readLine(), timeFormatter);
-        } catch (IOException exp) {
-            logger.error("Error in input date to the console", exp);
-        } catch (DateTimeParseException otherExp) {
-            System.out.println("Please input only number, in other case it can't be "
-                    + "transformed to LocalDateTime format");
-            logger.error("Error in formatting input date to LocalDateTime", otherExp);
-        }
-        if ((end == null)) {
-            System.out.println("Empty LocalDateTime field");
-            return addEndTimeForTask();
-        }
-        return end;
+        return inputDateTime();
     }
 
     public int addInterval() {
@@ -274,57 +229,43 @@ public class PrimaryView implements CoreViewable {
     }
 
     public LocalDateTime changeTimeOfTask() {
-        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        LocalDateTime time = null;
         System.out.println("Enter the date "
                 + "or just copy this (2020-01-29 19:46) without braces:"
                 + " and change numbers \r");
+        return inputDateTime();
+    }
+
+    public LocalDateTime changeStartTimeOfTask() {
+        System.out.println("First please write start time for "
+                + "or just copy this (2020-01-29 19:46) without braces:"
+                + " and change numbers \r");
+        return inputDateTime();
+    }
+
+    public LocalDateTime changeEndTimeOfTask() {
+        System.out.println("Secondly, type the end time for "
+                + "this task "
+                + "like start time: \r");
+        return inputDateTime();
+    }
+
+    private LocalDateTime inputDateTime() {
+        String date = "";
+        LocalDateTime time = null;
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("yyyy-mm-dd hh:mm");
         try {
-            time = LocalDateTime.parse(bufReader.readLine(), timeFormatter);
+            date = bufReader.readLine();
         } catch (IOException exp) {
             logger.error("Error in input date to the console", exp);
+        }
+        try {
+            time = LocalDateTime.parse(date, timeFormatter);
         } catch (DateTimeParseException otherExp) {
             System.out.println("Please input only number, in other case it can't be "
                     + "transformed to LocalDateTime format");
             logger.error("Error in formatting input date to LocalDateTime", otherExp);
         }
         return time;
-    }
-
-    public LocalDateTime changeStartTimeOfTask() {
-        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        LocalDateTime start = null;
-        System.out.println("First please write start time for "
-                + "or just copy this (2020-01-29 19:46) without braces:"
-                + " and change numbers \r");
-        try {
-            start = LocalDateTime.parse(bufReader.readLine(), timeFormatter);
-        } catch (IOException exp) {
-            logger.error("Error in input date to the console", exp);
-        } catch (DateTimeParseException otherExp) {
-            System.out.println("Please input only number, in other case it can't be "
-                    + "transformed to LocalDateTime format");
-            logger.error("Error in formatting input date to LocalDateTime", otherExp);
-        }
-        return start;
-    }
-
-    public LocalDateTime changeEndTimeOfTask() {
-        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        LocalDateTime end = null;
-        System.out.println("Secondly, type the end time for "
-                + "this task "
-                + "like start time: \r");
-        try {
-            end = LocalDateTime.parse(bufReader.readLine(), timeFormatter);
-        } catch (IOException exp) {
-            logger.error("Error in input date to the console", exp);
-        } catch (DateTimeParseException otherExp) {
-            System.out.println("Please input only number, in other case it can't be "
-                    + "transformed to LocalDateTime format");
-            logger.error("Error in formatting input date to LocalDateTime", otherExp);
-        }
-        return end;
     }
 
     public int changeIntervalOfTask() {
@@ -394,134 +335,134 @@ public class PrimaryView implements CoreViewable {
         return nameFile;
     }
 
-    public void changeTask() throws IOException {
-//        logger.info("The process of changing task was started");
-//        view.changeOptions();
-//        int optionValue = getUserInput();
-//        logger.info("The console was called");
-//        for (Task smth : listOfTasks) {
-//            switch (optionValue) {
-//                case 1:
-//                    int taskId = 0;
-//                    System.out.println("Enter the id of the task: \r");
-//                    try {
-//                        taskId = Integer.parseInt(bufReader.readLine());
-//                    } catch (IOException exp) {
-//                        logger.error("Error in input number to the console", exp);
-//                    }
-//                    smth.setId(taskId);
-//                    logger.info("The id of the task was changed");
-//                    break;
-//                case 2:
-//                    String taskName = null;
-//                    System.out.println("First you need name "
-//                            + "it by title (only string type): \r");
-//                    try {
-//                        taskName = bufReader.readLine();
-//                    } catch (IOException exp) {
-//                        logger.error("Error in input word to the console", exp);
-//                    }
-//                    smth.setTitle(taskName);
-//                    logger.info("The title of the task was changed");
-//                    break;
-//                case 3:
-//                    String answer = null;
-//                    System.out.println("You want to change repeative or no "
-//                            + "repeative task: (yes\no)\r");
-//                    try {
-//                        answer = bufReader.readLine();
-//                    } catch (IOException exp) {
-//                        logger.error("Error in input word to the console", exp);
-//                    }
-//                    if (answer.toLowerCase().equals("yes")) {
-//                        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-//                        LocalDateTime start = null;
-//                        System.out.println("First please write start time for "
-//                                + "your task " + "like this "
-//                                + "(yyyy,mm,dd,hh,mm): \r");
-//                        try {
-//                            start = LocalDateTime.parse(bufReader.readLine(), timeFormatter);
-//                        } catch (IOException exp) {
-//                            logger.error("Error in input date to the console", exp);
-//                        } catch (DateTimeParseException otherExp) {
-//                            System.out.println("Please input only number, in other case it can't be "
-//                                    + "transformed to LocalDateTime format");
-//                            logger.error("Error in formatting input date to LocalDateTime", otherExp);
-//                        }
-//                        LocalDateTime end = null;
-//                        System.out.println("Secondly, type the end time for "
-//                                + "this task "
-//                                + "like start time: \r");
-//                        try {
-//                            end = LocalDateTime.parse(bufReader.readLine(), timeFormatter);
-//                        } catch (IOException exp) {
-//                            logger.error("Error in input date to the console", exp);
-//                        } catch (DateTimeParseException otherExp) {
-//                            System.out.println("Please input only number, in other case it can't be "
-//                                    + "transformed to LocalDateTime format");
-//                            logger.error("Error in formatting input date to LocalDateTime", otherExp);
-//                        }
-//                        int taskInterval = 0;
-//                        System.out.println("Enter the interval for your task\r");
-//                        try {
-//                            taskInterval = Integer.parseInt(bufReader.readLine());
-//                        } catch (IOException exp) {
-//                            logger.error("Error in input number to the console", exp);
-//                        }
-//                        if ((start == null) || (end == null)
-//                                || (taskInterval == 0)) {
-//                            System.out.println("Wrong input make sure try again");
-//                            return;
-//                        } else {
-//                            smth.setTime(start, end, taskInterval);
-//                            logger.info("The repeated time and interval were changed");
-//                        }
-//                    } else if (answer.toLowerCase().equals("no")) {
-//                        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-//                        LocalDateTime time = null;
-//                        System.out.println("Please write the time for "
-//                                + "your task"
-//                                + "like this (yyyy,mm,dd,hh,mm): \r");
-//                        try {
-//                            time = LocalDateTime.parse(bufReader.readLine(), timeFormatter);
-//                        } catch (IOException exp) {
-//                            logger.error("Error in input date to the console", exp);
-//                        } catch (DateTimeParseException otherExp) {
-//                            System.out.println("Please input only number, in other case it can't be "
-//                                    + "transformed to LocalDateTime format");
-//                            logger.error("Error in formatting input date to LocalDateTime", otherExp);
-//                        }
-//                        smth.setTime(time);
-//                        logger.info("The time of the task was changed");
-//                    } else {
-//                        logger.error("Wrong input, make sure "
-//                                + "that you write yes or no!!!");
-//                        changeTask();
-//                    }
-//                case 4:
-//                    int taskStatus = 0;
-//                    System.out.println("Set the status of your task\n "
-//                            + "1 - active; 0 - notactive: \r");
-//                    try {
-//                        taskStatus = Integer.parseInt(bufReader.readLine());
-//                    } catch (IOException exp) {
-//                        logger.error("Error in input number to the console", exp);
-//                    }
-//                    if (taskStatus == 1) {
-//                        smth.setActive(true);
-//                        logger.info("The task is now active");
-//                    } else if (taskStatus == 0) {
-//                        smth.setActive(false);
-//                        logger.info("The task turn off");
-//                    } else {
-//                        logger.error("Wrong input, make "
-//                                + "sure that you enter number 1 or 0!!");
-//                        changeTask();
-//                        return;
-//                    }
-//                default:
-//                    System.out.println("Wrong input by user!!!!" + new AssertionError());
-//            }
-//        }
-    }
+//    public void changeTask() throws IOException {
+////        logger.info("The process of changing task was started");
+////        view.changeOptions();
+////        int optionValue = getUserInput();
+////        logger.info("The console was called");
+////        for (Task smth : listOfTasks) {
+////            switch (optionValue) {
+////                case 1:
+////                    int taskId = 0;
+////                    System.out.println("Enter the id of the task: \r");
+////                    try {
+////                        taskId = Integer.parseInt(bufReader.readLine());
+////                    } catch (IOException exp) {
+////                        logger.error("Error in input number to the console", exp);
+////                    }
+////                    smth.setId(taskId);
+////                    logger.info("The id of the task was changed");
+////                    break;
+////                case 2:
+////                    String taskName = null;
+////                    System.out.println("First you need name "
+////                            + "it by title (only string type): \r");
+////                    try {
+////                        taskName = bufReader.readLine();
+////                    } catch (IOException exp) {
+////                        logger.error("Error in input word to the console", exp);
+////                    }
+////                    smth.setTitle(taskName);
+////                    logger.info("The title of the task was changed");
+////                    break;
+////                case 3:
+////                    String answer = null;
+////                    System.out.println("You want to change repeative or no "
+////                            + "repeative task: (yes\no)\r");
+////                    try {
+////                        answer = bufReader.readLine();
+////                    } catch (IOException exp) {
+////                        logger.error("Error in input word to the console", exp);
+////                    }
+////                    if (answer.toLowerCase().equals("yes")) {
+////                        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+////                        LocalDateTime start = null;
+////                        System.out.println("First please write start time for "
+////                                + "your task " + "like this "
+////                                + "(yyyy,mm,dd,hh,mm): \r");
+////                        try {
+////                            start = LocalDateTime.parse(bufReader.readLine(), timeFormatter);
+////                        } catch (IOException exp) {
+////                            logger.error("Error in input date to the console", exp);
+////                        } catch (DateTimeParseException otherExp) {
+////                            System.out.println("Please input only number, in other case it can't be "
+////                                    + "transformed to LocalDateTime format");
+////                            logger.error("Error in formatting input date to LocalDateTime", otherExp);
+////                        }
+////                        LocalDateTime end = null;
+////                        System.out.println("Secondly, type the end time for "
+////                                + "this task "
+////                                + "like start time: \r");
+////                        try {
+////                            end = LocalDateTime.parse(bufReader.readLine(), timeFormatter);
+////                        } catch (IOException exp) {
+////                            logger.error("Error in input date to the console", exp);
+////                        } catch (DateTimeParseException otherExp) {
+////                            System.out.println("Please input only number, in other case it can't be "
+////                                    + "transformed to LocalDateTime format");
+////                            logger.error("Error in formatting input date to LocalDateTime", otherExp);
+////                        }
+////                        int taskInterval = 0;
+////                        System.out.println("Enter the interval for your task\r");
+////                        try {
+////                            taskInterval = Integer.parseInt(bufReader.readLine());
+////                        } catch (IOException exp) {
+////                            logger.error("Error in input number to the console", exp);
+////                        }
+////                        if ((start == null) || (end == null)
+////                                || (taskInterval == 0)) {
+////                            System.out.println("Wrong input make sure try again");
+////                            return;
+////                        } else {
+////                            smth.setTime(start, end, taskInterval);
+////                            logger.info("The repeated time and interval were changed");
+////                        }
+////                    } else if (answer.toLowerCase().equals("no")) {
+////                        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+////                        LocalDateTime time = null;
+////                        System.out.println("Please write the time for "
+////                                + "your task"
+////                                + "like this (yyyy,mm,dd,hh,mm): \r");
+////                        try {
+////                            time = LocalDateTime.parse(bufReader.readLine(), timeFormatter);
+////                        } catch (IOException exp) {
+////                            logger.error("Error in input date to the console", exp);
+////                        } catch (DateTimeParseException otherExp) {
+////                            System.out.println("Please input only number, in other case it can't be "
+////                                    + "transformed to LocalDateTime format");
+////                            logger.error("Error in formatting input date to LocalDateTime", otherExp);
+////                        }
+////                        smth.setTime(time);
+////                        logger.info("The time of the task was changed");
+////                    } else {
+////                        logger.error("Wrong input, make sure "
+////                                + "that you write yes or no!!!");
+////                        changeTask();
+////                    }
+////                case 4:
+////                    int taskStatus = 0;
+////                    System.out.println("Set the status of your task\n "
+////                            + "1 - active; 0 - notactive: \r");
+////                    try {
+////                        taskStatus = Integer.parseInt(bufReader.readLine());
+////                    } catch (IOException exp) {
+////                        logger.error("Error in input number to the console", exp);
+////                    }
+////                    if (taskStatus == 1) {
+////                        smth.setActive(true);
+////                        logger.info("The task is now active");
+////                    } else if (taskStatus == 0) {
+////                        smth.setActive(false);
+////                        logger.info("The task turn off");
+////                    } else {
+////                        logger.error("Wrong input, make "
+////                                + "sure that you enter number 1 or 0!!");
+////                        changeTask();
+////                        return;
+////                    }
+////                default:
+////                    System.out.println("Wrong input by user!!!!" + new AssertionError());
+////            }
+////        }
+//    }
 }
