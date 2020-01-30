@@ -21,8 +21,7 @@ public class ConcurrencyNotification extends Thread {
     /**
      * Adding logger to the class.
      */
-    private static final Logger log =
-            LogManager.getLogger("info.log");
+    private static final Logger logger = LogManager.getLogger(ConcurrencyNotification.class);
 
     /**
      * Time constant in seconds for time notification.
@@ -68,8 +67,7 @@ public class ConcurrencyNotification extends Thread {
     public void run() {
         while (true) {
             notify = false;
-            LocalDateTime startNotify = (LocalDateTime.now()
-                    .minusSeconds(DEFAULT_TIME));
+            LocalDateTime startNotify = (LocalDateTime.now());
             LocalDateTime endNotify = LocalDateTime.now()
                     .plusSeconds(DEFAULT_TIME);
             ArrayTaskList arrayTaskList = (ArrayTaskList) Tasks
