@@ -83,10 +83,10 @@ public class ConcurrencyNotification extends Thread {
             try {
                 sleep(SLEEP_THREAD);
                 if (notify) {
-                    log.info("Notification was started");
+                    logger.info("Notification was started");
                 }
             } catch (InterruptedException e) {
-                log.error("The thread can't run " + e);
+                logger.error("The thread can't run", e);
             }
         }
     }
