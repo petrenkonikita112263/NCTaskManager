@@ -20,7 +20,7 @@ public interface CoreController {
     /**
      * Method that allow add task to the list.
      */
-    void processAddingTask();
+    void processAddingTask() throws IOException;
 
     /**
      * Method that allow to change all information about task

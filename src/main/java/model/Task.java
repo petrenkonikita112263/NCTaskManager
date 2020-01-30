@@ -307,18 +307,18 @@ public class Task implements Cloneable, Serializable {
     public String toString() {
         if (!this.repeated) {
             if (!this.active) {
-                return "[The nonrepeative task " + "(" + title + ")\n"
+                return "Id: " + id + "[The nonrepeative task " + "(" + title + ")\n"
                         + "was completed at " + time + " time]\n";
             } else {
-                return "[The nonrepeative task " + "(" + title + ")\n"
+                return "Id: " + id +  "[The nonrepeative task " + "(" + title + ")\n"
                         + "is active and gonna end at " + time + " time]\n";
             }
         } else if (!this.active) {
-            return "[The repeative task " + "(" + title + ")\n"
+            return "Id: " + id +  "[The repeative task " + "(" + title + ")\n"
                     + "was started at " + start + " and ended at " + end
                     + " with interval = " + interval + "]\n";
         } else {
-            return "[The repeative task " + "(" + title + ")\n"
+            return "Id: " + id +  "[The repeative task " + "(" + title + ")\n"
                     + "is active, it starts at " + start
                     + " and gonna end at " + end
                     + " with interval = " + interval + "]\n";

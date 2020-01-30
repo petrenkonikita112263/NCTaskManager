@@ -252,7 +252,7 @@ public class PrimaryView implements CoreViewable {
     private LocalDateTime inputDateTime() {
         String date = "";
         LocalDateTime time = null;
-        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("yyyy-mm-dd hh:mm");
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         try {
             date = bufReader.readLine();
         } catch (IOException exp) {

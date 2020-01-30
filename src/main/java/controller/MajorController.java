@@ -82,6 +82,11 @@ public class MajorController implements CoreController {
 //        return Integer.parseInt(bufReader.readLine());
 //    }
 
+    private void createEmptyTaskList() {
+//        listOfTasks = new ArrayTaskList();
+        System.out.println("The empty task list was created");
+    }
+
     /**
      * Implementing (override) runMainApplication() method
      * from interface.
@@ -107,7 +112,7 @@ public class MajorController implements CoreController {
                 runSecondaryMenu();
                 break;
             case 3:
-                new ArrayTaskList();
+                createEmptyTaskList();
 //                view.displayAdditionalInfo();
                 runSecondaryMenu();
                 break;
@@ -164,7 +169,7 @@ public class MajorController implements CoreController {
      * from interface.
      */
     @Override
-    public void processAddingTask() {
+    public void processAddingTask() throws IOException {
         int id = view.addTaskIndex();
         String title = view.addTaskTitle();
         String wordAnswer = view.addTypeOfTask();
@@ -172,12 +177,16 @@ public class MajorController implements CoreController {
             LocalDateTime time = view.addTimeForTask();
             Task someTask = new Task(id, title, time);
             listOfTasks.add(someTask);
+            logger.info("The non-repetead task was added");
+            runSecondaryMenu();
         } else if (wordAnswer.toLowerCase().equals("yes")) {
             LocalDateTime start = view.addStartTimeForTask();
             LocalDateTime end = view.addEndTimeForTask();
             int interval = view.addInterval();
             Task someTask = new Task(id, title, start, end, interval);
             listOfTasks.add(someTask);
+            logger.info("The repetead task was added");
+            runSecondaryMenu();
         } else {
             logger.error("Wrong input, make "
                     + "sure that you enter the word yes or no!!");
@@ -352,20 +361,20 @@ public class MajorController implements CoreController {
         for (int i = 0; i < listOfTasks.size(); i++) {
             Task t = listOfTasks.getTask(i);
             if (t.isRepeated()) {
-                System.out.printf("Id : %d\n" + t.getId());
-                System.out.printf("Title : %s\n" + t.getTitle());
-                System.out.printf("Start Time : %s\n" + t.getStartTime());
-                System.out.printf("End Time : %s\n" + t.getEndTime());
-                System.out.printf("Repetition of period : %s\n" + t.getRepeatInterval());
+                System.out.printf("Id : " + t.getId());
+                System.out.printf("Title : " + t.getTitle());
+                System.out.printf("Start Time : " + t.getStartTime());
+                System.out.printf("End Time : " + t.getEndTime());
+                System.out.printf("Repetition of period : " + t.getRepeatInterval());
             } else if (!t.isActive()) {
-                System.out.printf("Id : %d\n" + t.getId());
-                System.out.printf("Title : %s\n" + t.getTitle());
-                System.out.printf("Task Time : %s\n" + t.getTime());
+                System.out.printf("Id : " + t.getId());
+                System.out.printf("Title : " + t.getTitle());
+                System.out.printf("Task Time : " + t.getTime());
             } else {
-                System.out.printf("Id : %d\n" + t.getId());
-                System.out.printf("Title : %s\n" + t.getTitle());
-                System.out.printf("Start Time : %s\n" + t.getStartTime());
-                System.out.printf("End Time : %s\n" + t.getEndTime());
+                System.out.printf("Id : " + t.getId());
+                System.out.printf("Title : " + t.getTitle());
+                System.out.printf("Start Time : " + t.getStartTime());
+                System.out.printf("End Time : " + t.getEndTime());
             }
         }
     }
