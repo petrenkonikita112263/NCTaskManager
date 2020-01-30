@@ -1,7 +1,6 @@
 package controller;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
 
 /**
  * Main interface of View part of MVC project.
@@ -21,7 +20,7 @@ public interface CoreController {
     /**
      * Method that allow add task to the list.
      */
-    void addSomeTask();
+    void processAddingTask();
 
     /**
      * Method that allow to change all information about task
@@ -30,7 +29,7 @@ public interface CoreController {
      * @throws IOException - input|output exception, failure during reading,
      *                     writing information
      */
-    void changeTask() throws IOException;
+    void processChangingTask() throws IOException;
 
     /**
      * Method that allow to delete task from the list.
@@ -38,26 +37,13 @@ public interface CoreController {
      * @throws IOException - input|output exception, failure during reading,
      *                     writing information
      */
-    void removeSomeTask() throws IOException;
+    void processDeletingTask() throws IOException;
 
     /**
      * Method that allow to create the calendar for set
      * period of time.
-     *
-     * @param limitDate - the period of time for that calendar
-     *                  will be created
      */
-    void createCalendar(LocalDateTime limitDate);
-
-    /**
-     * Method that allow to write task list to GSON txt file.
-     */
-    void saveFileWithTasks();
-
-    /**
-     * Method that allow to read task list from GSON txt file.
-     */
-    void readFileWithTasks();
+    void createCalendar();
 
     /**
      * Method that allow to see chosen task.
@@ -76,14 +62,14 @@ public interface CoreController {
      * @throws IOException - input|output exception, failure during reading,
      *                     writing information
      */
-    void saveWorkSession() throws IOException;
+    void processSavingWork() throws IOException;
 
-    /**
-     * Method that allow to continue work with application
-     * from previous session.
-     *
-     * @throws IOException - input|output exception, failure during reading,
-     *                     writing information
-     */
-    void continueWork() throws IOException;
+//    /**
+//     * Method that allow to continue work with application
+//     * from previous session.
+//     *
+//     * @throws IOException - input|output exception, failure during reading,
+//     *                     writing information
+//     */
+//    void continueWork() throws IOException;
 }
