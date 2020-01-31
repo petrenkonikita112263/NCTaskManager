@@ -9,6 +9,7 @@ import org.apache.logging.log4j.Logger;
 import view.PrimaryView;
 
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDateTime;
@@ -330,8 +331,8 @@ public class MajorController implements CoreController {
      */
     public void readFileWithTasks(String nameFile) {
         try {
-            TaskIO.readText(listOfTasks,
-                    (new File(folderName + File.separatorChar + nameFile + ".json")));
+            TaskIO.read(listOfTasks,
+                    (new FileReader(folderName + File.separatorChar + nameFile + ".json")));
         } catch (IOException e) {
             logger.error("Error with reading process from the file", e);
         }
