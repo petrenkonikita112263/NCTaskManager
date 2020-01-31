@@ -342,12 +342,14 @@ public class MajorController implements CoreController {
      * from interface.
      */
     @Override
-    public void createCalendar() {
-        LocalDateTime limitDate = view.addTimeLimit();
+    public void createCalendar() throws IOException {
+        LocalDateTime startDate = view.addTimeLimit_1();
+        LocalDateTime limitDate = view.addTimeLimit_2();
         SortedMap<LocalDateTime, Set<Task>> defaultCalendar =
-                Tasks.calendar(listOfTasks, LocalDateTime.now(), limitDate);
-        logger.info("The calendar was created");
+                Tasks.calendar(listOfTasks, startDate, limitDate);
+        System.out.println("The calendar was created");
         view.displayCreatedCalendar(defaultCalendar);
+        runSecondaryMenu();
     }
 
     /**

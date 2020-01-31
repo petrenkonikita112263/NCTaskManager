@@ -11,7 +11,6 @@ import java.io.InputStreamReader;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.Map;
 import java.util.Set;
 import java.util.SortedMap;
 
@@ -70,11 +69,11 @@ public class PrimaryView implements CoreViewable {
     @Override
     public void displayCreatedCalendar(SortedMap<LocalDateTime,
             Set<Task>> values) {
-        for (Map.Entry<LocalDateTime, Set<Task>> content : values.entrySet()) {
+        for (SortedMap.Entry<LocalDateTime, Set<Task>> content : values.entrySet()) {
             for (Task task : content.getValue()) {
-                System.out.println(content.getKey());
                 System.out.println(task.getTitle());
             }
+            System.out.println(content.getKey());
         }
     }
 
@@ -291,24 +290,19 @@ public class PrimaryView implements CoreViewable {
         return taskStatus;
     }
 
-    public LocalDateTime addTimeLimit() {
-        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        LocalDateTime limitDate = null;
-        System.out.println("Set the time period for which you want "
+    public LocalDateTime addTimeLimit_1() {
+        System.out.println("Enter the date from which your calendar starts "
+                + "or just copy this (2020-01-29 19:46) without braces:"
+                + " and change numbers \r");
+        return inputDateTime();
+    }
+    public LocalDateTime addTimeLimit_2() {
+        System.out.println("Set the end time period for which you want "
                 + "to get the calendar.\n"
                 + "Enter the date "
                 + "or just copy this (2020-01-29 19:46) without braces:"
                 + " and change numbers \r");
-        try {
-            limitDate = LocalDateTime.parse(bufReader.readLine(), timeFormatter);
-        } catch (IOException exp) {
-            logger.error("Error in input date to the console", exp);
-        } catch (DateTimeParseException otherExp) {
-            System.out.println("Please input only number, in other case it can't be "
-                    + "transformed to LocalDateTime format");
-            logger.error("Error in formatting input date to LocalDateTime", otherExp);
-        }
-        return limitDate;
+        return inputDateTime();
     }
 
     public int getAction() {
