@@ -53,11 +53,6 @@ public class MajorController implements CoreController {
      */
     private String folderName = "savepoint";
 
-//    /**
-//     * Empty file.
-//     */
-//    private File dataHoldingFile = new File(nameOfFile);
-
     /**
      * EVC constructor.
      */
@@ -98,28 +93,23 @@ public class MajorController implements CoreController {
     @Override
     public void runMainApplication() throws IOException {
         logger.info("The main menu was called");
-//        view.displayInfo();
         int defaultNumber_1 = view.getUserInput();
         logger.info("Console was called");
         switch (defaultNumber_1) {
             case 1:
                 continueWork();
-//                view.displayAdditionalInfo();
                 runSecondaryMenu();
                 break;
             case 2:
                 readFileWithTasks();
-//                view.displayAdditionalInfo();
                 runSecondaryMenu();
                 break;
             case 3:
                 createEmptyTaskList();
-//                view.displayAdditionalInfo();
                 runSecondaryMenu();
                 break;
             case 4:
                 System.exit(0);
-//                return;
             default:
                 System.out.println("Wrong input by user!!!!" + new AssertionError());
         }
@@ -176,14 +166,18 @@ public class MajorController implements CoreController {
         String wordAnswer = view.addTypeOfTask();
         if (wordAnswer.toLowerCase().equals("no")) {
             LocalDateTime time = view.addTimeForTask();
+            checkTime(time);
             Task someTask = new Task(id, title, time);
             listOfTasks.add(someTask);
             logger.info("The non-repetead task was added");
             runSecondaryMenu();
         } else if (wordAnswer.toLowerCase().equals("yes")) {
             LocalDateTime start = view.addStartTimeForTask();
+            checkTime(start);
             LocalDateTime end = view.addEndTimeForTask();
+            checkTime(end);
             int interval = view.addInterval();
+            checkInterval(interval);
             Task someTask = new Task(id, title, start, end, interval);
             listOfTasks.add(someTask);
             logger.info("The repetead task was added");
@@ -191,6 +185,20 @@ public class MajorController implements CoreController {
         } else {
             logger.error("Wrong input, make "
                     + "sure that you enter the word yes or no!!");
+            processAddingTask();
+        }
+    }
+
+    private void checkInterval(int interval) throws IOException {
+        if ((interval == Integer.MAX_VALUE) || (interval <= 0)) {
+            logger.error("Task can't exist with this interval");
+            processAddingTask();
+        }
+    }
+
+    private void checkTime(LocalDateTime time) throws IOException {
+        if (time.isBefore(LocalDateTime.now())) {
+            logger.error("Task can't exist with this time");
             processAddingTask();
         }
     }
@@ -203,14 +211,6 @@ public class MajorController implements CoreController {
     public void processDeletingTask() {
         view.displayListOfTasks(listOfTasks);
         int id = view.removeSomeTask();
-//        int id = 0;
-//        System.out.println("Please write the id number of your task, "
-//                + "that you want to delete");
-//        try {
-//            id = Integer.parseInt(bufReader.readLine());
-//        } catch (IOException exp) {
-//            logger.error("Error in input number to the console", exp);
-//        }
         boolean result = removeTask(id);
         if (result) {
             logger.info("The task was removed");
@@ -270,20 +270,17 @@ public class MajorController implements CoreController {
                     String answer = view.changeTypeOfTask();
                     if (answer.toLowerCase().equals("yes")) {
                         LocalDateTime startTime = view.changeStartTimeOfTask();
+                        checkTime(startTime);
                         LocalDateTime endTime = view.changeEndTimeOfTask();
+                        checkTime(endTime);
                         int taskInterval = view.changeIntervalOfTask();
-                        if ((startTime == null) || (endTime == null)
-                                || (taskInterval == 0)) {
-                            System.out.println("Wrong input make sure try again");
-                            view.changeStartTimeOfTask();
-                            view.changeEndTimeOfTask();
-                            view.changeIntervalOfTask();
-                        } else {
-                            smth.setTime(startTime, endTime, taskInterval);
-                            logger.info("The repeated time and interval were changed");
-                        }
+                        checkInterval(taskInterval);
+                        checkRepteadTask(startTime, endTime, taskInterval);
+                        smth.setTime(startTime, endTime, taskInterval);
+                        logger.info("The repeated time and interval were changed");
                     } else if (answer.toLowerCase().equals("no")) {
                         LocalDateTime taskTime = view.changeTimeOfTask();
+                        checkTime(taskTime);
                         smth.setTime(taskTime);
                         logger.info("The time of the task was changed");
                     } else {
@@ -307,6 +304,16 @@ public class MajorController implements CoreController {
                 default:
                     System.out.println("Wrong input by user!!!!" + new AssertionError());
             }
+        }
+    }
+
+    private void checkRepteadTask(LocalDateTime startTime, LocalDateTime endTime, int taskInterval) {
+        if ((startTime == null) || (endTime == null)
+                || (taskInterval == 0)) {
+            System.out.println("Wrong input make sure try again");
+            view.changeStartTimeOfTask();
+            view.changeEndTimeOfTask();
+            view.changeIntervalOfTask();
         }
     }
 
@@ -345,7 +352,9 @@ public class MajorController implements CoreController {
     @Override
     public void createCalendar() throws IOException {
         LocalDateTime startDate = view.addTimeLimit_1();
+        checkTime(startDate);
         LocalDateTime limitDate = view.addTimeLimit_2();
+        checkTime(limitDate);
         SortedMap<LocalDateTime, Set<Task>> defaultCalendar =
                 Tasks.calendar(listOfTasks, startDate, limitDate);
         System.out.println("The calendar was created");
@@ -390,16 +399,6 @@ public class MajorController implements CoreController {
     public void showListOfTask() {
         view.displayListOfTasks(listOfTasks);
     }
-
-//    /**
-//     * The path where the file is stored.
-//     */
-//    private String pathForFile = "save" + File.separatorChar + "point"
-//            + File.separatorChar + nameFile;
-//    /**
-//     * The name of directory to store files.
-//     */
-//    private String dirPath = "save";
 
     /**
      * Implementing (override) configApplication() method
