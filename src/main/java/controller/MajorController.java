@@ -368,27 +368,7 @@ public class MajorController implements CoreController {
      */
     @Override
     public void showTaskDetails() {
-        System.out.println("--------ALL YOUR TASKS--------");
-        System.out.println();
-        for (int i = 0; i < listOfTasks.size(); i++) {
-            Task t = listOfTasks.getTask(i);
-            if (t.isRepeated()) {
-                System.out.printf("Id : " + t.getId());
-                System.out.printf("Title : " + t.getTitle());
-                System.out.printf("Start Time : " + t.getStartTime());
-                System.out.printf("End Time : " + t.getEndTime());
-                System.out.printf("Repetition of period : " + t.getRepeatInterval());
-            } else if (!t.isActive()) {
-                System.out.printf("Id : " + t.getId());
-                System.out.printf("Title : " + t.getTitle());
-                System.out.printf("Task Time : " + t.getTime());
-            } else {
-                System.out.printf("Id : " + t.getId());
-                System.out.printf("Title : " + t.getTitle());
-                System.out.printf("Start Time : " + t.getStartTime());
-                System.out.printf("End Time : " + t.getEndTime());
-            }
-        }
+        view.displayDetailAboutTask(listOfTasks);
     }
 
     /**

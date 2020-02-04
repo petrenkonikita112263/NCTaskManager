@@ -89,6 +89,29 @@ public class PrimaryView implements CoreViewable {
     }
 
     /**
+     * Implementation (override) displatDetailAboutTask() method from
+     * interface.
+     */
+    @Override
+    public void displayDetailAboutTask(ArrayTaskList taskList) {
+        System.out.println("--------ALL YOUR TASKS--------");
+        for (int i = 0; i < taskList.size(); i++) {
+            Task t = taskList.getTask(i);
+            if (t.isRepeated()) {
+                System.out.println("Id : " + t.getId() + "\tTitle : " + t.getTitle()
+                        + "\nTask starts at " + t.getStartTime()
+                        + "\nTask ends at " + t.getEndTime()
+                        + "\nthe interval between start and end time is "
+                        + t.getRepeatInterval());
+            } else {
+                System.out.println("Id : " + t.getId() + "\tTitle : " + t.getTitle()
+                        + "\nTask starts at " + t.getStartTime()
+                        + "\nTask ends at " + t.getEndTime());
+            }
+        }
+    }
+
+    /**
      * Implementation (override) changeOptions() method from
      * interface.
      */
