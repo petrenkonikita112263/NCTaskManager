@@ -136,6 +136,11 @@ public class PrimaryView implements CoreViewable {
         return Integer.parseInt(bufReader.readLine());
     }
 
+    /**
+     * Method that allow user to input id for task.
+     *
+     * @return - id of it
+     */
     public int addTaskIndex() {
         int id = 0;
         System.out.println("Enter the id of the task: \r");
@@ -147,6 +152,11 @@ public class PrimaryView implements CoreViewable {
         return id;
     }
 
+    /**
+     * Method that allow user to input title for task.
+     *
+     * @return - title
+     */
     public String addTaskTitle() {
         String title = null;
         System.out.println("Enter the title for task: \r");
@@ -158,6 +168,12 @@ public class PrimaryView implements CoreViewable {
         return title;
     }
 
+    /**
+     * Method that allow user to choice which type of task
+     * to add to the list.
+     *
+     * @return - get user answer for further action
+     */
     public String addTypeOfTask() {
         String wordAnswer = null;
         System.out.println("What type of task it will be "
@@ -170,6 +186,11 @@ public class PrimaryView implements CoreViewable {
         return wordAnswer;
     }
 
+    /**
+     * Method that allow user to input date for task.
+     *
+     * @return - input date
+     */
     public LocalDateTime addTimeForTask() {
         System.out.println("Enter the date "
                 + "or just copy this (2020-01-29 19:46) without braces:"
@@ -177,6 +198,11 @@ public class PrimaryView implements CoreViewable {
         return inputDateTime();
     }
 
+    /**
+     * Method that allow user to input start date for task.
+     *
+     * @return - input start date
+     */
     public LocalDateTime addStartTimeForTask() {
         System.out.println("First please write start time for "
                 + "or just copy this (2020-01-29 19:46) without braces:"
@@ -184,6 +210,11 @@ public class PrimaryView implements CoreViewable {
         return inputDateTime();
     }
 
+    /**
+     * Method that allow user to input end date for task.
+     *
+     * @return - input end date
+     */
     public LocalDateTime addEndTimeForTask() {
         System.out.println("Secondly, type the end time for "
                 + "or just copy this (2020-01-29 19:46) without braces:"
@@ -191,6 +222,11 @@ public class PrimaryView implements CoreViewable {
         return inputDateTime();
     }
 
+    /**
+     * Method that allow user to input interval for task.
+     *
+     * @return - input interval
+     */
     public int addInterval() {
         int taskInterval = 0;
         System.out.println("At last enter the interval "
@@ -203,6 +239,11 @@ public class PrimaryView implements CoreViewable {
         return taskInterval;
     }
 
+    /**
+     * Method that ask user to set id of task that will be deleted.
+     *
+     * @return - the id of task for which remove will be called
+     */
     public int removeSomeTask() {
         int id = 0;
         System.out.println("Please write the id number of your task, "
@@ -215,6 +256,11 @@ public class PrimaryView implements CoreViewable {
         return id;
     }
 
+    /**
+     * Method that ask user to change id of the task.
+     *
+     * @return - new id
+     */
     public int changeIdOfTask() {
         int taskId = 0;
         System.out.println("Enter the id of the task: \r");
@@ -226,6 +272,11 @@ public class PrimaryView implements CoreViewable {
         return taskId;
     }
 
+    /**
+     * Method that ask user to change title of the task.
+     *
+     * @return - new title
+     */
     public String changeTitleOfTask() {
         String taskName = null;
         System.out.println("First you need name "
@@ -238,6 +289,11 @@ public class PrimaryView implements CoreViewable {
         return taskName;
     }
 
+    /**
+     * Method that ask user to change type of the task.
+     *
+     * @return - new type repeated or not
+     */
     public String changeTypeOfTask() {
         String answer = null;
         System.out.println("You want to change repeative or no "
@@ -250,6 +306,11 @@ public class PrimaryView implements CoreViewable {
         return answer;
     }
 
+    /**
+     * Method that ask user to change date of the task.
+     *
+     * @return - new date
+     */
     public LocalDateTime changeTimeOfTask() {
         System.out.println("Enter the date "
                 + "or just copy this (2020-01-29 19:46) without braces:"
@@ -257,6 +318,11 @@ public class PrimaryView implements CoreViewable {
         return inputDateTime();
     }
 
+    /**
+     * Method that ask user to change start date of the task.
+     *
+     * @return - new start date
+     */
     public LocalDateTime changeStartTimeOfTask() {
         System.out.println("First please write start time for "
                 + "or just copy this (2020-01-29 19:46) without braces:"
@@ -264,6 +330,11 @@ public class PrimaryView implements CoreViewable {
         return inputDateTime();
     }
 
+    /**
+     * Method that ask user to change end date of the task.
+     *
+     * @return - new end date
+     */
     public LocalDateTime changeEndTimeOfTask() {
         System.out.println("Secondly, type the end time for "
                 + "this task "
@@ -271,6 +342,11 @@ public class PrimaryView implements CoreViewable {
         return inputDateTime();
     }
 
+    /**
+     * Private additional method that allow to input date.
+     *
+     * @return - LocalDateTime that user inputs
+     */
     private LocalDateTime inputDateTime() {
         String date = "";
         LocalDateTime time = null;
@@ -290,6 +366,11 @@ public class PrimaryView implements CoreViewable {
         return time;
     }
 
+    /**
+     * Method that ask user to change interval of the task.
+     *
+     * @return - new interval
+     */
     public int changeIntervalOfTask() {
         int taskInterval = 0;
         System.out.println("Enter the interval for your task\r");
@@ -301,6 +382,11 @@ public class PrimaryView implements CoreViewable {
         return taskInterval;
     }
 
+    /**
+     * Method that ask user to change status of the task.
+     *
+     * @return - 0 - disable task, 1 - enable it
+     */
     public int changeStatusOfTask() {
         int taskStatus = 0;
         System.out.println("Set the status of your task\n "
@@ -313,6 +399,11 @@ public class PrimaryView implements CoreViewable {
         return taskStatus;
     }
 
+    /**
+     * Method that asks user to start date from which calendar starts.
+     *
+     * @return - get the start date
+     */
     public LocalDateTime addTimeLimit_1() {
         System.out.println("Enter the date from which your calendar starts "
                 + "or just copy this (2020-01-29 19:46) without braces:"
@@ -320,6 +411,11 @@ public class PrimaryView implements CoreViewable {
         return inputDateTime();
     }
 
+    /**
+     * Method that asks user to end date to which calendar ends.
+     *
+     * @return - get the end date of task
+     */
     public LocalDateTime addTimeLimit_2() {
         System.out.println("Set the end time period for which you want "
                 + "to get the calendar.\n"
@@ -329,8 +425,13 @@ public class PrimaryView implements CoreViewable {
         return inputDateTime();
     }
 
+    /**
+     * Method that asks user for further action and return it number.
+     *
+     * @return - get int number that is responsible to action
+     */
     public int getAction() {
-        System.out.println("TYpe what do you want to perform: ");
+        System.out.println("Type what do you want to perform: ");
         System.out.println("\t 1 - To saved task and exit\n\t 2- To load list of task"
                 + "\n\t 3 - To return to main menu of application");
         int inputNumber = 0;
@@ -342,6 +443,11 @@ public class PrimaryView implements CoreViewable {
         return inputNumber;
     }
 
+    /**
+     * Method that ask user to input name for the file and return it.
+     *
+     * @return - get the name of the file from the user input
+     */
     public String getFileName() {
         String nameFile = null;
         System.out.println("Print the name of the file:\r");

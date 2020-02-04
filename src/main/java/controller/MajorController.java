@@ -28,11 +28,6 @@ public class MajorController implements CoreController {
      */
     private static final Logger logger = LogManager.getLogger(MajorController.class);
 
-//    /**
-//     * Instead of using Scanner, use BufferedReader for input.
-//     */
-//    private static BufferedReader bufReader;
-
     /**
      * Constant that holds name of the file for saving task list.
      */
@@ -65,21 +60,11 @@ public class MajorController implements CoreController {
         logger.info("The thread is running. Notification works");
     }
 
-//    /**
-//     * Private method that allow user to input info in console.
-//     *
-//     * @return - get the input number from console
-//     * @throws IOException - input|output exception, failure during reading,
-//     *                     writing information
-//     */
-//    private int getUserInput() throws IOException {
-//        logger.info("User start works with console");
-//        bufReader = new BufferedReader(new InputStreamReader(System.in));
-//        return Integer.parseInt(bufReader.readLine());
-//    }
-
+    /**
+     * Private method that display info message about
+     * new created list.
+     */
     private void createEmptyTaskList() {
-//        listOfTasks = new ArrayTaskList();
         System.out.println("The empty task list was created");
     }
 
@@ -158,6 +143,8 @@ public class MajorController implements CoreController {
     /**
      * Implementing (override) addSomeTask() method
      * from interface.
+     *
+     * @throws IOException - input exception
      */
     @Override
     public void processAddingTask() throws IOException {
@@ -189,6 +176,13 @@ public class MajorController implements CoreController {
         }
     }
 
+    /**
+     * Private additional method that validate interval value
+     * from user input.
+     *
+     * @param interval - interval for task
+     * @throws IOException - input exception
+     */
     private void checkInterval(int interval) throws IOException {
         if ((interval == Integer.MAX_VALUE) || (interval <= 0)) {
             logger.error("Task can't exist with this interval");
@@ -196,6 +190,13 @@ public class MajorController implements CoreController {
         }
     }
 
+    /**
+     * Private additional method that validate LocalDateTime
+     * from user input.
+     *
+     * @param time - time value for task
+     * @throws IOException - input exception
+     */
     private void checkTime(LocalDateTime time) throws IOException {
         if (time.isBefore(LocalDateTime.now())) {
             logger.error("Task can't exist with this time");
@@ -223,7 +224,7 @@ public class MajorController implements CoreController {
      * Private method for delete task by id.
      *
      * @param id - serial number of the task
-     * @return - true if task was deleted, elsewhere false
+     * @return - true if task was deleted, elsewhere get false
      */
     private boolean removeTask(int id) {
         int index = -1;
@@ -275,7 +276,7 @@ public class MajorController implements CoreController {
                         checkTime(endTime);
                         int taskInterval = view.changeIntervalOfTask();
                         checkInterval(taskInterval);
-                        checkRepteadTask(startTime, endTime, taskInterval);
+                        checkRepeatTask(startTime, endTime, taskInterval);
                         smth.setTime(startTime, endTime, taskInterval);
                         logger.info("The repeated time and interval were changed");
                     } else if (answer.toLowerCase().equals("no")) {
@@ -307,7 +308,15 @@ public class MajorController implements CoreController {
         }
     }
 
-    private void checkRepteadTask(LocalDateTime startTime, LocalDateTime endTime, int taskInterval) {
+    /**
+     * Private additional method that check parameters for date
+     * and interval for null values.
+     *
+     * @param startTime    - start date for task
+     * @param endTime      - end date for task
+     * @param taskInterval - interval for task
+     */
+    private void checkRepeatTask(LocalDateTime startTime, LocalDateTime endTime, int taskInterval) {
         if ((startTime == null) || (endTime == null)
                 || (taskInterval == 0)) {
             System.out.println("Wrong input make sure try again");
@@ -405,6 +414,10 @@ public class MajorController implements CoreController {
         logger.info("The session was saved");
     }
 
+    /**
+     * Private additional method that read tasks from GSON file,
+     * that name user input.
+     */
     private void readFileWithTasks() {
         String fileName = view.getFileName();
         readFileWithTasks(fileName);
