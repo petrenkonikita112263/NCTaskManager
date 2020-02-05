@@ -48,12 +48,12 @@ public interface CoreController {
     /**
      * Method that allow to see chosen task.
      */
-    void showTaskDetails();
+    void showTaskDetails() throws IOException;
 
     /**
      * Method that print all tasks.
      */
-    void showListOfTask();
+    void showListOfTask() throws IOException;
 
     /**
      * Method that allow to change all information about task

@@ -153,18 +153,14 @@ public class MajorController implements CoreController {
         String wordAnswer = view.addTypeOfTask();
         if (wordAnswer.toLowerCase().equals("no")) {
             LocalDateTime time = view.addTimeForTask();
-            checkTime(time);
             Task someTask = new Task(id, title, time);
             listOfTasks.add(someTask);
             logger.info("The non-repetead task was added");
             runSecondaryMenu();
         } else if (wordAnswer.toLowerCase().equals("yes")) {
             LocalDateTime start = view.addStartTimeForTask();
-            checkTime(start);
             LocalDateTime end = view.addEndTimeForTask();
-            checkTime(end);
             int interval = view.addInterval();
-            checkInterval(interval);
             Task someTask = new Task(id, title, start, end, interval);
             listOfTasks.add(someTask);
             logger.info("The repetead task was added");
@@ -176,33 +172,6 @@ public class MajorController implements CoreController {
         }
     }
 
-    /**
-     * Private additional method that validate interval value
-     * from user input.
-     *
-     * @param interval - interval for task
-     * @throws IOException - input exception
-     */
-    private void checkInterval(int interval) throws IOException {
-        if ((interval == Integer.MAX_VALUE) || (interval <= 0)) {
-            logger.error("Task can't exist with this interval");
-            processAddingTask();
-        }
-    }
-
-    /**
-     * Private additional method that validate LocalDateTime
-     * from user input.
-     *
-     * @param time - time value for task
-     * @throws IOException - input exception
-     */
-    private void checkTime(LocalDateTime time) throws IOException {
-        if (time.isBefore(LocalDateTime.now())) {
-            logger.error("Task can't exist with this time");
-            processAddingTask();
-        }
-    }
 
     /**
      * Implementing (override) removeSomeTask() method
@@ -261,29 +230,28 @@ public class MajorController implements CoreController {
                     int taskId = view.changeIdOfTask();
                     smth.setId(taskId);
                     logger.info("The id of the task was changed");
+                    runSecondaryMenu();
                     break;
                 case 2:
                     String taskName = view.changeTitleOfTask();
                     smth.setTitle(taskName);
                     logger.info("The title of the task was changed");
+                    runSecondaryMenu();
                     break;
                 case 3:
                     String answer = view.changeTypeOfTask();
                     if (answer.toLowerCase().equals("yes")) {
                         LocalDateTime startTime = view.changeStartTimeOfTask();
-                        checkTime(startTime);
                         LocalDateTime endTime = view.changeEndTimeOfTask();
-                        checkTime(endTime);
                         int taskInterval = view.changeIntervalOfTask();
-                        checkInterval(taskInterval);
-                        checkRepeatTask(startTime, endTime, taskInterval);
                         smth.setTime(startTime, endTime, taskInterval);
                         logger.info("The repeated time and interval were changed");
+                        runSecondaryMenu();
                     } else if (answer.toLowerCase().equals("no")) {
                         LocalDateTime taskTime = view.changeTimeOfTask();
-                        checkTime(taskTime);
                         smth.setTime(taskTime);
                         logger.info("The time of the task was changed");
+                        runSecondaryMenu();
                     } else {
                         logger.error("Wrong input, make sure "
                                 + "that you write yes or no!!!");
@@ -294,9 +262,11 @@ public class MajorController implements CoreController {
                     if (taskStatus == 1) {
                         smth.setActive(true);
                         logger.info("The task is now active");
+                        runSecondaryMenu();
                     } else if (taskStatus == 0) {
                         smth.setActive(false);
                         logger.info("The task turn off");
+                        runSecondaryMenu();
                     } else {
                         logger.error("Wrong input, make "
                                 + "sure that you enter number 1 or 0!!");
@@ -305,24 +275,6 @@ public class MajorController implements CoreController {
                 default:
                     System.out.println("Wrong input by user!!!!" + new AssertionError());
             }
-        }
-    }
-
-    /**
-     * Private additional method that check parameters for date
-     * and interval for null values.
-     *
-     * @param startTime    - start date for task
-     * @param endTime      - end date for task
-     * @param taskInterval - interval for task
-     */
-    private void checkRepeatTask(LocalDateTime startTime, LocalDateTime endTime, int taskInterval) {
-        if ((startTime == null) || (endTime == null)
-                || (taskInterval == 0)) {
-            System.out.println("Wrong input make sure try again");
-            view.changeStartTimeOfTask();
-            view.changeEndTimeOfTask();
-            view.changeIntervalOfTask();
         }
     }
 
@@ -361,9 +313,7 @@ public class MajorController implements CoreController {
     @Override
     public void createCalendar() throws IOException {
         LocalDateTime startDate = view.addTimeLimit_1();
-        checkTime(startDate);
         LocalDateTime limitDate = view.addTimeLimit_2();
-        checkTime(limitDate);
         SortedMap<LocalDateTime, Set<Task>> defaultCalendar =
                 Tasks.calendar(listOfTasks, startDate, limitDate);
         System.out.println("The calendar was created");
@@ -376,8 +326,9 @@ public class MajorController implements CoreController {
      * from interface.
      */
     @Override
-    public void showTaskDetails() {
+    public void showTaskDetails() throws IOException {
         view.displayDetailAboutTask(listOfTasks);
+        runSecondaryMenu();
     }
 
     /**
@@ -385,8 +336,9 @@ public class MajorController implements CoreController {
      * from interface.
      */
     @Override
-    public void showListOfTask() {
+    public void showListOfTask() throws IOException {
         view.displayListOfTasks(listOfTasks);
+        runSecondaryMenu();
     }
 
     /**

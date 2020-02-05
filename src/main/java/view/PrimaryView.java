@@ -146,10 +146,25 @@ public class PrimaryView implements CoreViewable {
         System.out.println("Enter the id of the task: \r");
         try {
             id = Integer.parseInt(bufReader.readLine());
-        } catch (IOException exp) {
-            logger.error("Error in input number to the console", exp);
+            checkIntValue(id);
+        } catch (IOException exp_1) {
+            logger.error("Error in input number to the console", exp_1);
+        } catch (NumberFormatException exp_2) {
+            logger.error("Wrong type of id for task", exp_2);
         }
         return id;
+    }
+
+    /**
+     * Private additional method that validate int number
+     * from user input.
+     *
+     * @param number - any integer number in range of Integer
+     */
+    private void checkIntValue(int number) {
+        if ((number == Integer.MAX_VALUE) || (number <= 0)) {
+            logger.error("Task can't exist with this value of Integer");
+        }
     }
 
     /**
@@ -162,10 +177,25 @@ public class PrimaryView implements CoreViewable {
         System.out.println("Enter the title for task: \r");
         try {
             title = bufReader.readLine();
-        } catch (IOException exp) {
-            logger.error("Error in input word to the console", exp);
+            checkStringValue(title);
+        } catch (IOException exp_1) {
+            logger.error("Error in input word to the console", exp_1);
+        } catch (IllegalArgumentException exp_2) {
+            logger.error("Task can't exist without title", exp_2);
         }
         return title;
+    }
+
+    /**
+     * Private additional method that validate string value
+     * from user input.
+     *
+     * @param word - one word
+     */
+    private void checkStringValue(String word) {
+        if (word == null) {
+            logger.error("Task can't exist with this String value");
+        }
     }
 
     /**
@@ -196,6 +226,19 @@ public class PrimaryView implements CoreViewable {
                 + "or just copy this (2020-01-29 19:46) without braces:"
                 + " and change numbers \r");
         return inputDateTime();
+    }
+
+    /**
+     * Private additional method that validate LocalDateTime
+     * from user input.
+     *
+     * @param time - time value for task
+     */
+    private void checkTime(LocalDateTime time) {
+        if ((time.isBefore(LocalDateTime.now())) || (time == null)) {
+            logger.error("Task can't exist with this time");
+            inputDateTime();
+        }
     }
 
     /**
@@ -233,8 +276,11 @@ public class PrimaryView implements CoreViewable {
                 + "for this task (integer value): \r");
         try {
             taskInterval = Integer.parseInt(bufReader.readLine());
-        } catch (IOException exp) {
-            logger.error("Error in input number to the console", exp);
+            checkIntValue(taskInterval);
+        } catch (IOException exp_1) {
+            logger.error("Error in input number to the console", exp_1);
+        } catch (NumberFormatException exp_2) {
+            logger.error("Wrong type of interval for task", exp_2);
         }
         return taskInterval;
     }
@@ -250,8 +296,11 @@ public class PrimaryView implements CoreViewable {
                 + "that you want to delete");
         try {
             id = Integer.parseInt(bufReader.readLine());
-        } catch (IOException exp) {
-            logger.error("Error in input number to the console", exp);
+            checkIntValue(id);
+        } catch (IOException exp_1) {
+            logger.error("Error in input number to the console", exp_1);
+        } catch (NumberFormatException exp_2) {
+            logger.error("Wrong type of id for task", exp_2);
         }
         return id;
     }
@@ -266,8 +315,11 @@ public class PrimaryView implements CoreViewable {
         System.out.println("Enter the id of the task: \r");
         try {
             taskId = Integer.parseInt(bufReader.readLine());
-        } catch (IOException exp) {
-            logger.error("Error in input number to the console", exp);
+            checkIntValue(taskId);
+        } catch (IOException exp_1) {
+            logger.error("Error in input number to the console", exp_1);
+        } catch (NumberFormatException exp_2) {
+            logger.error("Wrong type of id for task", exp_2);
         }
         return taskId;
     }
@@ -283,8 +335,11 @@ public class PrimaryView implements CoreViewable {
                 + "it by title (only string type): \r");
         try {
             taskName = bufReader.readLine();
-        } catch (IOException exp) {
-            logger.error("Error in input word to the console", exp);
+            checkStringValue(taskName);
+        } catch (IOException exp_1) {
+            logger.error("Error in input word to the console", exp_1);
+        } catch (IllegalArgumentException exp_2) {
+            logger.error("Task can't exist without title", exp_2);
         }
         return taskName;
     }
@@ -300,8 +355,11 @@ public class PrimaryView implements CoreViewable {
                 + "repeative task: (yes\no)\r");
         try {
             answer = bufReader.readLine();
+            checkStringValue(answer);
         } catch (IOException exp) {
             logger.error("Error in input word to the console", exp);
+        } catch (IllegalArgumentException exp_2) {
+            logger.error("Not String type", exp_2);
         }
         return answer;
     }
@@ -353,11 +411,10 @@ public class PrimaryView implements CoreViewable {
         DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         try {
             date = bufReader.readLine();
+            time = LocalDateTime.parse(date, timeFormatter);
+            checkTime(time);
         } catch (IOException exp) {
             logger.error("Error in input date to the console", exp);
-        }
-        try {
-            time = LocalDateTime.parse(date, timeFormatter);
         } catch (DateTimeParseException otherExp) {
             System.out.println("Please input only number, in other case it can't be "
                     + "transformed to LocalDateTime format");
@@ -376,8 +433,11 @@ public class PrimaryView implements CoreViewable {
         System.out.println("Enter the interval for your task\r");
         try {
             taskInterval = Integer.parseInt(bufReader.readLine());
-        } catch (IOException exp) {
-            logger.error("Error in input number to the console", exp);
+            checkIntValue(taskInterval);
+        } catch (IOException exp_1) {
+            logger.error("Error in input number to the console", exp_1);
+        } catch (NumberFormatException exp_2) {
+            logger.error("Wrong type of interval for task", exp_2);
         }
         return taskInterval;
     }
@@ -393,8 +453,11 @@ public class PrimaryView implements CoreViewable {
                 + "1 - active; 0 - notactive: \r");
         try {
             taskStatus = Integer.parseInt(bufReader.readLine());
-        } catch (IOException exp) {
-            logger.error("Error in input number to the console", exp);
+            checkIntValue(taskStatus);
+        } catch (IOException exp_1) {
+            logger.error("Error in input number to the console", exp_1);
+        } catch (NumberFormatException exp_2) {
+            logger.error("This integer number can't exist", exp_2);
         }
         return taskStatus;
     }
@@ -437,8 +500,11 @@ public class PrimaryView implements CoreViewable {
         int inputNumber = 0;
         try {
             inputNumber = Integer.parseInt(bufReader.readLine());
+            checkIntValue(inputNumber);
         } catch (IOException mainExp) {
             logger.error("Error with typing number or wrong format for number", mainExp);
+        } catch (NumberFormatException otherExp) {
+            logger.error("This integer number can't exist", otherExp);
         }
         return inputNumber;
     }
@@ -453,8 +519,11 @@ public class PrimaryView implements CoreViewable {
         System.out.println("Print the name of the file:\r");
         try {
             nameFile = bufReader.readLine();
+            checkStringValue(nameFile);
         } catch (IOException exp) {
             logger.error("Error in typing word to the console", exp);
+        } catch (IllegalArgumentException otherExp) {
+            logger.error("Not String type", otherExp);
         }
         return nameFile;
     }
