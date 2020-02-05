@@ -178,14 +178,16 @@ public class MajorController implements CoreController {
      * from interface.
      */
     @Override
-    public void processDeletingTask() {
+    public void processDeletingTask() throws IOException {
         view.displayListOfTasks(listOfTasks);
         int id = view.removeSomeTask();
         boolean result = removeTask(id);
         if (result) {
             logger.info("The task was removed");
+            runSecondaryMenu();
         } else {
             logger.error("You try to delete task that doesn't exist");
+            processDeletingTask();
         }
     }
 
@@ -358,7 +360,7 @@ public class MajorController implements CoreController {
         } else if (optionNumber == 2) {
             readFileWithTasks();
         } else if (optionNumber == 3) {
-            runMainApplication();
+            runSecondaryMenu();
         } else {
             System.out.println("Something wrong try again");
             processSavingWork();

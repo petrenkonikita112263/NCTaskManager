@@ -162,7 +162,7 @@ public class PrimaryView implements CoreViewable {
      * @param number - any integer number in range of Integer
      */
     private void checkIntValue(int number) {
-        if ((number == Integer.MAX_VALUE) || (number <= 0)) {
+        if ((number == Integer.MAX_VALUE) || (number < 0)) {
             logger.error("Task can't exist with this value of Integer");
         }
     }
