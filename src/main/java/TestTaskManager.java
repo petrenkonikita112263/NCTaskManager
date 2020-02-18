@@ -1,5 +1,4 @@
 import controller.MajorController;
-import view.PrimaryView;
 
 import java.io.IOException;
 
@@ -18,13 +17,13 @@ public class TestTaskManager {
     public static void main(String[] args) throws IOException {
 
 //        create view instance
-        PrimaryView pv = new PrimaryView();
+//        PrimaryView pv = new PrimaryView();
 
 //        create controller instance
         MajorController mc = new MajorController();
 
 //        run main menu from controller
-        pv.displayInfo();
+//        pv.displayInfo();
         mc.runMainApplication();
     }
 

@@ -77,6 +77,7 @@ public class MajorController implements CoreController {
      */
     @Override
     public void runMainApplication() throws IOException {
+        view.displayInfo();
         logger.info("The main menu was called");
         int defaultNumber_1 = view.getUserInput();
         logger.info("Console was called");

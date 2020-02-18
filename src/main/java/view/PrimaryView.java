@@ -347,8 +347,6 @@ public class PrimaryView implements CoreViewable {
         } catch (IOException exp) {
             logger.error("Error in input date to the console", exp);
         } catch (DateTimeParseException otherExp) {
-            System.out.println("Please input only number, in other case it can't be "
-                    + "transformed to LocalDateTime format");
             logger.error("Error in formatting input date to LocalDateTime", otherExp);
         }
         return time;
