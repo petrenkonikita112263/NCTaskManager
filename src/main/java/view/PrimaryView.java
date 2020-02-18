@@ -351,8 +351,8 @@ public class PrimaryView implements CoreViewable {
      */
     public String changeTypeOfTask() {
         String answer = null;
-        System.out.println("You want to change repeative or no "
-                + "repeative task: (yes\no)\r");
+        System.out.println("Do you want to change repetitive task (start, end, interval) = 'yes'"
+                + " or you want to change non-repetitive task(only time) = 'no': \r");
         try {
             answer = bufReader.readLine();
             checkStringValue(answer);
