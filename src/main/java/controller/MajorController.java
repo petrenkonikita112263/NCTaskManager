@@ -152,14 +152,14 @@ public class MajorController implements CoreController {
         String title = view.addTaskTitle();
         String wordAnswer = view.addTypeOfTask();
         if (wordAnswer.toLowerCase().equals("no")) {
-            LocalDateTime time = view.addTimeForTask();
+            LocalDateTime time = view.inputDateTime();
             Task someTask = new Task(id, title, time);
             listOfTasks.add(someTask);
             logger.info("The non-repetead task was added");
             runSecondaryMenu();
         } else if (wordAnswer.toLowerCase().equals("yes")) {
-            LocalDateTime start = view.addStartTimeForTask();
-            LocalDateTime end = view.addEndTimeForTask();
+            LocalDateTime start = view.inputDateTime();
+            LocalDateTime end = view.inputDateTime();
             int interval = view.addInterval();
             Task someTask = new Task(id, title, start, end, interval);
             listOfTasks.add(someTask);
@@ -214,21 +214,21 @@ public class MajorController implements CoreController {
                 case 3:
                     String answer = view.changeTypeOfTask();
                     if (answer.toLowerCase().equals("yes")) {
-                        LocalDateTime startTime = view.changeStartTimeOfTask();
-                        LocalDateTime endTime = view.changeEndTimeOfTask();
+                        LocalDateTime startTime = view.inputDateTime();
+                        LocalDateTime endTime = view.inputDateTime();
                         int taskInterval = view.changeIntervalOfTask();
                         smth.setTime(startTime, endTime, taskInterval);
                         logger.info("The repeated time and interval were changed");
                         runSecondaryMenu();
                     } else if (answer.toLowerCase().equals("no")) {
-                        LocalDateTime taskTime = view.changeTimeOfTask();
+                        LocalDateTime taskTime = view.inputDateTime();
                         smth.setTime(taskTime);
                         logger.info("The time of the task was changed");
                         runSecondaryMenu();
                     } else {
                         logger.error("Wrong input, make sure "
                                 + "that you write yes or no!!!");
-                        view.changeTimeOfTask();
+                        view.inputDateTime();
                     }
                 case 4:
                     int taskStatus = view.changeStatusOfTask();

@@ -217,18 +217,6 @@ public class PrimaryView implements CoreViewable {
     }
 
     /**
-     * Method that allow user to input date for task.
-     *
-     * @return - input date
-     */
-    public LocalDateTime addTimeForTask() {
-        System.out.println("Enter the date "
-                + "or just copy this (2020-01-29 19:46) without braces:"
-                + " and change numbers \r");
-        return inputDateTime();
-    }
-
-    /**
      * Private additional method that validate LocalDateTime
      * from user input.
      *
@@ -239,30 +227,6 @@ public class PrimaryView implements CoreViewable {
             logger.error("Task can't exist with this time");
             inputDateTime();
         }
-    }
-
-    /**
-     * Method that allow user to input start date for task.
-     *
-     * @return - input start date
-     */
-    public LocalDateTime addStartTimeForTask() {
-        System.out.println("First please write start time for "
-                + "or just copy this (2020-01-29 19:46) without braces:"
-                + " and change numbers \r");
-        return inputDateTime();
-    }
-
-    /**
-     * Method that allow user to input end date for task.
-     *
-     * @return - input end date
-     */
-    public LocalDateTime addEndTimeForTask() {
-        System.out.println("Secondly, type the end time for "
-                + "or just copy this (2020-01-29 19:46) without braces:"
-                + " and change numbers \r");
-        return inputDateTime();
     }
 
     /**
@@ -365,47 +329,14 @@ public class PrimaryView implements CoreViewable {
     }
 
     /**
-     * Method that ask user to change date of the task.
-     *
-     * @return - new date
-     */
-    public LocalDateTime changeTimeOfTask() {
-        System.out.println("Enter the date "
-                + "or just copy this (2020-01-29 19:46) without braces:"
-                + " and change numbers \r");
-        return inputDateTime();
-    }
-
-    /**
-     * Method that ask user to change start date of the task.
-     *
-     * @return - new start date
-     */
-    public LocalDateTime changeStartTimeOfTask() {
-        System.out.println("First please write start time for "
-                + "or just copy this (2020-01-29 19:46) without braces:"
-                + " and change numbers \r");
-        return inputDateTime();
-    }
-
-    /**
-     * Method that ask user to change end date of the task.
-     *
-     * @return - new end date
-     */
-    public LocalDateTime changeEndTimeOfTask() {
-        System.out.println("Secondly, type the end time for "
-                + "this task "
-                + "like start time: \r");
-        return inputDateTime();
-    }
-
-    /**
-     * Private additional method that allow to input date.
+     * Method that allow to input date|change date.
      *
      * @return - LocalDateTime that user inputs
      */
-    private LocalDateTime inputDateTime() {
+    public LocalDateTime inputDateTime() {
+        System.out.println("Please enter the time for task like in braces "
+                + "or just copy this (2020-02-18 20:14) without braces:"
+                + " and change numbers \r");
         String date = "";
         LocalDateTime time = null;
         DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
@@ -469,7 +400,7 @@ public class PrimaryView implements CoreViewable {
      */
     public LocalDateTime addTimeLimit_1() {
         System.out.println("Enter the date from which your calendar starts "
-                + "or just copy this (2020-01-29 19:46) without braces:"
+                + "or just copy this (2020-02-18 20:14) without braces:"
                 + " and change numbers \r");
         return inputDateTime();
     }
@@ -483,7 +414,7 @@ public class PrimaryView implements CoreViewable {
         System.out.println("Set the end time period for which you want "
                 + "to get the calendar.\n"
                 + "Enter the date "
-                + "or just copy this (2020-01-29 19:46) without braces:"
+                + "or just copy this (2022-02-18 20:14) without braces:"
                 + " and change numbers \r");
         return inputDateTime();
     }
