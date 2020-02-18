@@ -21,10 +21,10 @@ import java.util.Objects;
  */
 public class Task implements Cloneable, Serializable {
 
-    /**
-     * id - number of the task.
-     */
-    private int id;
+//    /**
+//     * id - number of the task.
+//     */
+//    private int id;
 
     /**
      * title - name of the task.
@@ -65,18 +65,18 @@ public class Task implements Cloneable, Serializable {
      * DVC 1st constructor with default title and time.
      */
     public Task() {
-        this(0, "Nothing", LocalDateTime.now());
+        this("Nothing", LocalDateTime.now());
     }
 
     /**
      * EVC 2nd constructor for nonrepeative task.
      *
-     * @param id    - number of the task
+//     * @param id    - number of the task
      * @param title - title of task
      * @param time  - time for this task
      */
-    public Task(int id, String title, LocalDateTime time) {
-        this.id = id;
+    public Task(String title, LocalDateTime time) {
+//        this.id = id;
         this.title = title;
         if (time == null) {
             throw new IllegalArgumentException("Time can't be negative");
@@ -87,15 +87,15 @@ public class Task implements Cloneable, Serializable {
         /**
      * EVC 3th constructor for repeative task.
      *
-     * @param id       - number of the task
+//     * @param id       - number of the task
      * @param title    - title of task
      * @param start    - start time for this task
      * @param end      - end time for task
      * @param interval - interval of time (from start to end)
      */
-    public Task(int id, String title, LocalDateTime start, LocalDateTime end,
+    public Task(String title, LocalDateTime start, LocalDateTime end,
                 int interval) {
-        this.id = id;
+//        this.id = id;
         this.title = title;
         if (start == null) {
             throw new IllegalArgumentException("Start time can't be negative");
@@ -168,19 +168,19 @@ public class Task implements Cloneable, Serializable {
         this.repeated = repeated;
     }
 
-    /**
-     * Getter for get id of the task
-     *
-     * @return int - return the number
-     */
-    public int getId() {
-        return id;
-    }
-
-
-    public void setId(int id) {
-        this.id = id;
-    }
+//    /**
+//     * Getter for get id of the task
+//     *
+//     * @return int - return the number
+//     */
+//    public int getId() {
+//        return id;
+//    }
+//
+//
+//    public void setId(int id) {
+//        this.id = id;
+//    }
 
     /**
      * Getter time for the nonrepeative task.
@@ -307,18 +307,18 @@ public class Task implements Cloneable, Serializable {
     public String toString() {
         if (!this.repeated) {
             if (!this.active) {
-                return "Id: " + id + "[The nonrepeative task " + "(" + title + ")\n"
+                return "[The nonrepeative task " + "(" + title + ")\n"
                         + "was completed at " + time + " time]\n";
             } else {
-                return "Id: " + id +  "[The nonrepeative task " + "(" + title + ")\n"
+                return "[The nonrepeative task " + "(" + title + ")\n"
                         + "is active and gonna end at " + time + " time]\n";
             }
         } else if (!this.active) {
-            return "Id: " + id +  "[The repeative task " + "(" + title + ")\n"
+            return "[The repeative task " + "(" + title + ")\n"
                     + "was started at " + start + " and ended at " + end
                     + " with interval = " + interval + " in minutes" + "]\n";
         } else {
-            return "Id: " + id +  "[The repeative task " + "(" + title + ")\n"
+            return "[The repeative task " + "(" + title + ")\n"
                     + "is active, it starts at " + start
                     + " and gonna end at " + end
                     + " with interval = " + interval + " in minutes" + "]\n";

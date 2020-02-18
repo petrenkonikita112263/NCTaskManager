@@ -82,10 +82,10 @@ public class PrimaryView implements CoreViewable {
      */
     @Override
     public void changeOptions() {
-        System.out.println("\t1 - Change id (number) of your task");
-        System.out.println("\t2 - Change title of your task");
-        System.out.println("\t3 - Change time and interval of your task");
-        System.out.println("\t4- Set your task active or diactive it");
+//        System.out.println("\t1 - Change id (number) of your task");
+        System.out.println("\t1 - Change title of your task");
+        System.out.println("\t2 - Change time and interval of your task");
+        System.out.println("\t3- Set your task active or diactive it");
     }
 
     /**
@@ -101,24 +101,24 @@ public class PrimaryView implements CoreViewable {
         return Integer.parseInt(bufReader.readLine());
     }
 
-    /**
-     * Method that allow user to input id for task.
-     *
-     * @return - id of it
-     */
-    public int addTaskIndex() {
-        int id = 0;
-        System.out.println("Enter the id of the task: \r");
-        try {
-            id = Integer.parseInt(bufReader.readLine());
-            checkIntValue(id);
-        } catch (IOException exp_1) {
-            logger.error("Error in input number to the console", exp_1);
-        } catch (NumberFormatException exp_2) {
-            logger.error("Wrong type of id for task", exp_2);
-        }
-        return id;
-    }
+//    /**
+//     * Method that allow user to input id for task.
+//     *
+//     * @return - id of it
+//     */
+//    public int addTaskIndex() {
+//        int id = 0;
+//        System.out.println("Enter the id of the task: \r");
+//        try {
+//            id = Integer.parseInt(bufReader.readLine());
+//            checkIntValue(id);
+//        } catch (IOException exp_1) {
+//            logger.error("Error in input number to the console", exp_1);
+//        } catch (NumberFormatException exp_2) {
+//            logger.error("Wrong type of id for task", exp_2);
+//        }
+//        return id;
+//    }
 
     /**
      * Private additional method that validate int number
@@ -234,24 +234,24 @@ public class PrimaryView implements CoreViewable {
         return id;
     }
 
-    /**
-     * Method that ask user to change id of the task.
-     *
-     * @return - new id
-     */
-    public int changeIdOfTask() {
-        int taskId = 0;
-        System.out.println("Enter the id of the task: \r");
-        try {
-            taskId = Integer.parseInt(bufReader.readLine());
-            checkIntValue(taskId);
-        } catch (IOException exp_1) {
-            logger.error("Error in input number to the console", exp_1);
-        } catch (NumberFormatException exp_2) {
-            logger.error("Wrong type of id for task", exp_2);
-        }
-        return taskId;
-    }
+//    /**
+//     * Method that ask user to change id of the task.
+//     *
+//     * @return - new id
+//     */
+//    public int changeIdOfTask() {
+//        int taskId = 0;
+//        System.out.println("Enter the id of the task: \r");
+//        try {
+//            taskId = Integer.parseInt(bufReader.readLine());
+//            checkIntValue(taskId);
+//        } catch (IOException exp_1) {
+//            logger.error("Error in input number to the console", exp_1);
+//        } catch (NumberFormatException exp_2) {
+//            logger.error("Wrong type of id for task", exp_2);
+//        }
+//        return taskId;
+//    }
 
     /**
      * Method that ask user to change title of the task.

@@ -151,12 +151,11 @@ public class MajorController implements CoreController {
      */
     @Override
     public void processAddingTask() throws IOException {
-        int id = view.addTaskIndex();
         String title = view.addTaskTitle();
         String wordAnswer = view.addTypeOfTask();
         if (wordAnswer.toLowerCase().equals("no")) {
             LocalDateTime time = view.inputDateTime();
-            Task someTask = new Task(id, title, time);
+            Task someTask = new Task(title, time);
             listOfTasks.add(someTask);
             logger.info("The non-repetead task was added");
             runSecondaryMenu();
@@ -164,7 +163,7 @@ public class MajorController implements CoreController {
             LocalDateTime start = view.inputDateTime();
             LocalDateTime end = view.inputDateTime();
             int interval = view.addInterval();
-            Task someTask = new Task(id, title, start, end, interval);
+            Task someTask = new Task(title, start, end, interval);
             listOfTasks.add(someTask);
             logger.info("The repetead task was added");
             runSecondaryMenu();
@@ -202,19 +201,19 @@ public class MajorController implements CoreController {
         logger.info("The console was called");
         for (Task smth : listOfTasks) {
             switch (optionValue) {
+//                case 1:
+//                    int taskId = view.changeIdOfTask();
+//                    smth.setId(taskId);
+//                    logger.info("The id of the task was changed");
+//                    runSecondaryMenu();
+//                    break;
                 case 1:
-                    int taskId = view.changeIdOfTask();
-                    smth.setId(taskId);
-                    logger.info("The id of the task was changed");
-                    runSecondaryMenu();
-                    break;
-                case 2:
                     String taskName = view.changeTitleOfTask();
                     smth.setTitle(taskName);
                     logger.info("The title of the task was changed");
                     runSecondaryMenu();
                     break;
-                case 3:
+                case 2:
                     String answer = view.changeTypeOfTask();
                     if (answer.toLowerCase().equals("yes")) {
                         LocalDateTime startTime = view.inputDateTime();
@@ -233,7 +232,7 @@ public class MajorController implements CoreController {
                                 + "that you write yes or no!!!");
                         view.inputDateTime();
                     }
-                case 4:
+                case 3:
                     int taskStatus = view.changeStatusOfTask();
                     if (taskStatus == 1) {
                         smth.setActive(true);
@@ -441,13 +440,13 @@ public class MajorController implements CoreController {
         for (int i = 0; i < taskList.size(); i++) {
             Task t = taskList.getTask(i);
             if (t.isRepeated()) {
-                System.out.println("Id : " + t.getId() + "\tTitle : " + t.getTitle()
+                System.out.println("\tTitle : " + t.getTitle()
                         + "\nTask starts at " + t.getStartTime()
                         + "\nTask ends at " + t.getEndTime()
                         + "\nthe interval between start and end time is "
                         + t.getRepeatInterval());
             } else {
-                System.out.println("Id : " + t.getId() + "\tTitle : " + t.getTitle()
+                System.out.println("\tTitle : " + t.getTitle()
                         + "\nTask starts at " + t.getStartTime()
                         + "\nTask ends at " + t.getEndTime());
             }
