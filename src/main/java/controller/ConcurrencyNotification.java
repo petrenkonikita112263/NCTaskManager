@@ -49,6 +49,11 @@ public class ConcurrencyNotification extends Thread {
     private boolean notify;
 
     /**
+     *
+     */
+    private Task someTask;
+
+    /**
      * EVC constructor.
      *
      * @param listOfTasks    - array list
@@ -76,8 +81,8 @@ public class ConcurrencyNotification extends Thread {
             Iterator<Task> helper = arrayTaskList.iterator();
             while (helper.hasNext()) {
                 Task task = helper.next();
-                NotificationView notifyThread = new NotificationView(task);
-                notifyThread.displayMessageNotification();
+                NotificationView notifyThread = new NotificationView();
+                notifyThread.displayMessageNotification(task);
                 notify = true;
             }
             try {

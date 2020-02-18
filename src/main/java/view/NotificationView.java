@@ -9,27 +9,27 @@ import model.Task;
  */
 public class NotificationView {
 
-    /**
-     *
-     */
-    private Task someTask;
-
-    /**
-     * EVC constructor.
-     *
-     * @param someTask -
-     */
-    public NotificationView(Task someTask) {
-        this.someTask = someTask;
-    }
+//    /**
+//     *
+//     */
+//    private Task someTask;
+//
+//    /**
+//     * EVC constructor.
+//     *
+//     * @param someTask -
+//     */
+//    public NotificationView(Task someTask) {
+//        this.someTask = someTask;
+//    }
 
     /**
      * Method that print message of upcoming task.
      */
-    public void displayMessageNotification() {
+    public void displayMessageNotification(Task task) {
         try {
             System.out.println("Hi, you've upcoming event,"
-                    + " don't forget about it " + someTask.getTitle());
+                    + " don't forget about it " + task.getTitle());
         } catch (Exception mainExp) {
             mainExp.printStackTrace();
         }

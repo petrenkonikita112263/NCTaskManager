@@ -123,10 +123,12 @@ public class MajorController implements CoreController {
                 processDeletingTask();
                 break;
             case 4:
-                showListOfTask();
+                displayListOfTasks(listOfTasks);
+//                showListOfTask();
                 break;
             case 5:
-                showTaskDetails();
+                displayDetailAboutTask(listOfTasks);
+//                showTaskDetails();
                 break;
             case 6:
                 createCalendar();
@@ -180,7 +182,7 @@ public class MajorController implements CoreController {
      */
     @Override
     public void processDeletingTask() throws IOException {
-        view.displayListOfTasks(listOfTasks);
+        displayListOfTasks(listOfTasks);
         int id = view.removeSomeTask();
         listOfTasks.removeElement(id);
     }
@@ -295,25 +297,25 @@ public class MajorController implements CoreController {
         runSecondaryMenu();
     }
 
-    /**
-     * Implementing (override) showTaskDetails() method
-     * from interface.
-     */
-    @Override
-    public void showTaskDetails() throws IOException {
-        view.displayDetailAboutTask(listOfTasks);
-        runSecondaryMenu();
-    }
-
-    /**
-     * Implementing (override) showListOfTask() method
-     * from interface.
-     */
-    @Override
-    public void showListOfTask() throws IOException {
-        view.displayListOfTasks(listOfTasks);
-        runSecondaryMenu();
-    }
+//    /**
+//     * Implementing (override) showTaskDetails() method
+//     * from interface.
+//     */
+//    @Override
+//    public void showTaskDetails() throws IOException {
+//        view.displayDetailAboutTask(listOfTasks);
+//        runSecondaryMenu();
+//    }
+//
+//    /**
+//     * Implementing (override) showListOfTask() method
+//     * from interface.
+//     */
+//    @Override
+//    public void showListOfTask() throws IOException {
+//        view.displayListOfTasks(listOfTasks);
+//        runSecondaryMenu();
+//    }
 
     /**
      * Implementing (override) configApplication() method
@@ -417,5 +419,38 @@ public class MajorController implements CoreController {
     @Override
     public void continueWork() throws IOException {
         processCreatingFile();
+    }
+
+    /**
+     * Implementation (override) displayListOfTasks() method from
+     * interface.
+     */
+    @Override
+    public void displayListOfTasks(ArrayTaskList taskList) {
+        for (Task someTask : taskList) {
+            System.out.println(someTask);
+        }
+    }
+
+    /**
+     * Implementation (override) displayDetailAboutTask() method from
+     * interface.
+     */
+    @Override
+    public void displayDetailAboutTask(ArrayTaskList taskList) {
+        for (int i = 0; i < taskList.size(); i++) {
+            Task t = taskList.getTask(i);
+            if (t.isRepeated()) {
+                System.out.println("Id : " + t.getId() + "\tTitle : " + t.getTitle()
+                        + "\nTask starts at " + t.getStartTime()
+                        + "\nTask ends at " + t.getEndTime()
+                        + "\nthe interval between start and end time is "
+                        + t.getRepeatInterval());
+            } else {
+                System.out.println("Id : " + t.getId() + "\tTitle : " + t.getTitle()
+                        + "\nTask starts at " + t.getStartTime()
+                        + "\nTask ends at " + t.getEndTime());
+            }
+        }
     }
 }

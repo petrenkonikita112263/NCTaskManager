@@ -1,6 +1,5 @@
 package view;
 
-import model.ArrayTaskList;
 import model.Task;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -74,40 +73,6 @@ public class PrimaryView implements CoreViewable {
                 System.out.println(task.getTitle());
             }
             System.out.println(content.getKey());
-        }
-    }
-
-    /**
-     * Implementation (override) displayListOfTasks() method from
-     * interface.
-     */
-    @Override
-    public void displayListOfTasks(ArrayTaskList taskList) {
-        for (Task someTask : taskList) {
-            System.out.println(someTask);
-        }
-    }
-
-    /**
-     * Implementation (override) displatDetailAboutTask() method from
-     * interface.
-     */
-    @Override
-    public void displayDetailAboutTask(ArrayTaskList taskList) {
-        System.out.println("--------ALL YOUR TASKS--------");
-        for (int i = 0; i < taskList.size(); i++) {
-            Task t = taskList.getTask(i);
-            if (t.isRepeated()) {
-                System.out.println("Id : " + t.getId() + "\tTitle : " + t.getTitle()
-                        + "\nTask starts at " + t.getStartTime()
-                        + "\nTask ends at " + t.getEndTime()
-                        + "\nthe interval between start and end time is "
-                        + t.getRepeatInterval());
-            } else {
-                System.out.println("Id : " + t.getId() + "\tTitle : " + t.getTitle()
-                        + "\nTask starts at " + t.getStartTime()
-                        + "\nTask ends at " + t.getEndTime());
-            }
         }
     }
 

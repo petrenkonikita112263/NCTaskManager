@@ -1,5 +1,7 @@
 package controller;
 
+import model.ArrayTaskList;
+
 import java.io.IOException;
 
 /**
@@ -45,15 +47,15 @@ public interface CoreController {
      */
     void createCalendar() throws IOException;
 
-    /**
-     * Method that allow to see chosen task.
-     */
-    void showTaskDetails() throws IOException;
-
-    /**
-     * Method that print all tasks.
-     */
-    void showListOfTask() throws IOException;
+//    /**
+//     * Method that allow to see chosen task.
+//     */
+//    void showTaskDetails() throws IOException;
+//
+//    /**
+//     * Method that print all tasks.
+//     */
+//    void showListOfTask() throws IOException;
 
     /**
      * Method that allow to change all information about task
@@ -72,4 +74,17 @@ public interface CoreController {
      *                     writing information
      */
     void continueWork() throws IOException;
+
+    /**
+     * Method that prints the content of ArrayList
+     *
+     * @param taskList - ArrayList of tasks
+     */
+    void displayListOfTasks(ArrayTaskList taskList);
+
+    /**
+     * Method that prints complete information on every task
+     * (it's title, time, interval, etc.)
+     */
+    void displayDetailAboutTask(ArrayTaskList taskList);
 }
