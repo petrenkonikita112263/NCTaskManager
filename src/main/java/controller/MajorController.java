@@ -181,36 +181,7 @@ public class MajorController implements CoreController {
     public void processDeletingTask() throws IOException {
         view.displayListOfTasks(listOfTasks);
         int id = view.removeSomeTask();
-        boolean result = removeTask(id);
-        if (result) {
-            logger.info("The task was removed");
-            runSecondaryMenu();
-        } else {
-            logger.error("You try to delete task that doesn't exist");
-            processDeletingTask();
-        }
-    }
-
-    /**
-     * Private method for delete task by id.
-     *
-     * @param id - serial number of the task
-     * @return - true if task was deleted, elsewhere get false
-     */
-    private boolean removeTask(int id) {
-        int index = -1;
-        for (int i = 0, n = listOfTasks.size(); i < n; i++) {
-            if (listOfTasks.getTask(i).getId() == id) {
-                index = i;
-                break;
-            }
-        }
-        if (index != -1) {
-            listOfTasks.removeElement(index);
-            return true;
-        } else {
-            return false;
-        }
+        listOfTasks.removeElement(id);
     }
 
     /**
