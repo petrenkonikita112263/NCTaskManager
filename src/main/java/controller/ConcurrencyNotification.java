@@ -8,7 +8,8 @@ import org.apache.logging.log4j.Logger;
 import view.NotificationView;
 
 import java.time.LocalDateTime;
-import java.util.Iterator;
+import java.util.Set;
+import java.util.SortedMap;
 
 /**
  * Additional functionality of application. This class
@@ -51,7 +52,7 @@ public class ConcurrencyNotification extends Thread {
     /**
      *
      */
-    private Task someTask;
+    private NotificationView notificationView;
 
     /**
      * EVC constructor.
@@ -60,7 +61,8 @@ public class ConcurrencyNotification extends Thread {
      * @param mainController - instance of controller
      */
     public ConcurrencyNotification(ArrayTaskList listOfTasks,
-                                   MajorController mainController) {
+                                   MajorController mainController
+                                   ) {
         this.listOfTasks = listOfTasks;
         this.mainController = mainController;
     }
@@ -71,20 +73,31 @@ public class ConcurrencyNotification extends Thread {
     @Override
     public void run() {
         while (true) {
-            notify = false;
+//            notify = false;
             LocalDateTime startNotify = (LocalDateTime.now());
             LocalDateTime endNotify = LocalDateTime.now()
                     .plusSeconds(DEFAULT_TIME);
-            ArrayTaskList arrayTaskList = (ArrayTaskList) Tasks
-                    .incoming(listOfTasks,
-                            startNotify, endNotify);
-            Iterator<Task> helper = arrayTaskList.iterator();
-            while (helper.hasNext()) {
-                Task task = helper.next();
-                NotificationView notifyThread = new NotificationView();
-                notifyThread.displayMessageNotification(task);
-                notify = true;
+            SortedMap<LocalDateTime, Set<Task>>
+            calendarContent = Tasks.calendar(listOfTasks, startNotify, endNotify);
+            for(SortedMap.Entry<LocalDateTime, Set<Task>> content : calendarContent.entrySet()) {
+                for (Task someTask : content.getValue()) {
+                    String taskTitle = someTask.getTitle();
+                    if (content.getKey().isEqual(startNotify)) {
+                        notificationView.displayMessageNotification(content.getKey(), taskTitle);
+                    }
+                }
             }
+
+//            ArrayTaskList arrayTaskList = (ArrayTaskList) Tasks
+//                    .incoming(listOfTasks,
+//                            startNotify, endNotify);
+//            Iterator<Task> helper = arrayTaskList.iterator();
+//            while (helper.hasNext()) {
+//                Task task = helper.next();
+//                NotificationView notifyThread = new NotificationView();
+//                notifyThread.displayMessageNotification(task);
+//                notify = true;
+//            }
             try {
                 sleep(SLEEP_THREAD);
                 if (notify) {

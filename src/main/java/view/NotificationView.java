@@ -1,6 +1,6 @@
 package view;
 
-import model.Task;
+import java.time.LocalDateTime;
 
 /**
  * Additonal view class for thread-notification
@@ -26,10 +26,10 @@ public class NotificationView {
     /**
      * Method that print message of upcoming task.
      */
-    public void displayMessageNotification(Task task) {
+    public void displayMessageNotification(LocalDateTime time, String title) {
         try {
-            System.out.println("Hi, you've upcoming event,"
-                    + " don't forget about it " + task.getTitle());
+            System.out.println("Hi, you've upcoming event in "
+                    + time + " don't forget about it " + title);
         } catch (Exception mainExp) {
             mainExp.printStackTrace();
         }
