@@ -316,12 +316,12 @@ public class Task implements Cloneable, Serializable {
         } else if (!this.active) {
             return "Id: " + id +  "[The repeative task " + "(" + title + ")\n"
                     + "was started at " + start + " and ended at " + end
-                    + " with interval = " + interval + "]\n";
+                    + " with interval = " + interval + " in minutes" + "]\n";
         } else {
             return "Id: " + id +  "[The repeative task " + "(" + title + ")\n"
                     + "is active, it starts at " + start
                     + " and gonna end at " + end
-                    + " with interval = " + interval + "]\n";
+                    + " with interval = " + interval + " in minutes" + "]\n";
         }
     }
 

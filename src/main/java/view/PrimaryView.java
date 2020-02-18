@@ -236,7 +236,7 @@ public class PrimaryView implements CoreViewable {
      */
     public int addInterval() {
         int taskInterval = 0;
-        System.out.println("At last enter the interval "
+        System.out.println("At last enter the interval in minutes "
                 + "for this task (integer value): \r");
         try {
             taskInterval = Integer.parseInt(bufReader.readLine());
@@ -361,7 +361,7 @@ public class PrimaryView implements CoreViewable {
      */
     public int changeIntervalOfTask() {
         int taskInterval = 0;
-        System.out.println("Enter the interval for your task\r");
+        System.out.println("Enter the new interval in minutes for your task\r");
         try {
             taskInterval = Integer.parseInt(bufReader.readLine());
             checkIntValue(taskInterval);
