@@ -83,6 +83,7 @@ public class Task implements Cloneable, Serializable {
             throw new IllegalArgumentException("Time can't be negative");
         }
         this.time = time;
+        active = true;
     }
 
         /**
@@ -112,7 +113,7 @@ public class Task implements Cloneable, Serializable {
         }
         this.interval = interval;
         repeated = true;
-        active = false;
+        active = true;
     }
 
     /**
@@ -310,20 +311,20 @@ public class Task implements Cloneable, Serializable {
         if (!this.repeated) {
             if (!this.active) {
                 return "[The nonrepeative task " + "(" + title + ")\n"
-                        + "was completed at " + time.format(formatter) + " time]";
+                        + "with time " + time.format(formatter) + " .Is it active? " + isActive() + "]";
             } else {
                 return "[The nonrepeative task " + "(" + title + ")\n"
-                        + "is active and gonna end at " + time.format(formatter) + " time]";
+                        + "with time " + time.format(formatter) + " .Is it active? " + isActive() + "]";
             }
         } else if (!this.active) {
             return "[The repeative task " + "(" + title + ")\n"
-                    + "was started at " + start.format(formatter) + " and ended at " + end.format(formatter)
-                    + " with interval = " + interval + " in minutes" + "]";
+                    + "starts at " + start.format(formatter) + " and ends at " + end.format(formatter)
+                    + " with interval = " + interval + " in minutes" + " .Is it active? " + isActive() + "]";
         } else {
             return "[The repeative task " + "(" + title + ")\n"
-                    + "is active, it starts at " + start.format(formatter)
+                    + "it starts at " + start.format(formatter)
                     + " and gonna end at " + end.format(formatter)
-                    + " with interval = " + interval + " in minutes" + "]";
+                    + " with interval = " + interval + " in minutes" + " .Is it active? " + isActive() + "]";
         }
     }
 
