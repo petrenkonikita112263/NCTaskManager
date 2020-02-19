@@ -429,8 +429,17 @@ public class MajorController implements CoreController {
      */
     @Override
     public void displayListOfTasks(ArrayTaskList taskList) {
-        for (Task someTask : taskList) {
-            System.out.println(someTask);
+        if (taskList.size() == 0) {
+            System.out.println("The list is empty, firstly add some tasks in it");
+            try {
+                runSecondaryMenu();
+            } catch (IOException e) {
+                logger.error("Can't access to additional menu of application ", e);
+            }
+        } else {
+            for (Task someTask : taskList) {
+                System.out.println(someTask);
+            }
         }
     }
 
@@ -440,18 +449,27 @@ public class MajorController implements CoreController {
      */
     @Override
     public void displayDetailAboutTask(ArrayTaskList taskList) {
-        for (int i = 0; i < taskList.size(); i++) {
-            Task t = taskList.getTask(i);
-            if (t.isRepeated()) {
-                System.out.println("\tTitle : " + t.getTitle()
-                        + "\nTask starts at " + t.getStartTime()
-                        + "\nTask ends at " + t.getEndTime()
-                        + "\nthe interval between start and end time is "
-                        + t.getRepeatInterval());
-            } else {
-                System.out.println("\tTitle : " + t.getTitle()
-                        + "\nTask starts at " + t.getStartTime()
-                        + "\nTask ends at " + t.getEndTime());
+        if (taskList.size() == 0) {
+            System.out.println("The list is empty, firstly add some tasks in it");
+            try {
+                runSecondaryMenu();
+            } catch (IOException e) {
+                logger.error("Can't access to additional menu of application ", e);
+            }
+        } else {
+            for (int i = 0; i < taskList.size(); i++) {
+                Task t = taskList.getTask(i);
+                if (t.isRepeated()) {
+                    System.out.println("\tTitle : " + t.getTitle()
+                            + "\nTask starts at " + t.getStartTime()
+                            + "\nTask ends at " + t.getEndTime()
+                            + "\nthe interval between start and end time is "
+                            + t.getRepeatInterval());
+                } else {
+                    System.out.println("\tTitle : " + t.getTitle()
+                            + "\nTask starts at " + t.getStartTime()
+                            + "\nTask ends at " + t.getEndTime());
+                }
             }
         }
     }
