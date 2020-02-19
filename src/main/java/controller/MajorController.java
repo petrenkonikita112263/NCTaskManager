@@ -171,7 +171,7 @@ public class MajorController implements CoreController {
         } else {
             logger.error("Wrong input, make "
                     + "sure that you enter the word yes or no!!");
-            view.selectTheTypeForTask();
+            processAddingTask();
         }
     }
 
@@ -247,7 +247,7 @@ public class MajorController implements CoreController {
                     } else {
                         logger.error("Wrong input, make "
                                 + "sure that you enter number 1 or 0!!");
-                        view.changeStatusOfTask();
+                        processChangingTask();
                     }
                 default:
 //                    System.out.println("Wrong input by user!!!!" + new AssertionError());

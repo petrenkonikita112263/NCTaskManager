@@ -374,7 +374,28 @@ public class PrimaryView implements CoreViewable {
         System.out.println("Enter the date from which your calendar starts "
                 + "or just copy this (2020-02-18 20:14) without braces:"
                 + " and change numbers \r");
-        return inputDateTime();
+        String date = "";
+        LocalDateTime time = null;
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        try {
+            date = bufReader.readLine();
+            time = LocalDateTime.parse(date, timeFormatter);
+            checkCalendarDate_1(time);
+        } catch (IOException exp) {
+            logger.error("Error in input date to the console", exp);
+            addTimeLimit_1();
+        } catch (DateTimeParseException otherExp) {
+            logger.error("Error in formatting input date to LocalDateTime", otherExp);
+            addTimeLimit_1();
+        }
+        return time;
+    }
+
+    private void checkCalendarDate_1(LocalDateTime time) {
+        if ((time.isBefore(LocalDateTime.now())) || (time == null)) {
+            logger.error("Calendar can't exist with this time");
+            addTimeLimit_1();
+        }
     }
 
     /**
@@ -386,7 +407,28 @@ public class PrimaryView implements CoreViewable {
         System.out.println("Set the end time period for which you want "
                 + "to get the calendar.\n"
                 + "or just copy this (2022-02-18 20:14) without braces:\r");
-        return inputDateTime();
+        String date = "";
+        LocalDateTime time = null;
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        try {
+            date = bufReader.readLine();
+            time = LocalDateTime.parse(date, timeFormatter);
+            checkCalendarDate_2(time);
+        } catch (IOException exp) {
+            logger.error("Error in input date to the console", exp);
+            addTimeLimit_2();
+        } catch (DateTimeParseException otherExp) {
+            logger.error("Error in formatting input date to LocalDateTime", otherExp);
+            addTimeLimit_2();
+        }
+        return time;
+    }
+
+    private void checkCalendarDate_2(LocalDateTime time) {
+        if ((time.isBefore(LocalDateTime.now())) || (time == null)) {
+            logger.error("Calendar can't exist with this time");
+            addTimeLimit_2();
+        }
     }
 
     /**
