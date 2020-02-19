@@ -94,6 +94,7 @@ public class MajorController implements CoreController {
                 runSecondaryMenu();
                 break;
             case 4:
+                view.closeInput();
                 System.exit(0);
             default:
 //                System.out.println("Wrong input by user!!!!" + new AssertionError());
@@ -137,6 +138,7 @@ public class MajorController implements CoreController {
                 processSavingWork();
                 break;
             case 8:
+                view.closeInput();
                 System.exit(0);
             default:
 //                System.out.println("Wrong input by user!!!!" + new AssertionError());
@@ -581,11 +583,11 @@ public class MajorController implements CoreController {
         for (Task someTask : taskList) {
             System.out.println(someTask);
         }
-        try {
-            runSecondaryMenu();
-        } catch (IOException e) {
-            logger.error("Can't access to additional menu of application ", e);
-        }
+//        try {
+//            runSecondaryMenu();
+//        } catch (IOException e) {
+//            logger.error("Can't access to additional menu of application ", e);
+//        }
     }
 
     /**
@@ -616,10 +618,10 @@ public class MajorController implements CoreController {
                         + "\nTask ends at " + t.getEndTime());
             }
         }
-        try {
-            runSecondaryMenu();
-        } catch (IOException e) {
-            logger.error("Can't access to additional menu of application ", e);
-        }
+//        try {
+//            runSecondaryMenu();
+//        } catch (IOException e) {
+//            logger.error("Can't access to additional menu of application ", e);
+//        }
     }
 }

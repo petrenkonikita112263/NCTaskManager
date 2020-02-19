@@ -100,6 +100,16 @@ public class PrimaryView implements CoreViewable {
         return Integer.parseInt(bufReader.readLine());
     }
 
+    public void closeInput() {
+        if (bufReader != null) {
+            try {
+                bufReader.close();
+            } catch (IOException e) {
+                logger.error("Can't close the BufferedReader ", e);
+            }
+        }
+    }
+
     /**
      * Method that allow user to input id for task.
      *
