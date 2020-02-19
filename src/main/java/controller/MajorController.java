@@ -97,7 +97,8 @@ public class MajorController implements CoreController {
             case 4:
                 System.exit(0);
             default:
-                System.out.println("Wrong input by user!!!!" + new AssertionError());
+//                System.out.println("Wrong input by user!!!!" + new AssertionError());
+                new AssertionError();
         }
     }
 
@@ -139,7 +140,8 @@ public class MajorController implements CoreController {
             case 8:
                 System.exit(0);
             default:
-                System.out.println("Wrong input by user!!!!" + new AssertionError());
+//                System.out.println("Wrong input by user!!!!" + new AssertionError());
+                new AssertionError();
         }
     }
 
@@ -168,8 +170,8 @@ public class MajorController implements CoreController {
             logger.info("The repetead task was added");
             runSecondaryMenu();
         } else {
-            logger.error("Wrong input, make "
-                    + "sure that you enter the word yes or no!!");
+//            logger.error("Wrong input, make "
+//                    + "sure that you enter the word yes or no!!");
             processAddingTask();
         }
     }
@@ -248,7 +250,8 @@ public class MajorController implements CoreController {
                         view.changeStatusOfTask();
                     }
                 default:
-                    System.out.println("Wrong input by user!!!!" + new AssertionError());
+//                    System.out.println("Wrong input by user!!!!" + new AssertionError());
+                    new AssertionError();
             }
         }
     }
@@ -291,7 +294,7 @@ public class MajorController implements CoreController {
         LocalDateTime limitDate = view.addTimeLimit_2();
         SortedMap<LocalDateTime, Set<Task>> defaultCalendar =
                 Tasks.calendar(listOfTasks, startDate, limitDate);
-        System.out.println("The calendar was created");
+//        System.out.println("The calendar was created");
         view.displayCreatedCalendar(defaultCalendar);
         runSecondaryMenu();
     }
@@ -335,7 +338,7 @@ public class MajorController implements CoreController {
         } else if (optionNumber == 3) {
             runSecondaryMenu();
         } else {
-            System.out.println("Something wrong try again");
+//            System.out.println("Something wrong try again");
             processSavingWork();
         }
         logger.info("The session was saved");
