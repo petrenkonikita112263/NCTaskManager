@@ -1,8 +1,7 @@
 package model;
 
 import com.google.gson.Gson;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.Logger;
 
 import java.io.*;
 import java.lang.reflect.Type;
@@ -22,7 +21,7 @@ public class TaskIO {
     /**
      * Adding logger to the class.
      */
-    private static final Logger logger = LogManager.getLogger(TaskIO.class);
+    private static final Logger logger = Logger.getLogger(TaskIO.class);
 
     /**
      * Static method that write list into the stream.
@@ -43,7 +42,7 @@ public class TaskIO {
 //            run thoough the taskList
             for (Task smth : taskList) {
 
-                dataOutputStream.writeInt(smth.getId());
+//                dataOutputStream.writeInt(smth.getId());
 
 //                write the int number of length of the title
                 dataOutputStream.writeInt(smth.getTitle().length());
@@ -151,7 +150,7 @@ public class TaskIO {
                     LocalDateTime endDateTime = LocalDateTime
                             .ofEpochSecond(dataInputStream.readLong(),
                                     0, ZoneOffset.UTC);
-                    Task newTask = new Task(idTask, titleOfTask, startDateTime,
+                    Task newTask = new Task(titleOfTask, startDateTime,
                             endDateTime, valueOfInterval);
 
 //                    set the status of the task UNNECESSARY
@@ -164,7 +163,7 @@ public class TaskIO {
 //                    long time = dataInputStream.readLong();
 //                    LocalDateTime timeDate = Instant.ofEpochMilli(time).
 //                            atZone(ZoneId.systemDefault()).toLocalDateTime();
-                    Task newTask = new Task(idTask, titleOfTask, startDateTime);
+                    Task newTask = new Task(titleOfTask, startDateTime);
                     newTask.setActive(statusActive);
                     taskList.add(newTask);
                 }

@@ -1,8 +1,7 @@
 package view;
 
 import model.Task;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.Logger;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -23,7 +22,7 @@ public class PrimaryView implements CoreViewable {
     /**
      * Adding logger to the class.
      */
-    private static final Logger logger = LogManager.getLogger(PrimaryView.class);
+    private static final Logger logger = Logger.getLogger(PrimaryView.class);
 
     /**
      * Instead of using Scanner, use BufferedReader for input.
@@ -127,8 +126,9 @@ public class PrimaryView implements CoreViewable {
      * @param number - any integer number in range of Integer
      */
     private void checkIntValue(int number) {
-        if ((number == Integer.MAX_VALUE) || (number < 0)) {
+        if ((number > 60) || (number < 0)) {
             logger.error("Task can't exist with this value of Integer");
+            addInterval();
         }
     }
 
@@ -145,8 +145,10 @@ public class PrimaryView implements CoreViewable {
             checkStringValue(title);
         } catch (IOException exp_1) {
             logger.error("Error in input word to the console", exp_1);
+            addTaskTitle();
         } catch (IllegalArgumentException exp_2) {
             logger.error("Task can't exist without title", exp_2);
+            addTaskTitle();
         }
         return title;
     }
@@ -160,26 +162,27 @@ public class PrimaryView implements CoreViewable {
     private void checkStringValue(String word) {
         if (word == null) {
             logger.error("Task can't exist with this String value");
+            selectTheTypeForTask();
         }
     }
 
-    /**
-     * Method that allow user to choice which type of task
-     * to add to the list.
-     *
-     * @return - get user answer for further action
-     */
-    public String addTypeOfTask() {
-        String wordAnswer = null;
-        System.out.println("What type of task it will be "
-                + "repeative or not? (yes/no) \r");
-        try {
-            wordAnswer = bufReader.readLine();
-        } catch (IOException exp) {
-            logger.error("Error in input word to the console", exp);
-        }
-        return wordAnswer;
-    }
+//    /**
+//     * Method that allow user to choice which type of task
+//     * to add to the list.
+//     *
+//     * @return - get user answer for further action
+//     */
+//    public String addTypeOfTask() {
+//        String wordAnswer = null;
+//        System.out.println("What type of task it will be "
+//                + "repeative or not? (yes/no) \r");
+//        try {
+//            wordAnswer = bufReader.readLine();
+//        } catch (IOException exp) {
+//            logger.error("Error in input word to the console", exp);
+//        }
+//        return wordAnswer;
+//    }
 
     /**
      * Private additional method that validate LocalDateTime
@@ -208,8 +211,10 @@ public class PrimaryView implements CoreViewable {
             checkIntValue(taskInterval);
         } catch (IOException exp_1) {
             logger.error("Error in input number to the console", exp_1);
+            addInterval();
         } catch (NumberFormatException exp_2) {
             logger.error("Wrong type of interval for task", exp_2);
+            addInterval();
         }
         return taskInterval;
     }
@@ -278,10 +283,10 @@ public class PrimaryView implements CoreViewable {
      *
      * @return - new type repeated or not
      */
-    public String changeTypeOfTask() {
+    public String selectTheTypeForTask() {
         String answer = null;
-        System.out.println("Do you want to change repetitive task (start, end, interval) = 'yes'"
-                + " or you want to change non-repetitive task(only time) = 'no': \r");
+        System.out.println("Do you want to add(change) repetitive task (start, end, interval) = 'yes'"
+                + " or you want to add(change) non-repetitive task(only time) = 'no': \r");
         try {
             answer = bufReader.readLine();
             checkStringValue(answer);
@@ -311,8 +316,10 @@ public class PrimaryView implements CoreViewable {
             checkTime(time);
         } catch (IOException exp) {
             logger.error("Error in input date to the console", exp);
+            inputDateTime();
         } catch (DateTimeParseException otherExp) {
             logger.error("Error in formatting input date to LocalDateTime", otherExp);
+            inputDateTime();
         }
         return time;
     }
@@ -330,8 +337,10 @@ public class PrimaryView implements CoreViewable {
             checkIntValue(taskInterval);
         } catch (IOException exp_1) {
             logger.error("Error in input number to the console", exp_1);
+            changeIntervalOfTask();
         } catch (NumberFormatException exp_2) {
             logger.error("Wrong type of interval for task", exp_2);
+            changeIntervalOfTask();
         }
         return taskInterval;
     }
@@ -376,9 +385,7 @@ public class PrimaryView implements CoreViewable {
     public LocalDateTime addTimeLimit_2() {
         System.out.println("Set the end time period for which you want "
                 + "to get the calendar.\n"
-                + "Enter the date "
-                + "or just copy this (2022-02-18 20:14) without braces:"
-                + " and change numbers \r");
+                + "or just copy this (2022-02-18 20:14) without braces:\r");
         return inputDateTime();
     }
 
@@ -416,8 +423,10 @@ public class PrimaryView implements CoreViewable {
             checkStringValue(nameFile);
         } catch (IOException exp) {
             logger.error("Error in typing word to the console", exp);
+            getFileName();
         } catch (IllegalArgumentException otherExp) {
             logger.error("Not String type", otherExp);
+            getFileName();
         }
         return nameFile;
     }

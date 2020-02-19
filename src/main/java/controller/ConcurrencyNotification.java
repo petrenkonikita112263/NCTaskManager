@@ -3,8 +3,7 @@ package controller;
 import model.ArrayTaskList;
 import model.Task;
 import model.Tasks;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.Logger;
 import view.NotificationView;
 
 import java.time.LocalDateTime;
@@ -22,7 +21,7 @@ public class ConcurrencyNotification extends Thread {
     /**
      * Adding logger to the class.
      */
-    private static final Logger logger = LogManager.getLogger(ConcurrencyNotification.class);
+    private static final Logger logger = Logger.getLogger(ConcurrencyNotification.class);
 
     /**
      * Time constant in seconds for time notification.

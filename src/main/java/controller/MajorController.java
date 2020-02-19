@@ -4,8 +4,7 @@ import model.ArrayTaskList;
 import model.Task;
 import model.TaskIO;
 import model.Tasks;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.Logger;
 import view.PrimaryView;
 
 import java.io.File;
@@ -26,7 +25,7 @@ public class MajorController implements CoreController {
     /**
      * Adding logger to the class.
      */
-    private static final Logger logger = LogManager.getLogger(MajorController.class);
+    private static final Logger logger = Logger.getLogger(MajorController.class);
 
     /**
      * Constant that holds name of the file for saving task list.
@@ -154,7 +153,7 @@ public class MajorController implements CoreController {
     @Override
     public void processAddingTask() throws IOException {
         String title = view.addTaskTitle();
-        String wordAnswer = view.addTypeOfTask();
+        String wordAnswer = view.selectTheTypeForTask();
         if (wordAnswer.toLowerCase().equals("no")) {
             LocalDateTime time = view.inputDateTime();
             Task someTask = new Task(title, time);
@@ -170,9 +169,9 @@ public class MajorController implements CoreController {
             logger.info("The repetead task was added");
             runSecondaryMenu();
         } else {
-//            logger.error("Wrong input, make "
-//                    + "sure that you enter the word yes or no!!");
-            processAddingTask();
+            logger.error("Wrong input, make "
+                    + "sure that you enter the word yes or no!!");
+            view.selectTheTypeForTask();
         }
     }
 
@@ -199,6 +198,7 @@ public class MajorController implements CoreController {
     public void processChangingTask() throws IOException {
         logger.info("The process of changing task was started");
         view.changeOptions();
+        displayListOfTasks(listOfTasks);
         int optionValue = view.getUserInput();
         logger.info("The console was called");
         for (Task smth : listOfTasks) {
@@ -216,7 +216,7 @@ public class MajorController implements CoreController {
                     runSecondaryMenu();
                     break;
                 case 2:
-                    String answer = view.changeTypeOfTask();
+                    String answer = view.selectTheTypeForTask();
                     if (answer.toLowerCase().equals("yes")) {
                         LocalDateTime startTime = view.inputDateTime();
                         LocalDateTime endTime = view.inputDateTime();
@@ -232,7 +232,7 @@ public class MajorController implements CoreController {
                     } else {
                         logger.error("Wrong input, make sure "
                                 + "that you write yes or no!!!");
-                        view.inputDateTime();
+                        view.selectTheTypeForTask();
                     }
                 case 3:
                     int taskStatus = view.changeStatusOfTask();
@@ -362,20 +362,20 @@ public class MajorController implements CoreController {
         try {
             String defaultFile = view.getFileName();
             File fileTxt = new File(defaultFile);
-            System.out.println("The file starts creating.........");
+            logger.info("The file starts creating.........");
 //            logger.info("The file starts creating.........");
             if (fileTxt.createNewFile()) {
-                System.out.println("Your file is created here '"
+                logger.info("Your file is created here '"
                         + defaultFile + "'");
             } else {
-                System.out.println("File've already existed");
+                logger.info("File've already existed");
 //                logger.info("File've already existed");
                 PrintWriter writer = new PrintWriter(defaultFile);
                 writer.print("");
                 writer.close();
             }
 //            TaskIO.writeText(listOfTasks, fileTxt);
-            System.out.println("The process of "
+            logger.info("The process of "
                     + "writing was successfully completed");
 //            logger.info("The process of "
 //                    + "writing was successfully completed");
@@ -394,15 +394,15 @@ public class MajorController implements CoreController {
         logger.info("\nThe process of creating folder was started");
         File fileDirectory = new File(dirPath);
         if (!fileDirectory.exists()) {
-            System.out.println("The directory starts creating........");
+            logger.info("The directory starts creating........");
 //            logger.info("The directory starts creating........");
             if (fileDirectory.mkdir()) {
-                System.out.println("The directory '"
+                logger.info("The directory '"
                         + dirPath + "' is created");
 //                logger.info("The directory '"
 //                        + dirPath + "' is created");
             } else {
-                System.out.println("Don't enough "
+                logger.error("Don't enough "
                         + "permission to create directory");
 //                logger.error("Don't enough "
 //                        + "permission to create directory");
