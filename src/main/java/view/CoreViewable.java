@@ -46,9 +46,9 @@ public interface CoreViewable {
 //     */
 //    void displayDetailAboutTask(ArrayTaskList taskList);
 
-    /**
-     * Method that displays step instruction to change the task.
-     */
-    void changeOptions();
+//    /**
+//     * Method that displays step instruction to change the task.
+//     */
+//    void changeOptions();
 
 }

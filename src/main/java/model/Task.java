@@ -184,6 +184,19 @@ public class Task implements Cloneable, Serializable {
 //        this.id = id;
 //    }
 
+
+    public void setStart(LocalDateTime start) {
+        this.start = start;
+    }
+
+    public void setEnd(LocalDateTime end) {
+        this.end = end;
+    }
+
+    public void setInterval(int interval) {
+        this.interval = interval;
+    }
+
     /**
      * Getter time for the nonrepeative task.
      *
@@ -308,24 +321,40 @@ public class Task implements Cloneable, Serializable {
     @Override
     public String toString() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        if (!this.repeated) {
-            if (!this.active) {
-                return "[The nonrepeative task " + "(" + title + ")\n"
-                        + "with time " + time.format(formatter) + " .Is it active? " + isActive() + "]";
-            } else {
-                return "[The nonrepeative task " + "(" + title + ")\n"
-                        + "with time " + time.format(formatter) + " .Is it active? " + isActive() + "]";
-            }
-        } else if (!this.active) {
+        if (!repeated) {
+            return "[The nonrepeative task " + "(" + title + ")\n"
+                    + "with time " + time.format(formatter) + " .Is it active? " + isActive() + "]";
+        } else if (repeated) {
             return "[The repeative task " + "(" + title + ")\n"
                     + "starts at " + start.format(formatter) + " and ends at " + end.format(formatter)
                     + " with interval = " + interval + " in minutes" + " .Is it active? " + isActive() + "]";
         } else {
-            return "[The repeative task " + "(" + title + ")\n"
-                    + "it starts at " + start.format(formatter)
-                    + " and gonna end at " + end.format(formatter)
-                    + " with interval = " + interval + " in minutes" + " .Is it active? " + isActive() + "]";
+            return "[Sorry we don't have another task]";
         }
+
+//        } else if (!this.active) {
+//            return "[The repeative task " + "(" + title + ")\n"
+//                    + "starts at " + start.format(formatter) + " and ends at " + end.format(formatter)
+//                    + " with interval = " + interval + " in minutes" + " .Is it active? " + isActive() + "]";
+//        } else {
+//        if (!this.repeated) {
+//            if (!this.active) {
+//                return "[The nonrepeative task " + "(" + title + ")\n"
+//                        + "with time " + time.format(formatter) + " .Is it active? " + isActive() + "]";
+//            } else {
+//                return "[The nonrepeative task " + "(" + title + ")\n"
+//                        + "with time " + time.format(formatter) + " .Is it active? " + isActive() + "]";
+//            }
+//        } else if (!this.active) {
+//            return "[The repeative task " + "(" + title + ")\n"
+//                    + "starts at " + start.format(formatter) + " and ends at " + end.format(formatter)
+//                    + " with interval = " + interval + " in minutes" + " .Is it active? " + isActive() + "]";
+//        } else {
+//            return "[The repeative task " + "(" + title + ")\n"
+//                    + "it starts at " + start.format(formatter)
+//                    + " and gonna end at " + end.format(formatter)
+//                    + " with interval = " + interval + " in minutes" + " .Is it active? " + isActive() + "]";
+//        }
     }
 
     /**

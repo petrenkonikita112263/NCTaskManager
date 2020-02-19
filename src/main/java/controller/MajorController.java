@@ -182,9 +182,13 @@ public class MajorController implements CoreController {
      */
     @Override
     public void processDeletingTask() throws IOException {
-        displayListOfTasks(listOfTasks);
+        for (Task someTask : listOfTasks) {
+            System.out.println(someTask);
+        }
         int id = view.removeSomeTask();
         listOfTasks.removeElement(id);
+        logger.info("Task was deleted");
+        runSecondaryMenu();
     }
 
     /**
@@ -197,64 +201,178 @@ public class MajorController implements CoreController {
     @Override
     public void processChangingTask() throws IOException {
         logger.info("The process of changing task was started");
-        view.changeOptions();
+//        view.changeOptions();
         displayListOfTasks(listOfTasks);
-        int optionValue = view.getUserInput();
+//        int optionValue = view.getUserInput();
         logger.info("The console was called");
+        String answer = view.selectTheTypeForTask();
         for (Task smth : listOfTasks) {
-            switch (optionValue) {
-//                case 1:
-//                    int taskId = view.changeIdOfTask();
-//                    smth.setId(taskId);
-//                    logger.info("The id of the task was changed");
-//                    runSecondaryMenu();
-//                    break;
-                case 1:
-                    String taskName = view.changeTitleOfTask();
-                    smth.setTitle(taskName);
-                    logger.info("The title of the task was changed");
-                    runSecondaryMenu();
-                    break;
-                case 2:
-                    String answer = view.selectTheTypeForTask();
-                    if (answer.toLowerCase().equals("yes")) {
-                        LocalDateTime startTime = view.inputDateTime();
-                        LocalDateTime endTime = view.inputDateTime();
-                        int taskInterval = view.changeIntervalOfTask();
-                        smth.setTime(startTime, endTime, taskInterval);
-                        logger.info("The repeated time and interval were changed");
-                        runSecondaryMenu();
-                    } else if (answer.toLowerCase().equals("no")) {
-                        LocalDateTime taskTime = view.inputDateTime();
-                        smth.setTime(taskTime);
-                        logger.info("The time of the task was changed");
-                        runSecondaryMenu();
-                    } else {
-                        logger.error("Wrong input, make sure "
-                                + "that you write yes or no!!!");
-                        view.selectTheTypeForTask();
+            switch (answer.toLowerCase()) {
+                case "yes":
+                    int taskIndex_1 = view.getTaskIndex();
+                    listOfTasks.getTask(taskIndex_1);
+                    view.changeFunctionalityRepeteadTask();
+                    int changeOption_1 = view.getUserInput();
+                    switch (changeOption_1) {
+                        case 1:
+                            String taskName = view.changeTitleOfTask();
+                            smth.setTitle(taskName);
+                            logger.info("The title of the task was changed");
+                            processChangingTask();
+                            break;
+                        case 2:
+                            LocalDateTime startTime = view.inputDateTime();
+                            LocalDateTime endTime = view.inputDateTime();
+                            smth.setStart(startTime);
+                            smth.setEnd(endTime);
+                            logger.info("The start and end time was changed");
+                            processChangingTask();
+                            break;
+                        case 3:
+                            int taskInterval = view.changeIntervalOfTask();
+                            smth.setInterval(taskInterval);
+                            logger.info("The interval was changed");
+                            processChangingTask();
+                            break;
+                        case 4:
+                            int taskStatus = view.changeStatusOfTask();
+                            switch (taskStatus) {
+                                case 0:
+                                    smth.setRepeated(false);
+                                    smth.setTime(LocalDateTime.now());
+                                    logger.info("The task is nonreptead now");
+                                    break;
+                                case 1:
+                                    smth.setRepeated(true);
+                                    smth.setTime(LocalDateTime.now(), LocalDateTime.now().plusDays(1), 0);
+                                    logger.info("The task is repetead now");
+                                    break;
+                                case 2:
+                                    smth.setActive(false);
+                                    logger.info("The task isn't active");
+                                    break;
+                                case 3:
+                                    smth.setActive(true);
+                                    logger.info("The task is active");
+                                    break;
+                                default:
+                                    runSecondaryMenu();
+                            }
+                        case 5:
+                            runSecondaryMenu();
+                            break;
+                        default:
+                            new AssertionError();
                     }
-                case 3:
-                    int taskStatus = view.changeStatusOfTask();
-                    if (taskStatus == 1) {
-                        smth.setActive(true);
-                        logger.info("The task is now active");
-                        runSecondaryMenu();
-                    } else if (taskStatus == 0) {
-                        smth.setActive(false);
-                        logger.info("The task turn off");
-                        runSecondaryMenu();
-                    } else {
-                        logger.error("Wrong input, make "
-                                + "sure that you enter number 1 or 0!!");
-                        processChangingTask();
+                case "no":
+                    int taskIndex_2 = view.getTaskIndex();
+                    listOfTasks.getTask(taskIndex_2);
+                    view.changeFunctionalityNormalyTask();
+                    int changeOption_2 = view.getUserInput();
+                    switch (changeOption_2) {
+                        case 1:
+                            String taskName = view.changeTitleOfTask();
+                            smth.setTitle(taskName);
+                            logger.info("The title of the task was changed");
+                            processChangingTask();
+                            break;
+                        case 2:
+                            LocalDateTime time = view.inputDateTime();
+                            smth.setTime(time);
+                            logger.info("The time was changed");
+                            processChangingTask();
+                            break;
+                        case 3:
+                            int taskStatus = view.changeStatusOfTask();
+                            switch (taskStatus) {
+                                case 0:
+                                    smth.setRepeated(false);
+                                    smth.setTime(LocalDateTime.now());
+                                    logger.info("The task is nonreptead now");
+                                    break;
+                                case 1:
+                                    smth.setRepeated(true);
+                                    smth.setTime(LocalDateTime.now(), LocalDateTime.now().plusDays(1), 0);
+                                    logger.info("The task is repetead now");
+                                    break;
+                                case 2:
+                                    smth.setActive(false);
+                                    logger.info("The task isn't active");
+                                    break;
+                                case 3:
+                                    smth.setActive(true);
+                                    logger.info("The task is active");
+                                    break;
+                                default:
+                                    runSecondaryMenu();
+                            }
+                        case 4:
+                            runSecondaryMenu();
+                            break;
+                        default:
+                            new AssertionError();
                     }
                 default:
-//                    System.out.println("Wrong input by user!!!!" + new AssertionError());
-                    new AssertionError();
+                    runSecondaryMenu();
             }
         }
     }
+
+//            for (Task smth : listOfTasks) {
+//
+//                switch (optionValue) {
+////                case 1:
+////                    int taskId = view.changeIdOfTask();
+////                    smth.setId(taskId);
+////                    logger.info("The id of the task was changed");
+////                    runSecondaryMenu();
+////                    break;
+//                    case 1:
+//                        String taskName = view.changeTitleOfTask();
+//                        smth.setTitle(taskName);
+//                        logger.info("The title of the task was changed");
+//                        runSecondaryMenu();
+//                        break;
+//                    case 2:
+//                        String answer = view.selectTheTypeForTask();
+//                        if (answer.toLowerCase().equals("yes")) {
+//                            LocalDateTime startTime = view.inputDateTime();
+//                            LocalDateTime endTime = view.inputDateTime();
+//                            int taskInterval = view.changeIntervalOfTask();
+//                            smth.setTime(startTime, endTime, taskInterval);
+//                            logger.info("The repeated time and interval were changed");
+//                            runSecondaryMenu();
+//                        } else if (answer.toLowerCase().equals("no")) {
+//                            LocalDateTime taskTime = view.inputDateTime();
+//                            smth.setTime(taskTime);
+//                            logger.info("The time of the task was changed");
+//                            runSecondaryMenu();
+//                        } else {
+//                            logger.error("Wrong input, make sure "
+//                                    + "that you write yes or no!!!");
+//                            view.selectTheTypeForTask();
+//                        }
+//                    case 3:
+//                        int taskStatus = view.changeStatusOfTask();
+//                        if (taskStatus == 1) {
+//                            smth.setActive(true);
+//                            logger.info("The task is now active");
+//                            runSecondaryMenu();
+//                        } else if (taskStatus == 0) {
+//                            smth.setActive(false);
+//                            logger.info("The task turn off");
+//                            runSecondaryMenu();
+//                        } else {
+//                            logger.error("Wrong input, make "
+//                                    + "sure that you enter number 1 or 0!!");
+//                            processChangingTask();
+//                        }
+//                    default:
+////                    System.out.println("Wrong input by user!!!!" + new AssertionError());
+//                        new AssertionError();
+//                }
+//            }
+//        }
 
     /**
      * Private method that allow to write task list to GSON file.
@@ -436,15 +554,14 @@ public class MajorController implements CoreController {
             } catch (IOException e) {
                 logger.error("Can't access to additional menu of application ", e);
             }
-        } else {
-            for (Task someTask : taskList) {
-                System.out.println(someTask);
-            }
-            try {
-                runSecondaryMenu();
-            } catch (IOException e) {
-                logger.error("Can't access to additional menu of application ", e);
-            }
+        }
+        for (Task someTask : taskList) {
+            System.out.println(someTask);
+        }
+        try {
+            runSecondaryMenu();
+        } catch (IOException e) {
+            logger.error("Can't access to additional menu of application ", e);
         }
     }
 
@@ -461,26 +578,25 @@ public class MajorController implements CoreController {
             } catch (IOException e) {
                 logger.error("Can't access to additional menu of application ", e);
             }
-        } else {
-            for (int i = 0; i < taskList.size(); i++) {
-                Task t = taskList.getTask(i);
-                if (t.isRepeated()) {
-                    System.out.println("\tTitle : " + t.getTitle()
-                            + "\nTask starts at " + t.getStartTime()
-                            + "\nTask ends at " + t.getEndTime()
-                            + "\nthe interval between start and end time is "
-                            + t.getRepeatInterval());
-                } else {
-                    System.out.println("\tTitle : " + t.getTitle()
-                            + "\nTask starts at " + t.getStartTime()
-                            + "\nTask ends at " + t.getEndTime());
-                }
+        }
+        for (int i = 0; i < taskList.size(); i++) {
+            Task t = taskList.getTask(i);
+            if (t.isRepeated()) {
+                System.out.println("\tTitle : " + t.getTitle()
+                        + "\nTask starts at " + t.getStartTime()
+                        + "\nTask ends at " + t.getEndTime()
+                        + "\nthe interval between start and end time is "
+                        + t.getRepeatInterval());
+            } else {
+                System.out.println("\tTitle : " + t.getTitle()
+                        + "\nTask starts at " + t.getStartTime()
+                        + "\nTask ends at " + t.getEndTime());
             }
-            try {
-                runSecondaryMenu();
-            } catch (IOException e) {
-                logger.error("Can't access to additional menu of application ", e);
-            }
+        }
+        try {
+            runSecondaryMenu();
+        } catch (IOException e) {
+            logger.error("Can't access to additional menu of application ", e);
         }
     }
 }

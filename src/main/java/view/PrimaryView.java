@@ -75,17 +75,17 @@ public class PrimaryView implements CoreViewable {
         }
     }
 
-    /**
-     * Implementation (override) changeOptions() method from
-     * interface.
-     */
-    @Override
-    public void changeOptions() {
-//        System.out.println("\t1 - Change id (number) of your task");
-        System.out.println("\t1 - Change title of your task");
-        System.out.println("\t2 - Change time and interval of your task");
-        System.out.println("\t3- Set your task active or diactive it");
-    }
+//    /**
+//     * Implementation (override) changeOptions() method from
+//     * interface.
+//     */
+//    @Override
+//    public void changeOptions() {
+////        System.out.println("\t1 - Change id (number) of your task");
+//        System.out.println("\t1 - Change title of your task");
+//        System.out.println("\t2 - Change time and interval of your task");
+//        System.out.println("\t3- Set your task active or diactive it");
+//    }
 
     /**
      * Public method that allow user to input info in console.
@@ -100,24 +100,27 @@ public class PrimaryView implements CoreViewable {
         return Integer.parseInt(bufReader.readLine());
     }
 
-//    /**
-//     * Method that allow user to input id for task.
-//     *
-//     * @return - id of it
-//     */
-//    public int addTaskIndex() {
-//        int id = 0;
-//        System.out.println("Enter the id of the task: \r");
-//        try {
-//            id = Integer.parseInt(bufReader.readLine());
-//            checkIntValue(id);
-//        } catch (IOException exp_1) {
-//            logger.error("Error in input number to the console", exp_1);
-//        } catch (NumberFormatException exp_2) {
-//            logger.error("Wrong type of id for task", exp_2);
-//        }
-//        return id;
-//    }
+    /**
+     * Method that allow user to input id for task.
+     *
+     * @return - id of it
+     */
+    public int getTaskIndex() {
+        int id = 0;
+        System.out.println("Enter the id of the task " +
+                "\nP.S. Note and bring to the attention that ArrayList element starts from 0: \r");
+        try {
+            id = Integer.parseInt(bufReader.readLine());
+            if ((id < 0) || (id > Integer.MAX_VALUE)) {
+                getTaskIndex();
+            }
+        } catch (IOException exp_1) {
+            logger.error("Error in input number to the console", exp_1);
+        } catch (NumberFormatException exp_2) {
+            logger.error("Wrong type of id for task", exp_2);
+        }
+        return id;
+    }
 
     /**
      * Private additional method that validate int number
@@ -126,7 +129,7 @@ public class PrimaryView implements CoreViewable {
      * @param number - any integer number in range of Integer
      */
     private void checkIntValue(int number) {
-        if ((number > 60) || (number < 0)) {
+        if ((number > 60) || (number < 0) || (number > Integer.MAX_VALUE)) {
             logger.error("Task can't exist with this value of Integer");
             addInterval();
         }
@@ -258,6 +261,23 @@ public class PrimaryView implements CoreViewable {
 //        return taskId;
 //    }
 
+    public void changeFunctionalityRepeteadTask() {
+        System.out.println("You gonna change repetead task\n" +
+                "\t1 - Change title of the task" +
+                "\t2 - Change start and end date time" +
+                "\t3 - Change interval" +
+                "\t4 - Change status"
+                + "\t5 - Back to the menu");
+    }
+
+    public void changeFunctionalityNormalyTask() {
+        System.out.println("You gonna change regular type of task\n" +
+                "\t1 - Change title of the task" +
+                "\t2 - Change time" +
+                "\t3 - Change status"
+                + "\t4 - Back to the menu");
+    }
+
     /**
      * Method that ask user to change title of the task.
      *
@@ -286,7 +306,8 @@ public class PrimaryView implements CoreViewable {
     public String selectTheTypeForTask() {
         String answer = null;
         System.out.println("Do you want to add(change) repetitive task (start, end, interval) = 'yes'"
-                + " or you want to add(change) non-repetitive task(only time) = 'no': \r");
+                + " or you want to add(change) non-repetitive task(only time) = 'no'" +
+                "\nP.S if you are in menu change task press Enter to exit from it: \r");
         try {
             answer = bufReader.readLine();
             checkStringValue(answer);
@@ -352,8 +373,8 @@ public class PrimaryView implements CoreViewable {
      */
     public int changeStatusOfTask() {
         int taskStatus = 0;
-        System.out.println("Set the status of your task\n "
-                + "1 - active; 0 - notactive: \r");
+        System.out.println("Change type of task"
+                + "\n0 - nonrepeated; \n1 - repeated; \n2 - disable task; \n3 - enable task; \npress Enter to exit to menu: \r");
         try {
             taskStatus = Integer.parseInt(bufReader.readLine());
             checkIntValue(taskStatus);
