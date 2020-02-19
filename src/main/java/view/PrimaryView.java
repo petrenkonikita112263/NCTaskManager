@@ -460,7 +460,7 @@ public class PrimaryView implements CoreViewable {
     public int getAction() {
         System.out.println("Type what do you want to perform: ");
         System.out.println("\t 1 - To saved task and exit\n\t 2- To load list of task"
-                + "\n\t 3 - To return to main menu of application");
+                + "\n\t Press ENTER - To return to main menu of application");
         int inputNumber = 0;
         try {
             inputNumber = Integer.parseInt(bufReader.readLine());

@@ -131,7 +131,7 @@ public class MajorController implements CoreController {
 //                showTaskDetails();
                 break;
             case 6:
-                createCalendar();
+                displayCalendar();
                 break;
             case 7:
                 processSavingWork();
@@ -407,14 +407,24 @@ public class MajorController implements CoreController {
      * from interface.
      */
     @Override
-    public void createCalendar() throws IOException {
+    public void displayCalendar() throws IOException {
         LocalDateTime startDate = view.addTimeLimit_1();
         LocalDateTime limitDate = view.addTimeLimit_2();
-        SortedMap<LocalDateTime, Set<Task>> defaultCalendar =
-                Tasks.calendar(listOfTasks, startDate, limitDate);
-//        System.out.println("The calendar was created");
-        view.displayCreatedCalendar(defaultCalendar);
+        makeCalendar(startDate, limitDate);
         runSecondaryMenu();
+    }
+
+    private void makeCalendar(LocalDateTime start, LocalDateTime end) {
+        SortedMap<LocalDateTime, Set<Task>> defaultCalendar =
+                Tasks.calendar(listOfTasks, start, end);
+//        System.out.println("The calendar was created");
+        for (SortedMap.Entry<LocalDateTime, Set<Task>> content : defaultCalendar.entrySet()) {
+            for (Task task : content.getValue()) {
+                System.out.println(task.getTitle());
+            }
+            System.out.println(content.getKey());
+        }
+//        view.displayCreatedCalendar(defaultCalendar);
     }
 
 //    /**
@@ -448,18 +458,31 @@ public class MajorController implements CoreController {
     public void processSavingWork() throws IOException {
         createFolder(folderName);
         int optionNumber = view.getAction();
-        if (optionNumber == 1) {
-            String fileName = view.getFileName();
-            saveFileWithTasks(fileName);
-        } else if (optionNumber == 2) {
-            readFileWithTasks();
-        } else if (optionNumber == 3) {
-            runSecondaryMenu();
-        } else {
-//            System.out.println("Something wrong try again");
-            processSavingWork();
+        switch(optionNumber) {
+            case 1:
+                String fileName = view.getFileName();
+                saveFileWithTasks(fileName);
+                runSecondaryMenu();
+                break;
+            case 2:
+                readFileWithTasks();
+                runSecondaryMenu();
+                break;
+            default:
+                runMainApplication();
         }
-        logger.info("The session was saved");
+//        if (optionNumber == 1) {
+//            String fileName = view.getFileName();
+//            saveFileWithTasks(fileName);
+//        } else if (optionNumber == 2) {
+//            readFileWithTasks();
+//        } else if (optionNumber == 3) {
+//            runSecondaryMenu();
+//        } else {
+////            System.out.println("Something wrong try again");
+//            processSavingWork();
+//        }
+//        logger.info("The session was saved");
     }
 
     /**

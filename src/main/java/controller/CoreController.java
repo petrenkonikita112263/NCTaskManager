@@ -45,7 +45,7 @@ public interface CoreController {
      * Method that allow to create the calendar for set
      * period of time.
      */
-    void createCalendar() throws IOException;
+    void displayCalendar() throws IOException;
 
 //    /**
 //     * Method that allow to see chosen task.
