@@ -69,9 +69,9 @@ public class PrimaryView implements CoreViewable {
             Set<Task>> values) {
         for (SortedMap.Entry<LocalDateTime, Set<Task>> content : values.entrySet()) {
             for (Task task : content.getValue()) {
-                System.out.println(task.getTitle());
+                System.out.println("Task title: " + task.getTitle());
             }
-            System.out.println(content.getKey());
+            System.out.println("Its date: " + content.getKey());
         }
     }
 

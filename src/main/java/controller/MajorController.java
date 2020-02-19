@@ -413,21 +413,11 @@ public class MajorController implements CoreController {
     public void displayCalendar() throws IOException {
         LocalDateTime startDate = view.addTimeLimit_1();
         LocalDateTime limitDate = view.addTimeLimit_2();
-        makeCalendar(startDate, limitDate);
-        runSecondaryMenu();
-    }
-
-    private void makeCalendar(LocalDateTime start, LocalDateTime end) {
         SortedMap<LocalDateTime, Set<Task>> defaultCalendar =
-                Tasks.calendar(listOfTasks, start, end);
-//        System.out.println("The calendar was created");
-        for (SortedMap.Entry<LocalDateTime, Set<Task>> content : defaultCalendar.entrySet()) {
-            for (Task task : content.getValue()) {
-                System.out.println(task.getTitle());
-            }
-            System.out.println(content.getKey());
-        }
-//        view.displayCreatedCalendar(defaultCalendar);
+                Tasks.calendar(listOfTasks, startDate, limitDate);
+        logger.info("The calendar was created");
+        view.displayCreatedCalendar(defaultCalendar);
+        runSecondaryMenu();
     }
 
 //    /**
