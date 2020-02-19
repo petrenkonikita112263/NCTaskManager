@@ -440,6 +440,11 @@ public class MajorController implements CoreController {
             for (Task someTask : taskList) {
                 System.out.println(someTask);
             }
+            try {
+                runSecondaryMenu();
+            } catch (IOException e) {
+                logger.error("Can't access to additional menu of application ", e);
+            }
         }
     }
 
@@ -470,6 +475,11 @@ public class MajorController implements CoreController {
                             + "\nTask starts at " + t.getStartTime()
                             + "\nTask ends at " + t.getEndTime());
                 }
+            }
+            try {
+                runSecondaryMenu();
+            } catch (IOException e) {
+                logger.error("Can't access to additional menu of application ", e);
             }
         }
     }

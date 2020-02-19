@@ -10,6 +10,7 @@ package model;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 /**
@@ -305,23 +306,24 @@ public class Task implements Cloneable, Serializable {
      */
     @Override
     public String toString() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         if (!this.repeated) {
             if (!this.active) {
                 return "[The nonrepeative task " + "(" + title + ")\n"
-                        + "was completed at " + time + " time]\n";
+                        + "was completed at " + time.format(formatter) + " time]";
             } else {
                 return "[The nonrepeative task " + "(" + title + ")\n"
-                        + "is active and gonna end at " + time + " time]\n";
+                        + "is active and gonna end at " + time.format(formatter) + " time]";
             }
         } else if (!this.active) {
             return "[The repeative task " + "(" + title + ")\n"
-                    + "was started at " + start + " and ended at " + end
-                    + " with interval = " + interval + " in minutes" + "]\n";
+                    + "was started at " + start.format(formatter) + " and ended at " + end.format(formatter)
+                    + " with interval = " + interval + " in minutes" + "]";
         } else {
             return "[The repeative task " + "(" + title + ")\n"
-                    + "is active, it starts at " + start
-                    + " and gonna end at " + end
-                    + " with interval = " + interval + " in minutes" + "]\n";
+                    + "is active, it starts at " + start.format(formatter)
+                    + " and gonna end at " + end.format(formatter)
+                    + " with interval = " + interval + " in minutes" + "]";
         }
     }
 
