@@ -156,24 +156,25 @@ public class MajorController implements CoreController {
     public void processAddingTask() throws IOException {
         String title = view.addTaskTitle();
         String wordAnswer = view.selectTheTypeForTask();
-        if (wordAnswer.toLowerCase().equals("no")) {
-            LocalDateTime time = view.inputDateTime();
-            Task someTask = new Task(title, time);
-            listOfTasks.add(someTask);
-            logger.info("The non-repetead task was added");
-            runSecondaryMenu();
-        } else if (wordAnswer.toLowerCase().equals("yes")) {
-            LocalDateTime start = view.inputDateTime();
-            LocalDateTime end = view.inputDateTime();
-            int interval = view.addInterval();
-            Task someTask = new Task(title, start, end, interval);
-            listOfTasks.add(someTask);
-            logger.info("The repetead task was added");
-            runSecondaryMenu();
-        } else {
-            logger.error("Wrong input, make "
-                    + "sure that you enter the word yes or no!!");
-            processAddingTask();
+        switch (wordAnswer.toLowerCase()) {
+            case "yes":
+                LocalDateTime start = view.inputDateTime();
+                LocalDateTime end = view.inputDateTime();
+                int interval = view.addInterval();
+                Task repTask = new Task(title, start, end, interval);
+                listOfTasks.add(repTask);
+                logger.info("The repetead task was added");
+                runSecondaryMenu();
+                break;
+            case "no":
+                LocalDateTime time = view.inputDateTime();
+                Task normalTask = new Task(title, time);
+                listOfTasks.add(normalTask);
+                logger.info("The non-repetead task was added");
+                runSecondaryMenu();
+                break;
+            default:
+                runMainApplication();
         }
     }
 
@@ -460,7 +461,7 @@ public class MajorController implements CoreController {
     public void processSavingWork() throws IOException {
         createFolder(folderName);
         int optionNumber = view.getAction();
-        switch(optionNumber) {
+        switch (optionNumber) {
             case 1:
                 String fileName = view.getFileName();
                 saveFileWithTasks(fileName);
@@ -518,10 +519,10 @@ public class MajorController implements CoreController {
                 writer.close();
             }
 //            TaskIO.writeText(listOfTasks, fileTxt);
-            logger.info("The process of "
-                    + "writing was successfully completed");
 //            logger.info("The process of "
 //                    + "writing was successfully completed");
+        } catch (IOException e) {
+            logger.error("The error occurred ", e);
         } finally {
             logger.info("The process "
                     + "of create default file was successfully completed");
@@ -534,7 +535,7 @@ public class MajorController implements CoreController {
      * @param dirPath - path to the directory
      */
     private static void createFolder(String dirPath) {
-        logger.info("\nThe process of creating folder was started");
+        logger.info("The process of creating folder was started");
         File fileDirectory = new File(dirPath);
         if (!fileDirectory.exists()) {
             logger.info("The directory starts creating........");
@@ -551,7 +552,7 @@ public class MajorController implements CoreController {
 //                        + "permission to create directory");
             }
         }
-        logger.info("\nThe process of creating folder was finished");
+        logger.info("The process of creating folder was finished");
     }
 
     /**
