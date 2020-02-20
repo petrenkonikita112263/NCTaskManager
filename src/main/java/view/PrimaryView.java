@@ -53,11 +53,11 @@ public class PrimaryView implements CoreViewable {
         System.out.println("\t1 - To add task to the list");
         System.out.println("\t2 - To change the task in the list");
         System.out.println("\t3 - To delete task from the list");
-        System.out.println("\t4 - Display all tasks from the list");
-        System.out.println("\t5 - Display all information about every tasks in the list");
-        System.out.println("\t6 - Create calendar");
-        System.out.println("\t7 - To write your task list to the file");
-        System.out.println("\t8 - Terminate the application");
+        System.out.println("\t4 - Display all tasks with information inside ArrayList");
+//        System.out.println("\t5 - Display all information about every tasks in the list");
+        System.out.println("\t5 - Create calendar");
+        System.out.println("\t6 - To write your task list to the file");
+        System.out.println("\t7 - Terminate the application");
     }
 
     /**

@@ -127,17 +127,17 @@ public class MajorController implements CoreController {
                 displayListOfTasks(listOfTasks);
 //                showListOfTask();
                 break;
+//            case 5:
+//                displayDetailAboutTask(listOfTasks);
+////                showTaskDetails();
+//                break;
             case 5:
-                displayDetailAboutTask(listOfTasks);
-//                showTaskDetails();
-                break;
-            case 6:
                 displayCalendar();
                 break;
-            case 7:
+            case 6:
                 processSavingWork();
                 break;
-            case 8:
+            case 7:
                 view.closeInput();
                 System.exit(0);
             default:
@@ -185,9 +185,10 @@ public class MajorController implements CoreController {
      */
     @Override
     public void processDeletingTask() throws IOException {
-        for (Task someTask : listOfTasks) {
-            System.out.println(someTask);
-        }
+//        for (Task someTask : listOfTasks) {
+//            System.out.println(someTask);
+//        }
+        displayDetailAboutTask(listOfTasks);
         int id = view.removeSomeTask();
         listOfTasks.removeElement(id);
         logger.info("Task was deleted");
@@ -205,7 +206,7 @@ public class MajorController implements CoreController {
     public void processChangingTask() throws IOException {
         logger.info("The process of changing task was started");
 //        view.changeOptions();
-        displayListOfTasks(listOfTasks);
+        displayDetailAboutTask(listOfTasks);
 //        int optionValue = view.getUserInput();
         logger.info("The console was called");
         String answer = view.selectTheTypeForTask();
@@ -574,11 +575,11 @@ public class MajorController implements CoreController {
         for (Task someTask : taskList) {
             System.out.println(someTask);
         }
-//        try {
-//            runSecondaryMenu();
-//        } catch (IOException e) {
-//            logger.error("Can't access to additional menu of application ", e);
-//        }
+        try {
+            runSecondaryMenu();
+        } catch (IOException e) {
+            logger.error("Can't access to additional menu of application ", e);
+        }
     }
 
     /**
@@ -597,17 +598,18 @@ public class MajorController implements CoreController {
         }
         for (int i = 0; i < taskList.size(); i++) {
             Task t = taskList.getTask(i);
-            if (t.isRepeated()) {
-                System.out.println("\tTitle : " + t.getTitle()
-                        + "\nTask starts at " + t.getStartTime()
-                        + "\nTask ends at " + t.getEndTime()
-                        + "\nthe interval between start and end time is "
-                        + t.getRepeatInterval());
-            } else {
-                System.out.println("\tTitle : " + t.getTitle()
-                        + "\nTask starts at " + t.getStartTime()
-                        + "\nTask ends at " + t.getEndTime());
-            }
+            System.out.println(t.toString());
+//            if (t.isRepeated()) {
+//                System.out.println("\tTitle : " + t.getTitle()
+//                        + "\nTask starts at " + t.getStartTime()
+//                        + "\nTask ends at " + t.getEndTime()
+//                        + "\nthe interval between start and end time is "
+//                        + t.getRepeatInterval());
+//            } else {
+//                System.out.println("\tTitle : " + t.getTitle()
+//                        + "\nTask starts at " + t.getStartTime()
+//                        + "\nTask ends at " + t.getEndTime());
+//            }
         }
 //        try {
 //            runSecondaryMenu();
