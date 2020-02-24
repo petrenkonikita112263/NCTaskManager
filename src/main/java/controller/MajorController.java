@@ -100,7 +100,7 @@ public class MajorController implements CoreController {
                 System.exit(0);
             default:
 //                System.out.println("Wrong input by user!!!!" + new AssertionError());
-                new AssertionError();
+                throw new AssertionError("Something went wrong, fatal error");
         }
     }
 
@@ -144,7 +144,7 @@ public class MajorController implements CoreController {
                 System.exit(0);
             default:
 //                System.out.println("Wrong input by user!!!!" + new AssertionError());
-                new AssertionError();
+                throw  new AssertionError("Something went wrong, fatal error");
         }
     }
 
@@ -278,7 +278,7 @@ public class MajorController implements CoreController {
                             runSecondaryMenu();
                             break;
                         default:
-                            new AssertionError();
+                            throw  new AssertionError("Something went wrong, fatal error");
                     }
                 case "no":
                     int taskIndex_2 = view.getTaskIndex();
@@ -332,7 +332,7 @@ public class MajorController implements CoreController {
                             runSecondaryMenu();
                             break;
                         default:
-                            new AssertionError();
+                            throw  new AssertionError("Something went wrong, fatal error");
                     }
                 default:
                     runSecondaryMenu();
