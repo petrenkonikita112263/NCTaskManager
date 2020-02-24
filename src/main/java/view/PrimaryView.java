@@ -110,6 +110,10 @@ public class PrimaryView implements CoreViewable {
         }
     }
 
+    public int getNumberForFurtherAction() throws IOException {
+        return Integer.parseInt(bufReader.readLine());
+    }
+
     /**
      * Method that allow user to input id for task.
      *

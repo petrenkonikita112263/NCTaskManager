@@ -111,7 +111,7 @@ public class MajorController implements CoreController {
     private void runSecondaryMenu() throws IOException {
         logger.info("The additional menu was called");
         view.displayAdditionalInfo();
-        int defaultNumber = view.getUserInput();
+        int defaultNumber = view.getNumberForFurtherAction();
         logger.info("Console was called");
         switch (defaultNumber) {
             case 1:
@@ -216,7 +216,7 @@ public class MajorController implements CoreController {
                     int taskIndex_1 = view.getTaskIndex();
                     listOfTasks.getTask(taskIndex_1);
                     view.changeFunctionalityRepeteadTask();
-                    int changeOption_1 = view.getUserInput();
+                    int changeOption_1 = view.getNumberForFurtherAction();
                     switch (changeOption_1) {
                         case 1:
                             String taskName = view.changeTitleOfTask();
@@ -272,7 +272,7 @@ public class MajorController implements CoreController {
                     int taskIndex_2 = view.getTaskIndex();
                     listOfTasks.getTask(taskIndex_2);
                     view.changeFunctionalityNormalyTask();
-                    int changeOption_2 = view.getUserInput();
+                    int changeOption_2 = view.getNumberForFurtherAction();
                     switch (changeOption_2) {
                         case 1:
                             String taskName = view.changeTitleOfTask();
