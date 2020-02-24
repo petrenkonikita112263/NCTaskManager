@@ -5,6 +5,7 @@ import model.Task;
 import model.TaskIO;
 import model.Tasks;
 import org.apache.log4j.Logger;
+import view.NotificationView;
 import view.PrimaryView;
 
 import java.io.File;
@@ -54,7 +55,8 @@ public class MajorController implements CoreController {
         listOfTasks = new ArrayTaskList();
         view = new PrimaryView();
         ConcurrencyNotification notificationThread =
-                new ConcurrencyNotification(listOfTasks, this);
+                new ConcurrencyNotification(listOfTasks, new NotificationView());
+        notificationThread.setDaemon(true);
         notificationThread.start();
         logger.info("The thread is running. Notification works");
     }

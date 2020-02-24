@@ -39,31 +39,26 @@ public class ConcurrencyNotification extends Thread {
     private ArrayTaskList listOfTasks;
 
     /**
-     * Instance of controller.
-     */
-    private MajorController mainController;
-
-    /**
      * Boolean variable of notification.
      */
     private boolean notify;
 
     /**
-     *
+     * Instance of view of notifications.
      */
     private NotificationView notificationView;
 
     /**
      * EVC constructor.
      *
-     * @param listOfTasks    - array list
-     * @param mainController - instance of controller
+     * @param listOfTasks      - array list
+     * @param notificationView - instance of view
      */
     public ConcurrencyNotification(ArrayTaskList listOfTasks,
-                                   MajorController mainController
-                                   ) {
+                                   NotificationView notificationView
+    ) {
         this.listOfTasks = listOfTasks;
-        this.mainController = mainController;
+        this.notificationView = notificationView;
     }
 
     /**
@@ -77,8 +72,8 @@ public class ConcurrencyNotification extends Thread {
             LocalDateTime endNotify = LocalDateTime.now()
                     .plusSeconds(DEFAULT_TIME);
             SortedMap<LocalDateTime, Set<Task>>
-            calendarContent = Tasks.calendar(listOfTasks, startNotify, endNotify);
-            for(SortedMap.Entry<LocalDateTime, Set<Task>> content : calendarContent.entrySet()) {
+                    calendarContent = Tasks.calendar(listOfTasks, startNotify, endNotify);
+            for (SortedMap.Entry<LocalDateTime, Set<Task>> content : calendarContent.entrySet()) {
                 for (Task someTask : content.getValue()) {
                     String taskTitle = someTask.getTitle();
                     if (content.getKey().isEqual(startNotify)) {
