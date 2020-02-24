@@ -164,6 +164,7 @@ public class MajorController implements CoreController {
                 Task repTask = new Task(title, start, end, interval);
                 listOfTasks.add(repTask);
                 logger.info("The repetead task was added");
+                processSavingWork();
                 runSecondaryMenu();
                 break;
             case "no":
@@ -171,6 +172,7 @@ public class MajorController implements CoreController {
                 Task normalTask = new Task(title, time);
                 listOfTasks.add(normalTask);
                 logger.info("The non-repetead task was added");
+                processSavingWork();
                 runSecondaryMenu();
                 break;
             default:
@@ -192,6 +194,7 @@ public class MajorController implements CoreController {
         int id = view.removeSomeTask();
         listOfTasks.removeElement(id);
         logger.info("Task was deleted");
+        processSavingWork();
         runSecondaryMenu();
     }
 
@@ -222,6 +225,7 @@ public class MajorController implements CoreController {
                             String taskName = view.changeTitleOfTask();
                             smth.setTitle(taskName);
                             logger.info("The title of the task was changed");
+                            processSavingWork();
                             processChangingTask();
                             break;
                         case 2:
@@ -230,12 +234,14 @@ public class MajorController implements CoreController {
                             smth.setStart(startTime);
                             smth.setEnd(endTime);
                             logger.info("The start and end time was changed");
+                            processSavingWork();
                             processChangingTask();
                             break;
                         case 3:
                             int taskInterval = view.changeIntervalOfTask();
                             smth.setInterval(taskInterval);
                             logger.info("The interval was changed");
+                            processSavingWork();
                             processChangingTask();
                             break;
                         case 4:
@@ -245,19 +251,23 @@ public class MajorController implements CoreController {
                                     smth.setRepeated(false);
                                     smth.setTime(LocalDateTime.now());
                                     logger.info("The task is nonreptead now");
+                                    processSavingWork();
                                     break;
                                 case 1:
                                     smth.setRepeated(true);
                                     smth.setTime(LocalDateTime.now(), LocalDateTime.now().plusDays(1), 0);
                                     logger.info("The task is repetead now");
+                                    processSavingWork();
                                     break;
                                 case 2:
                                     smth.setActive(false);
                                     logger.info("The task isn't active");
+                                    processSavingWork();
                                     break;
                                 case 3:
                                     smth.setActive(true);
                                     logger.info("The task is active");
+                                    processSavingWork();
                                     break;
                                 default:
                                     runSecondaryMenu();
@@ -278,12 +288,14 @@ public class MajorController implements CoreController {
                             String taskName = view.changeTitleOfTask();
                             smth.setTitle(taskName);
                             logger.info("The title of the task was changed");
+                            processSavingWork();
                             processChangingTask();
                             break;
                         case 2:
                             LocalDateTime time = view.inputDateTime();
                             smth.setTime(time);
                             logger.info("The time was changed");
+                            processSavingWork();
                             processChangingTask();
                             break;
                         case 3:
@@ -293,19 +305,23 @@ public class MajorController implements CoreController {
                                     smth.setRepeated(false);
                                     smth.setTime(LocalDateTime.now());
                                     logger.info("The task is nonreptead now");
+                                    processSavingWork();
                                     break;
                                 case 1:
                                     smth.setRepeated(true);
                                     smth.setTime(LocalDateTime.now(), LocalDateTime.now().plusDays(1), 0);
+                                    processSavingWork();
                                     logger.info("The task is repetead now");
                                     break;
                                 case 2:
                                     smth.setActive(false);
                                     logger.info("The task isn't active");
+                                    processSavingWork();
                                     break;
                                 case 3:
                                     smth.setActive(true);
                                     logger.info("The task is active");
+                                    processSavingWork();
                                     break;
                                 default:
                                     runSecondaryMenu();
@@ -456,11 +472,9 @@ public class MajorController implements CoreController {
             case 1:
                 String fileName = view.getFileName();
                 saveFileWithTasks(fileName);
-                runSecondaryMenu();
                 break;
             case 2:
                 readFileWithTasks();
-                runSecondaryMenu();
                 break;
             default:
                 runMainApplication();
