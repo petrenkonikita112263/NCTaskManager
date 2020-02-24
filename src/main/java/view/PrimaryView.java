@@ -1,5 +1,6 @@
 package view;
 
+import model.ArrayTaskList;
 import model.Task;
 import org.apache.log4j.Logger;
 
@@ -72,6 +73,38 @@ public class PrimaryView implements CoreViewable {
                 System.out.println("Task title: " + task.getTitle());
             }
             System.out.println("Its date: " + content.getKey());
+        }
+    }
+
+    public void getInfoAboutCreation() {
+        System.out.println("The empty task list was created");
+    }
+
+    public void getMessageAboutEmptiness() {
+        System.out.println("The list is empty, firstly add some tasks in it");
+    }
+
+    public void getViewForList(ArrayTaskList arrayTaskList) {
+        for (Task someTask : arrayTaskList) {
+            System.out.println(someTask);
+        }
+    }
+
+    public void getViewForTask(ArrayTaskList arrayTaskList) {
+        for (int i = 0; i < arrayTaskList.size(); i++) {
+            Task t = arrayTaskList.getTask(i);
+            System.out.println(t.toString());
+//            if (t.isRepeated()) {
+//                System.out.println("\tTitle : " + t.getTitle()
+//                        + "\nTask starts at " + t.getStartTime()
+//                        + "\nTask ends at " + t.getEndTime()
+//                        + "\nthe interval between start and end time is "
+//                        + t.getRepeatInterval());
+//            } else {
+//                System.out.println("\tTitle : " + t.getTitle()
+//                        + "\nTask starts at " + t.getStartTime()
+//                        + "\nTask ends at " + t.getEndTime());
+//            }
         }
     }
 

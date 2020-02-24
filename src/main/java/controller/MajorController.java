@@ -66,7 +66,7 @@ public class MajorController implements CoreController {
      * new created list.
      */
     private void createEmptyTaskList() {
-        System.out.println("The empty task list was created");
+        view.getInfoAboutCreation();
     }
 
     /**
@@ -581,16 +581,14 @@ public class MajorController implements CoreController {
     @Override
     public void displayListOfTasks(ArrayTaskList taskList) {
         if (taskList.size() == 0) {
-            System.out.println("The list is empty, firstly add some tasks in it");
+            view.getMessageAboutEmptiness();
             try {
                 runSecondaryMenu();
             } catch (IOException e) {
                 logger.error("Can't access to additional menu of application ", e);
             }
         }
-        for (Task someTask : taskList) {
-            System.out.println(someTask);
-        }
+        view.getViewForList(taskList);
         try {
             runSecondaryMenu();
         } catch (IOException e) {
@@ -605,28 +603,14 @@ public class MajorController implements CoreController {
     @Override
     public void displayDetailAboutTask(ArrayTaskList taskList) {
         if (taskList.size() == 0) {
-            System.out.println("The list is empty, firstly add some tasks in it");
+            view.getMessageAboutEmptiness();
             try {
                 runSecondaryMenu();
             } catch (IOException e) {
                 logger.error("Can't access to additional menu of application ", e);
             }
         }
-        for (int i = 0; i < taskList.size(); i++) {
-            Task t = taskList.getTask(i);
-            System.out.println(t.toString());
-//            if (t.isRepeated()) {
-//                System.out.println("\tTitle : " + t.getTitle()
-//                        + "\nTask starts at " + t.getStartTime()
-//                        + "\nTask ends at " + t.getEndTime()
-//                        + "\nthe interval between start and end time is "
-//                        + t.getRepeatInterval());
-//            } else {
-//                System.out.println("\tTitle : " + t.getTitle()
-//                        + "\nTask starts at " + t.getStartTime()
-//                        + "\nTask ends at " + t.getEndTime());
-//            }
-        }
+        view.getViewForTask(taskList);
 //        try {
 //            runSecondaryMenu();
 //        } catch (IOException e) {
