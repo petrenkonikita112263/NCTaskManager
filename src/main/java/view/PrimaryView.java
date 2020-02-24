@@ -122,6 +122,7 @@ public class PrimaryView implements CoreViewable {
         try {
             id = Integer.parseInt(bufReader.readLine());
             if ((id < 0) || (id > Integer.MAX_VALUE)) {
+                System.out.println("This number can't be negative or bigger than Integer");
                 getTaskIndex();
             }
         } catch (IOException exp_1) {
@@ -140,6 +141,7 @@ public class PrimaryView implements CoreViewable {
      */
     private void checkIntValue(int number) {
         if ((number > 60) || (number < 0) || (number > Integer.MAX_VALUE)) {
+            System.out.println("Time in minute can't be negative or move than 60");
             logger.error("Task can't exist with this value of Integer");
             addInterval();
         }
@@ -173,7 +175,8 @@ public class PrimaryView implements CoreViewable {
      * @param word - one word
      */
     private void checkStringValue(String word) {
-        if (word == null) {
+        if (word.equals(null)) {
+            System.out.println("You don't write any word. Please try again");
             logger.error("Task can't exist with this String value");
             selectTheTypeForTask();
         }
@@ -204,7 +207,9 @@ public class PrimaryView implements CoreViewable {
      * @param time - time value for task
      */
     private void checkTime(LocalDateTime time) {
-        if ((time.isBefore(LocalDateTime.now())) || (time == null)) {
+        if ((time.isBefore(LocalDateTime.now())) || (time == null)
+        || (time.isEqual(LocalDateTime.now()))) {
+            System.out.println("You enter wrong date, date can't be before today or equals now date");
             logger.error("Task can't exist with this time");
             inputDateTime();
         }
@@ -243,7 +248,10 @@ public class PrimaryView implements CoreViewable {
                 + "that you want to delete");
         try {
             id = Integer.parseInt(bufReader.readLine());
-            checkIntValue(id);
+            if ((id < 0) || (id > Integer.MAX_VALUE)) {
+                System.out.println("This number can't be negative or bigger than Integer");
+                removeSomeTask();
+            }
         } catch (IOException exp_1) {
             logger.error("Error in input number to the console", exp_1);
         } catch (NumberFormatException exp_2) {
@@ -387,7 +395,10 @@ public class PrimaryView implements CoreViewable {
                 + "\n0 - nonrepeated; \n1 - repeated; \n2 - disable task; \n3 - enable task; \npress Enter to exit to menu: \r");
         try {
             taskStatus = Integer.parseInt(bufReader.readLine());
-            checkIntValue(taskStatus);
+            if ((taskStatus < 0) || (taskStatus > Integer.MAX_VALUE)) {
+                System.out.println("This number can't be negative or bigger than Integer");
+                changeStatusOfTask();
+            }
         } catch (IOException exp_1) {
             logger.error("Error in input number to the console", exp_1);
         } catch (NumberFormatException exp_2) {
@@ -424,6 +435,7 @@ public class PrimaryView implements CoreViewable {
 
     private void checkCalendarDate_1(LocalDateTime time) {
         if ((time.isBefore(LocalDateTime.now())) || (time == null)) {
+            System.out.println("You enter wrong date, date can't be before today or nothing info");
             logger.error("Calendar can't exist with this time");
             addTimeLimit_1();
         }
@@ -457,6 +469,7 @@ public class PrimaryView implements CoreViewable {
 
     private void checkCalendarDate_2(LocalDateTime time) {
         if ((time.isBefore(LocalDateTime.now())) || (time == null)) {
+            System.out.println("You enter wrong date, date can't be before today or nothing info");
             logger.error("Calendar can't exist with this time");
             addTimeLimit_2();
         }
@@ -474,7 +487,10 @@ public class PrimaryView implements CoreViewable {
         int inputNumber = 0;
         try {
             inputNumber = Integer.parseInt(bufReader.readLine());
-            checkIntValue(inputNumber);
+            if ((inputNumber < 0) || (inputNumber > Integer.MAX_VALUE)) {
+                System.out.println("This number can't be negative or bigger than Integer");
+                getAction();
+            }
         } catch (IOException mainExp) {
             logger.error("Error with typing number or wrong format for number", mainExp);
         } catch (NumberFormatException otherExp) {
