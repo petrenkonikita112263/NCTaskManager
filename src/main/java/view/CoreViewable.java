@@ -1,11 +1,5 @@
 package view;
 
-import model.Task;
-
-import java.time.LocalDateTime;
-import java.util.Set;
-import java.util.SortedMap;
-
 /**
  * Main interface of View part of MVC project.
  *
@@ -23,13 +17,5 @@ public interface CoreViewable {
      * application.
      */
     void displayAdditionalInfo();
-
-    /**
-     * Method displays the created calendar.
-     *
-     * @param values - SortedMap collection where
-     *               key - date and value - is task
-     */
-    void displayCreatedCalendar(SortedMap<LocalDateTime, Set<Task>> values);
 
 }

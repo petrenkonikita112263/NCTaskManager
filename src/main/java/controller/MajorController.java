@@ -13,6 +13,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Set;
 import java.util.SortedMap;
 
@@ -94,7 +95,8 @@ public class MajorController implements CoreController {
                 view.closeInput();
                 System.exit(0);
             default:
-                throw new AssertionError("Something went wrong, fatal error");
+                throw  new AssertionError("Something went wrong, fatal error, user type negative numer"
+                        + " or more that 4");
         }
     }
 
@@ -132,7 +134,8 @@ public class MajorController implements CoreController {
                 view.closeInput();
                 System.exit(0);
             default:
-                throw  new AssertionError("Something went wrong, fatal error");
+                throw  new AssertionError("Something went wrong, fatal error, user type negative numer"
+                        + " or more that 7");
         }
     }
 
@@ -200,7 +203,7 @@ public class MajorController implements CoreController {
         for (Task smth : listOfTasks) {
             switch (answer.toLowerCase()) {
                 case "yes":
-                    view.getViewForTask(listOfTasks);
+                    displayDetailAboutTask(listOfTasks);
                     int taskIndex_1 = view.getTaskIndex();
                     listOfTasks.getTask(taskIndex_1);
                     view.changeFunctionalityOfTask();
@@ -261,10 +264,11 @@ public class MajorController implements CoreController {
                             runSecondaryMenu();
                             break;
                         default:
-                            throw  new AssertionError("Something went wrong, fatal error");
+                            throw  new AssertionError("Something went wrong, fatal error, user type negative numer"
+                                    + " or more that 5");
                     }
                 case "no":
-                    view.getViewForTask(listOfTasks);
+                    displayDetailAboutTask(listOfTasks);
                     int taskIndex_2 = view.getTaskIndex();
                     listOfTasks.getTask(taskIndex_2);
                     view.changeFunctionalityOfTask();
@@ -316,7 +320,8 @@ public class MajorController implements CoreController {
                             runSecondaryMenu();
                             break;
                         default:
-                            throw  new AssertionError("Something went wrong, fatal error");
+                            throw  new AssertionError("Something went wrong, fatal error, user type negative numer"
+                            + " or more that 4");
                     }
                 default:
                     runSecondaryMenu();
@@ -363,7 +368,15 @@ public class MajorController implements CoreController {
         SortedMap<LocalDateTime, Set<Task>> defaultCalendar =
                 Tasks.calendar(listOfTasks, startDate, limitDate);
         logger.info("The calendar was created");
-        view.displayCreatedCalendar(defaultCalendar);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        for (SortedMap.Entry<LocalDateTime, Set<Task>> content : defaultCalendar.entrySet()) {
+            for (Task task : content.getValue()) {
+                String taskTitle = "Task title: " + task.getTitle();
+                view.displayTaskTitle(taskTitle);
+            }
+            String taskDate = "Its date: " + content.getKey().format(formatter);
+            view.displayTaskdate(taskDate);
+        }
         runSecondaryMenu();
     }
 
@@ -471,7 +484,10 @@ public class MajorController implements CoreController {
                 logger.error("Can't access to additional menu of application ", e);
             }
         }
-        view.getViewForList(taskList);
+        for (Task someTask : taskList) {
+            String result = String.valueOf(someTask);
+            view.getViewForList(result);
+        }
         try {
             runSecondaryMenu();
         } catch (IOException e) {
@@ -493,6 +509,20 @@ public class MajorController implements CoreController {
                 logger.error("Can't access to additional menu of application ", e);
             }
         }
-        view.getViewForTask(taskList);
+        for (int i = 0; i < taskList.size(); i++) {
+            Task t = taskList.getTask(i);
+            if (t.isRepeated()) {
+                String resultRepTask = i + "\tYou have the repetead tesk with title : " + t.getTitle()
+                        + "\nTask starts at " + t.getStartTime()
+                        + "\nTask ends at " + t.getEndTime()
+                        + "\nthe interval between start and end time is "
+                        + t.getRepeatInterval();
+                view.getViewForRepTask(resultRepTask);
+            } else if (!t.isRepeated()) {
+                String resultNorTask = i + "\tYou have the non-repetead task with title : " + t.getTitle()
+                        + "\nTask starts at " + t.getTime();
+                view.getViewForNorTask(resultNorTask);
+            }
+        }
     }
 }

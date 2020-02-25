@@ -1,7 +1,5 @@
 package view;
 
-import model.ArrayTaskList;
-import model.Task;
 import org.apache.log4j.Logger;
 
 import java.io.BufferedReader;
@@ -10,8 +8,6 @@ import java.io.InputStreamReader;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.Set;
-import java.util.SortedMap;
 
 /**
  * View class that implements interface of Core class.
@@ -60,20 +56,12 @@ public class PrimaryView implements CoreViewable {
         System.out.println("\t7 - Terminate the application");
     }
 
-    /**
-     * Implementation (override) displayCreatedCalendar() method from
-     * interface.
-     */
-    @Override
-    public void displayCreatedCalendar(SortedMap<LocalDateTime,
-            Set<Task>> values) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        for (SortedMap.Entry<LocalDateTime, Set<Task>> content : values.entrySet()) {
-            for (Task task : content.getValue()) {
-                System.out.println("Task title: " + task.getTitle());
-            }
-            System.out.println("Its date: " + content.getKey().format(formatter));
-        }
+    public void displayTaskTitle(String title) {
+        System.out.println(title);
+    }
+
+    public void displayTaskdate(String date) {
+        System.out.println(date);
     }
 
     public void getInfoAboutCreation() {
@@ -84,26 +72,16 @@ public class PrimaryView implements CoreViewable {
         System.out.println("The list is empty, firstly add some tasks in it");
     }
 
-    public void getViewForList(ArrayTaskList arrayTaskList) {
-        for (Task someTask : arrayTaskList) {
-            System.out.println(someTask);
-        }
+    public void getViewForList(String stringText) {
+        System.out.println(stringText);
     }
 
-    public void getViewForTask(ArrayTaskList arrayTaskList) {
-        for (int i = 0; i < arrayTaskList.size(); i++) {
-            Task t = arrayTaskList.getTask(i);
-            if (t.isRepeated()) {
-                System.out.println(i + "\tYou have the repetead tesk with title : " + t.getTitle()
-                        + "\nTask starts at " + t.getStartTime()
-                        + "\nTask ends at " + t.getEndTime()
-                        + "\nthe interval between start and end time is "
-                        + t.getRepeatInterval());
-            } else if (!t.isRepeated()) {
-                System.out.println(i + "\tYou have the non-repetead task with title : " + t.getTitle()
-                        + "\nTask starts at " + t.getTime());
-            }
-        }
+    public void getViewForRepTask(String textTask) {
+        System.out.println(textTask);
+    }
+
+    public void getViewForNorTask(String textTask) {
+        System.out.println(textTask);
     }
 
     /**
