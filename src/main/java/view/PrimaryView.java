@@ -93,18 +93,16 @@ public class PrimaryView implements CoreViewable {
     public void getViewForTask(ArrayTaskList arrayTaskList) {
         for (int i = 0; i < arrayTaskList.size(); i++) {
             Task t = arrayTaskList.getTask(i);
-            System.out.println(t.toString());
-//            if (t.isRepeated()) {
-//                System.out.println("\tTitle : " + t.getTitle()
-//                        + "\nTask starts at " + t.getStartTime()
-//                        + "\nTask ends at " + t.getEndTime()
-//                        + "\nthe interval between start and end time is "
-//                        + t.getRepeatInterval());
-//            } else {
-//                System.out.println("\tTitle : " + t.getTitle()
-//                        + "\nTask starts at " + t.getStartTime()
-//                        + "\nTask ends at " + t.getEndTime());
-//            }
+            if (t.isRepeated()) {
+                System.out.println(i + "\tYou have the repetead tesk with title : " + t.getTitle()
+                        + "\nTask starts at " + t.getStartTime()
+                        + "\nTask ends at " + t.getEndTime()
+                        + "\nthe interval between start and end time is "
+                        + t.getRepeatInterval());
+            } else if (!t.isRepeated()) {
+                System.out.println(i + "\tYou have the non-repetead task with title : " + t.getTitle()
+                        + "\nTask starts at " + t.getTime());
+            }
         }
     }
 

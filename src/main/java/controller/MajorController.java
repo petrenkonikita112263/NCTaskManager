@@ -211,13 +211,14 @@ public class MajorController implements CoreController {
     public void processChangingTask() throws IOException {
         logger.info("The process of changing task was started");
 //        view.changeOptions();
-        displayDetailAboutTask(listOfTasks);
+//        displayDetailAboutTask(listOfTasks);
 //        int optionValue = view.getUserInput();
         logger.info("The console was called");
         String answer = view.selectTheTypeForTask();
         for (Task smth : listOfTasks) {
             switch (answer.toLowerCase()) {
                 case "yes":
+                    view.getViewForTask(listOfTasks);
                     int taskIndex_1 = view.getTaskIndex();
                     listOfTasks.getTask(taskIndex_1);
                     view.changeFunctionalityRepeteadTask();
@@ -281,6 +282,7 @@ public class MajorController implements CoreController {
                             throw  new AssertionError("Something went wrong, fatal error");
                     }
                 case "no":
+                    view.getViewForTask(listOfTasks);
                     int taskIndex_2 = view.getTaskIndex();
                     listOfTasks.getTask(taskIndex_2);
                     view.changeFunctionalityNormalyTask();
