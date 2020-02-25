@@ -32,23 +32,4 @@ public interface CoreViewable {
      */
     void displayCreatedCalendar(SortedMap<LocalDateTime, Set<Task>> values);
 
-//    /**
-//     * Method display the whole ArrayTaskList.
-//     *
-//     * @param taskList - name of the task list
-//     */
-//    void displayListOfTasks(ArrayTaskList taskList);
-
-//    /**
-//     * Method display the all information about every task in the list..
-//     *
-//     * @param taskList - name of the task list
-//     */
-//    void displayDetailAboutTask(ArrayTaskList taskList);
-
-//    /**
-//     * Method that displays step instruction to change the task.
-//     */
-//    void changeOptions();
-
 }

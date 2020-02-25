@@ -39,11 +39,6 @@ public class ConcurrencyNotification extends Thread {
     private ArrayTaskList listOfTasks;
 
     /**
-     * Boolean variable of notification.
-     */
-    private boolean notify;
-
-    /**
      * Instance of view of notifications.
      */
     private NotificationView notificationView;
@@ -67,7 +62,6 @@ public class ConcurrencyNotification extends Thread {
     @Override
     public void run() {
         while (true) {
-//            notify = false;
             LocalDateTime startNotify = (LocalDateTime.now());
             LocalDateTime endNotify = LocalDateTime.now()
                     .plusSeconds(DEFAULT_TIME);
@@ -81,22 +75,8 @@ public class ConcurrencyNotification extends Thread {
                     }
                 }
             }
-
-//            ArrayTaskList arrayTaskList = (ArrayTaskList) Tasks
-//                    .incoming(listOfTasks,
-//                            startNotify, endNotify);
-//            Iterator<Task> helper = arrayTaskList.iterator();
-//            while (helper.hasNext()) {
-//                Task task = helper.next();
-//                NotificationView notifyThread = new NotificationView();
-//                notifyThread.displayMessageNotification(task);
-//                notify = true;
-//            }
             try {
                 sleep(SLEEP_THREAD);
-                if (notify) {
-                    logger.info("Notification was started");
-                }
             } catch (InterruptedException e) {
                 logger.error("The thread can't run", e);
             }

@@ -55,7 +55,6 @@ public class PrimaryView implements CoreViewable {
         System.out.println("\t2 - To change the task in the list");
         System.out.println("\t3 - To delete task from the list");
         System.out.println("\t4 - Display all tasks with information inside ArrayList");
-//        System.out.println("\t5 - Display all information about every tasks in the list");
         System.out.println("\t5 - Create calendar");
         System.out.println("\t6 - To write your task list to the file");
         System.out.println("\t7 - Terminate the application");
@@ -105,18 +104,6 @@ public class PrimaryView implements CoreViewable {
             }
         }
     }
-
-//    /**
-//     * Implementation (override) changeOptions() method from
-//     * interface.
-//     */
-//    @Override
-//    public void changeOptions() {
-////        System.out.println("\t1 - Change id (number) of your task");
-//        System.out.println("\t1 - Change title of your task");
-//        System.out.println("\t2 - Change time and interval of your task");
-//        System.out.println("\t3- Set your task active or diactive it");
-//    }
 
     /**
      * Public method that allow user to input info in console.
@@ -217,24 +204,6 @@ public class PrimaryView implements CoreViewable {
         }
     }
 
-//    /**
-//     * Method that allow user to choice which type of task
-//     * to add to the list.
-//     *
-//     * @return - get user answer for further action
-//     */
-//    public String addTypeOfTask() {
-//        String wordAnswer = null;
-//        System.out.println("What type of task it will be "
-//                + "repeative or not? (yes/no) \r");
-//        try {
-//            wordAnswer = bufReader.readLine();
-//        } catch (IOException exp) {
-//            logger.error("Error in input word to the console", exp);
-//        }
-//        return wordAnswer;
-//    }
-
     /**
      * Private additional method that validate LocalDateTime
      * from user input.
@@ -294,25 +263,6 @@ public class PrimaryView implements CoreViewable {
         }
         return id;
     }
-
-//    /**
-//     * Method that ask user to change id of the task.
-//     *
-//     * @return - new id
-//     */
-//    public int changeIdOfTask() {
-//        int taskId = 0;
-//        System.out.println("Enter the id of the task: \r");
-//        try {
-//            taskId = Integer.parseInt(bufReader.readLine());
-//            checkIntValue(taskId);
-//        } catch (IOException exp_1) {
-//            logger.error("Error in input number to the console", exp_1);
-//        } catch (NumberFormatException exp_2) {
-//            logger.error("Wrong type of id for task", exp_2);
-//        }
-//        return taskId;
-//    }
 
     public void changeFunctionalityRepeteadTask() {
         System.out.println("You gonna change repetead task\n" +
@@ -517,7 +467,7 @@ public class PrimaryView implements CoreViewable {
      */
     public int getAction() {
         System.out.println("Type what do you want to perform: ");
-        System.out.println("\t 1 - To saved task and exit\n\t 2- To load list of task"
+        System.out.println("\t 1 - To saved task and exit"
                 + "\n\t Press ENTER - To return to main menu of application");
         int inputNumber = 0;
         try {

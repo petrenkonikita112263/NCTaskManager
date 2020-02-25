@@ -29,11 +29,6 @@ public class MajorController implements CoreController {
     private static final Logger logger = Logger.getLogger(MajorController.class);
 
     /**
-     * Constant that holds name of the file for saving task list.
-     */
-    private final String nameOfFile = "TaskManagerList";
-
-    /**
      * Instance of list.
      */
     private ArrayTaskList listOfTasks;
@@ -99,7 +94,6 @@ public class MajorController implements CoreController {
                 view.closeInput();
                 System.exit(0);
             default:
-//                System.out.println("Wrong input by user!!!!" + new AssertionError());
                 throw new AssertionError("Something went wrong, fatal error");
         }
     }
@@ -127,12 +121,7 @@ public class MajorController implements CoreController {
                 break;
             case 4:
                 displayListOfTasks(listOfTasks);
-//                showListOfTask();
                 break;
-//            case 5:
-//                displayDetailAboutTask(listOfTasks);
-////                showTaskDetails();
-//                break;
             case 5:
                 displayCalendar();
                 break;
@@ -143,7 +132,6 @@ public class MajorController implements CoreController {
                 view.closeInput();
                 System.exit(0);
             default:
-//                System.out.println("Wrong input by user!!!!" + new AssertionError());
                 throw  new AssertionError("Something went wrong, fatal error");
         }
     }
@@ -189,9 +177,6 @@ public class MajorController implements CoreController {
      */
     @Override
     public void processDeletingTask() throws IOException {
-//        for (Task someTask : listOfTasks) {
-//            System.out.println(someTask);
-//        }
         displayDetailAboutTask(listOfTasks);
         int id = view.removeSomeTask();
         listOfTasks.removeElement(id);
@@ -210,9 +195,6 @@ public class MajorController implements CoreController {
     @Override
     public void processChangingTask() throws IOException {
         logger.info("The process of changing task was started");
-//        view.changeOptions();
-//        displayDetailAboutTask(listOfTasks);
-//        int optionValue = view.getUserInput();
         logger.info("The console was called");
         String answer = view.selectTheTypeForTask();
         for (Task smth : listOfTasks) {
@@ -342,62 +324,6 @@ public class MajorController implements CoreController {
         }
     }
 
-//            for (Task smth : listOfTasks) {
-//
-//                switch (optionValue) {
-////                case 1:
-////                    int taskId = view.changeIdOfTask();
-////                    smth.setId(taskId);
-////                    logger.info("The id of the task was changed");
-////                    runSecondaryMenu();
-////                    break;
-//                    case 1:
-//                        String taskName = view.changeTitleOfTask();
-//                        smth.setTitle(taskName);
-//                        logger.info("The title of the task was changed");
-//                        runSecondaryMenu();
-//                        break;
-//                    case 2:
-//                        String answer = view.selectTheTypeForTask();
-//                        if (answer.toLowerCase().equals("yes")) {
-//                            LocalDateTime startTime = view.inputDateTime();
-//                            LocalDateTime endTime = view.inputDateTime();
-//                            int taskInterval = view.changeIntervalOfTask();
-//                            smth.setTime(startTime, endTime, taskInterval);
-//                            logger.info("The repeated time and interval were changed");
-//                            runSecondaryMenu();
-//                        } else if (answer.toLowerCase().equals("no")) {
-//                            LocalDateTime taskTime = view.inputDateTime();
-//                            smth.setTime(taskTime);
-//                            logger.info("The time of the task was changed");
-//                            runSecondaryMenu();
-//                        } else {
-//                            logger.error("Wrong input, make sure "
-//                                    + "that you write yes or no!!!");
-//                            view.selectTheTypeForTask();
-//                        }
-//                    case 3:
-//                        int taskStatus = view.changeStatusOfTask();
-//                        if (taskStatus == 1) {
-//                            smth.setActive(true);
-//                            logger.info("The task is now active");
-//                            runSecondaryMenu();
-//                        } else if (taskStatus == 0) {
-//                            smth.setActive(false);
-//                            logger.info("The task turn off");
-//                            runSecondaryMenu();
-//                        } else {
-//                            logger.error("Wrong input, make "
-//                                    + "sure that you enter number 1 or 0!!");
-//                            processChangingTask();
-//                        }
-//                    default:
-////                    System.out.println("Wrong input by user!!!!" + new AssertionError());
-//                        new AssertionError();
-//                }
-//            }
-//        }
-
     /**
      * Private method that allow to write task list to GSON file.
      *
@@ -441,26 +367,6 @@ public class MajorController implements CoreController {
         runSecondaryMenu();
     }
 
-//    /**
-//     * Implementing (override) showTaskDetails() method
-//     * from interface.
-//     */
-//    @Override
-//    public void showTaskDetails() throws IOException {
-//        view.displayDetailAboutTask(listOfTasks);
-//        runSecondaryMenu();
-//    }
-//
-//    /**
-//     * Implementing (override) showListOfTask() method
-//     * from interface.
-//     */
-//    @Override
-//    public void showListOfTask() throws IOException {
-//        view.displayListOfTasks(listOfTasks);
-//        runSecondaryMenu();
-//    }
-
     /**
      * Implementing (override) configApplication() method
      * from interface.
@@ -477,24 +383,9 @@ public class MajorController implements CoreController {
                 String fileName = view.getFileName();
                 saveFileWithTasks(fileName);
                 break;
-            case 2:
-                readFileWithTasks();
-                break;
             default:
                 runMainApplication();
         }
-//        if (optionNumber == 1) {
-//            String fileName = view.getFileName();
-//            saveFileWithTasks(fileName);
-//        } else if (optionNumber == 2) {
-//            readFileWithTasks();
-//        } else if (optionNumber == 3) {
-//            runSecondaryMenu();
-//        } else {
-////            System.out.println("Something wrong try again");
-//            processSavingWork();
-//        }
-//        logger.info("The session was saved");
     }
 
     /**
@@ -516,20 +407,15 @@ public class MajorController implements CoreController {
             String defaultFile = view.getFileName();
             File fileTxt = new File(defaultFile);
             logger.info("The file starts creating.........");
-//            logger.info("The file starts creating.........");
             if (fileTxt.createNewFile()) {
                 logger.info("Your file is created here '"
                         + defaultFile + "'");
             } else {
                 logger.info("File've already existed");
-//                logger.info("File've already existed");
                 PrintWriter writer = new PrintWriter(defaultFile);
                 writer.print("");
                 writer.close();
             }
-//            TaskIO.writeText(listOfTasks, fileTxt);
-//            logger.info("The process of "
-//                    + "writing was successfully completed");
         } catch (IOException e) {
             logger.error("The error occurred ", e);
         } finally {
@@ -548,17 +434,12 @@ public class MajorController implements CoreController {
         File fileDirectory = new File(dirPath);
         if (!fileDirectory.exists()) {
             logger.info("The directory starts creating........");
-//            logger.info("The directory starts creating........");
             if (fileDirectory.mkdir()) {
                 logger.info("The directory '"
                         + dirPath + "' is created");
-//                logger.info("The directory '"
-//                        + dirPath + "' is created");
             } else {
                 logger.error("Don't enough "
                         + "permission to create directory");
-//                logger.error("Don't enough "
-//                        + "permission to create directory");
             }
         }
         logger.info("The process of creating folder was finished");
@@ -613,10 +494,5 @@ public class MajorController implements CoreController {
             }
         }
         view.getViewForTask(taskList);
-//        try {
-//            runSecondaryMenu();
-//        } catch (IOException e) {
-//            logger.error("Can't access to additional menu of application ", e);
-//        }
     }
 }

@@ -1,5 +1,8 @@
 package model;
 
+import org.apache.log4j.Logger;
+import view.PrimaryView;
+
 import java.util.Arrays;
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
@@ -15,6 +18,16 @@ import java.util.stream.Stream;
  * @author Nikita
  */
 public class ArrayTaskList extends AbstractTaskList implements Cloneable {
+
+    /**
+     * Adding logger to the class.
+     */
+    private static final Logger logger = Logger.getLogger(ArrayTaskList.class);
+
+    /**
+     * Instance of PrimaryView.
+     */
+    private PrimaryView view;
 
     /**
      * initial cpacity of the array.
@@ -35,6 +48,7 @@ public class ArrayTaskList extends AbstractTaskList implements Cloneable {
      * DVC constructor create the array.
      */
     public ArrayTaskList() {
+        view = new PrimaryView();
         this.taskStore = new Task[DEFAULT_SIZE];
     }
 
@@ -96,8 +110,13 @@ public class ArrayTaskList extends AbstractTaskList implements Cloneable {
      * @return removedTask - return removed task
      */
     public Task removeElement(int index) {
-        if (index < 0 || index >= size) {
-            throw new IndexOutOfBoundsException();
+        try {
+            if (index < 0 || index >= size) {
+                System.out.println("The index can't be bigger that size of the array or even negative");
+                view.removeSomeTask();
+            }
+        } catch (IndexOutOfBoundsException e) {
+            logger.error("The main error of array list - out of the size ", e);
         }
         Task removedTask = taskStore[index];
         for (int i = index; i < size - 1; i++) {

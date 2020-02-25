@@ -47,16 +47,6 @@ public interface CoreController {
      */
     void displayCalendar() throws IOException;
 
-//    /**
-//     * Method that allow to see chosen task.
-//     */
-//    void showTaskDetails() throws IOException;
-//
-//    /**
-//     * Method that print all tasks.
-//     */
-//    void showListOfTask() throws IOException;
-
     /**
      * Method that allow to change all information about task
      * like id, title, time and status.

@@ -16,20 +16,6 @@ public class NotificationView {
      */
     private static final Logger logger = Logger.getLogger(NotificationView.class);
 
-//    /**
-//     *
-//     */
-//    private Task someTask;
-//
-//    /**
-//     * EVC constructor.
-//     *
-//     * @param someTask -
-//     */
-//    public NotificationView(Task someTask) {
-//        this.someTask = someTask;
-//    }
-
     /**
      * Method that print message of upcoming task.
      */
