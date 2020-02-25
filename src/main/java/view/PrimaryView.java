@@ -264,21 +264,13 @@ public class PrimaryView implements CoreViewable {
         return id;
     }
 
-    public void changeFunctionalityRepeteadTask() {
-        System.out.println("You gonna change repetead task\n" +
-                "\t1 - Change title of the task" +
-                "\t2 - Change start and end date time" +
-                "\t3 - Change interval" +
-                "\t4 - Change status"
-                + "\t5 - Back to the menu");
-    }
-
-    public void changeFunctionalityNormalyTask() {
-        System.out.println("You gonna change regular type of task\n" +
+    public void changeFunctionalityOfTask() {
+        System.out.println("For your task you can change these parameters:\n" +
                 "\t1 - Change title of the task" +
                 "\t2 - Change time" +
-                "\t3 - Change status"
-                + "\t4 - Back to the menu");
+                "\t3 - Change status" +
+                "\t4 - Change interval"
+                + "\nBack to menu for repeteted task type\t - 5; for non-repetead type\t - 4");
     }
 
     /**

@@ -203,7 +203,7 @@ public class MajorController implements CoreController {
                     view.getViewForTask(listOfTasks);
                     int taskIndex_1 = view.getTaskIndex();
                     listOfTasks.getTask(taskIndex_1);
-                    view.changeFunctionalityRepeteadTask();
+                    view.changeFunctionalityOfTask();
                     int changeOption_1 = view.getNumberForFurtherAction();
                     switch (changeOption_1) {
                         case 1:
@@ -223,13 +223,6 @@ public class MajorController implements CoreController {
                             processChangingTask();
                             break;
                         case 3:
-                            int taskInterval = view.changeIntervalOfTask();
-                            smth.setInterval(taskInterval);
-                            logger.info("The interval was changed");
-                            processSavingWork();
-                            processChangingTask();
-                            break;
-                        case 4:
                             int taskStatus = view.changeStatusOfTask();
                             switch (taskStatus) {
                                 case 0:
@@ -257,6 +250,13 @@ public class MajorController implements CoreController {
                                 default:
                                     runSecondaryMenu();
                             }
+                        case 4:
+                            int taskInterval = view.changeIntervalOfTask();
+                            smth.setInterval(taskInterval);
+                            logger.info("The interval was changed");
+                            processSavingWork();
+                            processChangingTask();
+                            break;
                         case 5:
                             runSecondaryMenu();
                             break;
@@ -267,7 +267,7 @@ public class MajorController implements CoreController {
                     view.getViewForTask(listOfTasks);
                     int taskIndex_2 = view.getTaskIndex();
                     listOfTasks.getTask(taskIndex_2);
-                    view.changeFunctionalityNormalyTask();
+                    view.changeFunctionalityOfTask();
                     int changeOption_2 = view.getNumberForFurtherAction();
                     switch (changeOption_2) {
                         case 1:
