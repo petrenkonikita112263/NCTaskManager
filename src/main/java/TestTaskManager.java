@@ -16,14 +16,11 @@ public class TestTaskManager {
      */
     public static void main(String[] args) throws IOException {
 
-//        create view instance
-//        PrimaryView pv = new PrimaryView();
 
 //        create controller instance
         MajorController mc = new MajorController();
 
 //        run main menu from controller
-//        pv.displayInfo();
         mc.runMainApplication();
     }
 

@@ -50,11 +50,6 @@ public class TaskIO {
 //                write the whole title of the task
                 dataOutputStream.writeUTF(smth.getTitle());
 
-//                if (smth.isActive()) {
-//                    dataOutputStream.writeInt(1);
-//                } else {
-//                    dataOutputStream.writeInt(0);
-//                }
 //                use lambdas to write 1 - if task is active, alternatively - 0
                 dataOutputStream.writeInt(smth.isActive() ? 1 : 0);
 
@@ -67,8 +62,6 @@ public class TaskIO {
 
 //                if task is repeated
                 if (smth.isRepeated()) {
-
-//                    dataOutputStream.writeLong(smth.getStartTime().getNano());
 
 //                    write the endDate as startDate
                     dataOutputStream.writeLong(smth.getEndTime()
@@ -140,13 +133,6 @@ public class TaskIO {
 
 //                if task is repeated
                 if (valueOfInterval != 0) {
-
-//                    long startTime = dataInputStream.readLong();
-//                    LocalDateTime startDateTime = Instant.ofEpochMilli(startTime).
-//                            atZone(ZoneId.systemDefault()).toLocalDateTime();
-//                    long endTime = dataInputStream.readLong();
-//                    LocalDateTime endDateTime = Instant.ofEpochMilli(endTime).
-//                            atZone(ZoneId.systemDefault()).toLocalDateTime();
                     LocalDateTime endDateTime = LocalDateTime
                             .ofEpochSecond(dataInputStream.readLong(),
                                     0, ZoneOffset.UTC);
@@ -159,10 +145,6 @@ public class TaskIO {
 //                    add task to the list
                     taskList.add(newTask);
                 } else {
-
-//                    long time = dataInputStream.readLong();
-//                    LocalDateTime timeDate = Instant.ofEpochMilli(time).
-//                            atZone(ZoneId.systemDefault()).toLocalDateTime();
                     Task newTask = new Task(titleOfTask, startDateTime);
                     newTask.setActive(statusActive);
                     taskList.add(newTask);
@@ -306,56 +288,8 @@ public class TaskIO {
             for (Task smth : arrayTaskList) {
                 taskList.add(smth);
             }
-//            gson.fromJson(fileReader, (Type) taskList);
-//            read(taskList, fileReader);
         } finally {
             fileReader.close();
         }
     }
-
-//    public static void write(AbstractTaskList taskList, Writer writer) {
-//
-//        BufferedWriter bufferedWriter = new BufferedWriter(writer);
-//        try {
-//            Iterator iterator = taskList.iterator();
-//            while (iterator.hasNext()) {
-//                Task newTask = (Task) iterator.next();
-//                bufferedWriter.write(newTask.toString() + "\n");
-//            }
-//        } catch (IOException mainExp) {
-//            mainExp.printStackTrace();
-//        } finally {
-//            try {
-//                bufferedWriter.flush();
-//            } catch (IOException e_1) {
-//                e_1.printStackTrace();
-//            }
-//            try {
-//                bufferedWriter.close();
-//            } catch (IOException e_2) {
-//                e_2.printStackTrace();
-//            }
-//        }
-//    }
-
-//    public static void read(AbstractTaskList taskList, Reader reader) {
-//        BufferedReader bufferedReader = new BufferedReader(reader);
-//        try {
-//            String stringOfTask;
-//            while ((stringOfTask = bufferedReader.readLine()) != null) {
-//                System.out.println(stringOfTask);
-//                ;
-//            }
-//        } catch (IOException mainExp) {
-//            mainExp.printStackTrace();
-//        } finally {
-//            if (bufferedReader != null) {
-//                try {
-//                    bufferedReader.close();
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        }
-//    }
 }

@@ -151,7 +151,7 @@ public class MajorController implements CoreController {
                 LocalDateTime start = view.inputDateTime();
                 LocalDateTime end = view.inputDateTime();
                 int interval = view.addInterval();
-                Task repTask = new Task(title, start, end, interval);
+                Task repTask = new Task(title, start, end, interval * 60);
                 listOfTasks.add(repTask);
                 logger.info("The repetead task was added");
                 processSavingWork();
@@ -252,7 +252,7 @@ public class MajorController implements CoreController {
                             }
                         case 4:
                             int taskInterval = view.changeIntervalOfTask();
-                            smth.setInterval(taskInterval);
+                            smth.setInterval(taskInterval * 60);
                             logger.info("The interval was changed");
                             processSavingWork();
                             processChangingTask();

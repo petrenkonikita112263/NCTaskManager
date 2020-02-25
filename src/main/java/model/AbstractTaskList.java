@@ -26,33 +26,4 @@ public abstract class AbstractTaskList implements Iterable<Task> {
     public Stream<Task> getStream() {
         return null;
     }
-
-//    /**
-//     * incoming method for both type of collections.
-//     *
-//     * @param from - from what time
-//     * @param to   - until what time
-//     * @return incomingAbstractTaskLsst
-//     */
-//    public AbstractTaskList incoming(int from, int to) {
-//        AbstractTaskList abstractTaskList;
-//        if (this instanceof LinkedTaskList) {
-//            abstractTaskList = new LinkedTaskList();
-//        } else {
-//            abstractTaskList = new ArrayTaskList();
-//        }
-//        abstractTaskList.getStream()                                        // call getStream()
-//                .filter(time -> (time.nextTimeAfter(from) != -1)            // we want only this time
-//                        && (time.nextTimeAfter(from) <= to))
-//                .forEach(abstractTaskList::add);                            // lambda expression for ForEach loop
-//        return abstractTaskList;
-//
-////        for (int i = 0; i < size(); i++) {
-////            if ((getTask(i).nextTimeAfter(from) != -1)
-////                    && (getTask(i).nextTimeAfter(from) <= to)) {
-////                incomingAbstarctTaskList.add(getTask(i));
-////            }
-////        }
-////        return incomingAbstarctTaskList;
-//    }
 }

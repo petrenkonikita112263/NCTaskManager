@@ -67,11 +67,12 @@ public class PrimaryView implements CoreViewable {
     @Override
     public void displayCreatedCalendar(SortedMap<LocalDateTime,
             Set<Task>> values) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         for (SortedMap.Entry<LocalDateTime, Set<Task>> content : values.entrySet()) {
             for (Task task : content.getValue()) {
                 System.out.println("Task title: " + task.getTitle());
             }
-            System.out.println("Its date: " + content.getKey());
+            System.out.println("Its date: " + content.getKey().format(formatter));
         }
     }
 

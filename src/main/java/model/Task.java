@@ -170,21 +170,6 @@ public class Task implements Cloneable, Serializable {
         this.repeated = repeated;
     }
 
-//    /**
-//     * Getter for get id of the task
-//     *
-//     * @return int - return the number
-//     */
-//    public int getId() {
-//        return id;
-//    }
-//
-//
-//    public void setId(int id) {
-//        this.id = id;
-//    }
-
-
     public void setStart(LocalDateTime start) {
         this.start = start;
     }
@@ -331,30 +316,6 @@ public class Task implements Cloneable, Serializable {
         } else {
             return "[Sorry we don't have another task]";
         }
-
-//        } else if (!this.active) {
-//            return "[The repeative task " + "(" + title + ")\n"
-//                    + "starts at " + start.format(formatter) + " and ends at " + end.format(formatter)
-//                    + " with interval = " + interval + " in minutes" + " .Is it active? " + isActive() + "]";
-//        } else {
-//        if (!this.repeated) {
-//            if (!this.active) {
-//                return "[The nonrepeative task " + "(" + title + ")\n"
-//                        + "with time " + time.format(formatter) + " .Is it active? " + isActive() + "]";
-//            } else {
-//                return "[The nonrepeative task " + "(" + title + ")\n"
-//                        + "with time " + time.format(formatter) + " .Is it active? " + isActive() + "]";
-//            }
-//        } else if (!this.active) {
-//            return "[The repeative task " + "(" + title + ")\n"
-//                    + "starts at " + start.format(formatter) + " and ends at " + end.format(formatter)
-//                    + " with interval = " + interval + " in minutes" + " .Is it active? " + isActive() + "]";
-//        } else {
-//            return "[The repeative task " + "(" + title + ")\n"
-//                    + "it starts at " + start.format(formatter)
-//                    + " and gonna end at " + end.format(formatter)
-//                    + " with interval = " + interval + " in minutes" + " .Is it active? " + isActive() + "]";
-//        }
     }
 
     /**
@@ -367,18 +328,6 @@ public class Task implements Cloneable, Serializable {
         int result = 31;
         return this.getTitle().hashCode() * result;
     }
-
-//    @Override
-//    public boolean equals(Object obj) {
-//        if (this == obj)
-//            return true;
-//        if ((obj == null) ||
-//                (obj.getClass() != this.getClass()))
-//            return false;
-//        Task task = (Task) obj;
-//        return ((task.title.equals(this.title))
-//                && (task.time == this.time));
-//    }
 
     /**
      * Override equals() method from Object class.

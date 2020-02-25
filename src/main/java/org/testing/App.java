@@ -6,10 +6,10 @@ import java.io.IOException;
 
 /**
  * Main class that run MVC project.
+ *
  * @author Nikita
  */
-public class App 
-{
+public class App {
     /**
      * Main satic method of the class.
      *
@@ -19,14 +19,10 @@ public class App
      */
     public static void main(String[] args) throws IOException {
 
-//        create view instance
-//        PrimaryView pv = new PrimaryView();
-
 //        create controller instance
         MajorController mc = new MajorController();
 
-//        run main menu from controller
-//        pv.displayInfo();
+        //        run main menu from controller
         mc.runMainApplication();
     }
 }

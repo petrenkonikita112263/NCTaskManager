@@ -143,34 +143,6 @@ public class ArrayTaskList extends AbstractTaskList implements Cloneable {
         return false;
     }
 
-//    @Override
-//    public AbstractTaskList incoming(int from, int to) {
-//        return super.incoming(from, to);
-//    }
-
-//    /**
-//     * incoming() method - that find tasks, that would performer
-//     * once in time period.
-//     *
-//     * @param from - time after task have to performed
-//     * @param to   - time before task have to be performed
-//     * @return ArrayTaskList - the list of tasks are in this range
-//     */
-//    public ArrayTaskList incoming(int from, int to) {
-//        if ((from < 0) || (to < 0)) {
-//            throw new IllegalArgumentException("These values can't"
-//            + " be negative");
-//        }
-//        ArrayTaskList incomingTask = new ArrayTaskList();
-//        for (int i = 0; i < size(); i++) {
-//            if ((getTask(i).nextTimeAfter(from) != -1)
-//                    && (getTask(i).nextTimeAfter(from) <= to)) {
-//                incomingTask.add(getTask(i));
-//            }
-//        }
-//        return incomingTask;
-//    }
-
     /**
      * Override toString() method from Object class.
      *
@@ -191,14 +163,6 @@ public class ArrayTaskList extends AbstractTaskList implements Cloneable {
     public int hashCode() {
         return this.size;
     }
-
-//    @Override
-//    public boolean equals(Object obj) {
-//        if ((obj == null) ||
-//                (obj.getClass() != this.getClass()))
-//            return false;
-//        return true;
-//    }
 
     /**
      * Override equals() method from Object class.

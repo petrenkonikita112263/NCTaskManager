@@ -136,33 +136,6 @@ public class LinkedTaskList extends AbstractTaskList
         }
     }
 
-//    @Override
-//    public AbstractTaskList incoming(int from, int to) {
-//        return super.incoming(from, to);
-//    }
-
-//    /**
-//     * incoming() method - that find tasks, that would performer
-//     * once in time period.
-//     * @param from - time after task have to performed
-//     * @param to   - time before task have to be performed
-//     * @return LinkedList - the list of tasks are in this range
-//     */
-//    public LinkedTaskList incoming(int from, int to) {
-//        if ((from < 0) || (to < 0)) {
-//            throw new IllegalArgumentException("These values " +
-//                    "can't be negative");
-//        }
-//        LinkedTaskList incomingTask = new LinkedTaskList();
-//        for (int i = 0; i < size(); i++) {
-//            if ((getTask(i).nextTimeAfter(from) != -1)
-//                    && (getTask(i).nextTimeAfter(from) <= to)) {
-//                incomingTask.add(getTask(i));
-//            }
-//        }
-//        return incomingTask;
-//    }
-
     /**
      * Override toString() method from Object class.
      *
@@ -343,22 +316,6 @@ public class LinkedTaskList extends AbstractTaskList
         }
         return arrayOfTask;
     }
-
-//    public <Task> Task[] toArray(Task[] a) {
-//        Object[] result = a;
-//        if (size() > result.length) {
-//            result = new Object[size()];
-//        }
-//        int i = 0;
-//        for (ua.edu.sumdu.j2se.petrenko.tasks.Task smth : this) {
-//            result[i] = (Task) smth;
-//            i++;
-//        }
-//        if (result.length > i) {
-//            result[i] = null;
-//        }
-//        return (Task[]) result;
-//    }
 
     /**
      * Override method getStream() from Tasks class.
