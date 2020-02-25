@@ -226,46 +226,56 @@ public class MajorController implements CoreController {
                             processChangingTask();
                             break;
                         case 3:
-                            int taskStatus = view.changeStatusOfTask();
-                            switch (taskStatus) {
+                            int taskType = view.changeTypeOfTask();
+                            switch (taskType) {
                                 case 0:
                                     smth.setRepeated(false);
                                     smth.setTime(LocalDateTime.now());
                                     logger.info("The task is nonreptead now");
                                     processSavingWork();
+                                    processChangingTask();
                                     break;
                                 case 1:
                                     smth.setRepeated(true);
                                     smth.setTime(LocalDateTime.now(), LocalDateTime.now().plusDays(1), 0);
+                                    processSavingWork();
+                                    processChangingTask();
                                     logger.info("The task is repetead now");
-                                    processSavingWork();
-                                    break;
-                                case 2:
-                                    smth.setActive(false);
-                                    logger.info("The task isn't active");
-                                    processSavingWork();
-                                    break;
-                                case 3:
-                                    smth.setActive(true);
-                                    logger.info("The task is active");
-                                    processSavingWork();
                                     break;
                                 default:
                                     runSecondaryMenu();
                             }
                         case 4:
+                            int taskStatus = view.changeStatusOfTask();
+                            switch (taskStatus) {
+                                case 0:
+                                    smth.setActive(false);
+                                    logger.info("The task isn't active");
+                                    processSavingWork();
+                                    processChangingTask();
+                                    break;
+                                case 1:
+                                    smth.setActive(true);
+                                    logger.info("The task is active");
+                                    processSavingWork();
+                                    processChangingTask();
+                                    break;
+                                default:
+                                    runSecondaryMenu();
+                            }
+                        case 5:
                             int taskInterval = view.changeIntervalOfTask();
                             smth.setInterval(taskInterval * 60);
                             logger.info("The interval was changed");
                             processSavingWork();
                             processChangingTask();
                             break;
-                        case 5:
+                        case 6:
                             runSecondaryMenu();
                             break;
                         default:
                             throw  new AssertionError("Something went wrong, fatal error, user type negative numer"
-                                    + " or more that 5");
+                                    + " or more that 6");
                     }
                 case "no":
                     displayDetailAboutTask(listOfTasks);
@@ -289,39 +299,51 @@ public class MajorController implements CoreController {
                             processChangingTask();
                             break;
                         case 3:
-                            int taskStatus = view.changeStatusOfTask();
-                            switch (taskStatus) {
+                            int taskType = view.changeTypeOfTask();
+                            switch (taskType) {
                                 case 0:
                                     smth.setRepeated(false);
                                     smth.setTime(LocalDateTime.now());
                                     logger.info("The task is nonreptead now");
                                     processSavingWork();
+                                    processChangingTask();
                                     break;
                                 case 1:
                                     smth.setRepeated(true);
                                     smth.setTime(LocalDateTime.now(), LocalDateTime.now().plusDays(1), 0);
                                     processSavingWork();
+                                    processChangingTask();
                                     logger.info("The task is repetead now");
-                                    break;
-                                case 2:
-                                    smth.setActive(false);
-                                    logger.info("The task isn't active");
-                                    processSavingWork();
-                                    break;
-                                case 3:
-                                    smth.setActive(true);
-                                    logger.info("The task is active");
-                                    processSavingWork();
                                     break;
                                 default:
                                     runSecondaryMenu();
+                                    break;
                             }
                         case 4:
+                            int taskStatus = view.changeStatusOfTask();
+                            switch (taskStatus) {
+                                case 0:
+                                    smth.setActive(false);
+                                    logger.info("The task isn't active");
+                                    processSavingWork();
+                                    processChangingTask();
+                                    break;
+                                case 1:
+                                    smth.setActive(true);
+                                    logger.info("The task is active");
+                                    processSavingWork();
+                                    processChangingTask();
+                                    break;
+                                default:
+                                    runSecondaryMenu();
+                                    break;
+                            }
+                        case 5:
                             runSecondaryMenu();
                             break;
                         default:
                             throw  new AssertionError("Something went wrong, fatal error, user type negative numer"
-                            + " or more that 4");
+                            + " or more that 5");
                     }
                 default:
                     runSecondaryMenu();

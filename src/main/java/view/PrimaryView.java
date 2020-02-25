@@ -247,9 +247,10 @@ public class PrimaryView implements CoreViewable {
         System.out.println("For your task you can change these parameters:\n" +
                 "\t1 - Change title of the task" +
                 "\t2 - Change time" +
-                "\t3 - Change status" +
-                "\t4 - Change interval"
-                + "\nBack to menu for repeteted task type\t - 5; for non-repetead type\t - 4");
+                "\t3 - Change type" +
+                "\t4 - Change status" +
+                "\t5 - Change interval"
+                + "\nBack to menu for repeteted task type\t - 6; for non-repetead type\t - 5");
     }
 
     /**
@@ -281,7 +282,7 @@ public class PrimaryView implements CoreViewable {
         String answer = null;
         System.out.println("Do you want to add(change) repetitive task (start, end, interval) = 'yes'"
                 + " or you want to add(change) non-repetitive task(only time) = 'no'" +
-                "\nP.S if you are in menu change task press Enter to exit from it: \r");
+                "\nP.S if you are in menu change task press Enter to back to additional menu from it: \r");
         try {
             answer = bufReader.readLine();
             checkStringValue(answer);
@@ -341,19 +342,42 @@ public class PrimaryView implements CoreViewable {
     }
 
     /**
-     * Method that ask user to change status of the task.
+     * Method that ask user to change type of the task.
      *
-     * @return - 0 - disable task, 1 - enable it
+     * @return - 0 - non-repetead task, 1 - repetead task
+     */
+    public int changeTypeOfTask() {
+        int taskType = 0;
+        System.out.println("Change type of task"
+                + "\n0 - nonrepeated; \n1 - repeated; \npress Enter to back to additional menu: \r");
+        try {
+            taskType = Integer.parseInt(bufReader.readLine());
+            if ((taskType < 0) || (taskType > Integer.MAX_VALUE)) {
+                System.out.println("This number can't be negative or bigger than Integer");
+                changeTypeOfTask();
+            }
+        } catch (IOException exp_1) {
+            logger.error("Error in input number to the console", exp_1);
+        } catch (NumberFormatException exp_2) {
+            logger.error("This integer number can't exist", exp_2);
+        }
+        return taskType;
+    }
+
+    /**
+     * Method that ask user to change type of the task.
+     *
+     * @return - 0 - disable it, 1 - enable it
      */
     public int changeStatusOfTask() {
         int taskStatus = 0;
-        System.out.println("Change type of task"
-                + "\n0 - nonrepeated; \n1 - repeated; \n2 - disable task; \n3 - enable task; \npress Enter to exit to menu: \r");
+        System.out.println("Change status of task"
+                + "\n0 - disable task; \n1 - enable task; \npress Enter to back to additional menu: \r");
         try {
             taskStatus = Integer.parseInt(bufReader.readLine());
             if ((taskStatus < 0) || (taskStatus > Integer.MAX_VALUE)) {
                 System.out.println("This number can't be negative or bigger than Integer");
-                changeStatusOfTask();
+                changeTypeOfTask();
             }
         } catch (IOException exp_1) {
             logger.error("Error in input number to the console", exp_1);
