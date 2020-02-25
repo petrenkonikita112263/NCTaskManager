@@ -39,7 +39,7 @@ public class MajorController implements CoreController {
     private PrimaryView view;
 
     /**
-     * The name of the file that stores the session of application.
+     * The name of the file that stores the session work.
      */
     private String folderName = "savepoint";
 
@@ -79,11 +79,11 @@ public class MajorController implements CoreController {
         logger.info("Console was called");
         switch (defaultNumber_1) {
             case 1:
-                continueWork();
+                readFileWithTasks();
                 runSecondaryMenu();
                 break;
             case 2:
-                readFileWithTasks();
+                continueWork();
                 runSecondaryMenu();
                 break;
             case 3:
