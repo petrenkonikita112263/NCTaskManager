@@ -56,30 +56,51 @@ public class PrimaryView implements CoreViewable {
         System.out.println("\t7 - Terminate the application");
     }
 
+    /**
+     * Method that prints task title in console when calendar is running.
+     */
     public void displayTaskTitle(String title) {
         System.out.println(title);
     }
 
+    /**
+     * Method that prints task date time in console when calendar is running.
+     */
     public void displayTaskdate(String date) {
         System.out.println(date);
     }
 
+    /**
+     * Information message that reports about created new empty list.
+     */
     public void getInfoAboutCreation() {
         System.out.println("The empty task list was created");
     }
 
+    /**
+     * If user tries to print empty task list, he'll get report about empty task list.
+     */
     public void getMessageAboutEmptiness() {
         System.out.println("The list is empty, firstly add some tasks in it");
     }
 
+    /**
+     * Print content of list.
+     */
     public void getViewForList(String stringText) {
         System.out.println(stringText);
     }
 
+    /**
+     * Print content of repetead task.
+     */
     public void getViewForRepTask(String textTask) {
         System.out.println(textTask);
     }
 
+    /**
+     * Print content of non-repeated task.
+     */
     public void getViewForNorTask(String textTask) {
         System.out.println(textTask);
     }
@@ -97,6 +118,9 @@ public class PrimaryView implements CoreViewable {
         return Integer.parseInt(bufReader.readLine());
     }
 
+    /**
+     * This method will close the Buffered Stream, if it's not empty the error writes to log.
+     */
     public void closeInput() {
         if (bufReader != null) {
             try {
@@ -107,6 +131,9 @@ public class PrimaryView implements CoreViewable {
         }
     }
 
+    /**
+     * Ask user to type one of these numbers (1-7)
+     */
     public int getNumberForFurtherAction() throws IOException {
         return Integer.parseInt(bufReader.readLine());
     }
@@ -191,7 +218,7 @@ public class PrimaryView implements CoreViewable {
      */
     private void checkTime(LocalDateTime time) {
         if ((time.isBefore(LocalDateTime.now())) || (time == null)
-        || (time.isEqual(LocalDateTime.now()))) {
+                || (time.isEqual(LocalDateTime.now()))) {
             System.out.println("You enter wrong date, date can't be before today or equals now date");
             logger.error("Task can't exist with this time");
             inputDateTime();
@@ -243,6 +270,9 @@ public class PrimaryView implements CoreViewable {
         return id;
     }
 
+    /**
+     * Print menu options for change task in the list.
+     */
     public void changeFunctionalityOfTask() {
         System.out.println("For your task you can change these parameters:\n" +
                 "\t1 - Change title of the task" +
@@ -413,6 +443,9 @@ public class PrimaryView implements CoreViewable {
         return time;
     }
 
+    /**
+     * Additional method that check local date time - it can't be past date.
+     */
     private void checkCalendarDate_1(LocalDateTime time) {
         if ((time.isBefore(LocalDateTime.now())) || (time == null)) {
             System.out.println("You enter wrong date, date can't be before today or nothing info");
@@ -447,6 +480,9 @@ public class PrimaryView implements CoreViewable {
         return time;
     }
 
+    /**
+     * Additional method that check local date time - it can't be past date.
+     */
     private void checkCalendarDate_2(LocalDateTime time) {
         if ((time.isBefore(LocalDateTime.now())) || (time == null)) {
             System.out.println("You enter wrong date, date can't be before today or nothing info");
