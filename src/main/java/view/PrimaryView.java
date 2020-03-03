@@ -402,29 +402,6 @@ public class PrimaryView implements CoreViewable {
     /**
      * Method that ask user to change type of the task.
      *
-     * @return - 0 - non-repetead task, 1 - repetead task
-     */
-    public int changeTypeOfTask() {
-        int taskType = 0;
-        System.out.println("Change type of task"
-                + "\n0 - nonrepeated; \n1 - repeated; \npress Enter to back to additional menu: \r");
-        try {
-            taskType = Integer.parseInt(bufReader.readLine());
-            if ((taskType < 0) || (taskType > Integer.MAX_VALUE)) {
-                System.out.println("This number can't be negative or bigger than Integer");
-                changeTypeOfTask();
-            }
-        } catch (IOException exp_1) {
-            logger.error("Error in input number to the console", exp_1);
-        } catch (NumberFormatException exp_2) {
-            logger.error("This integer number can't exist", exp_2);
-        }
-        return taskType;
-    }
-
-    /**
-     * Method that ask user to change type of the task.
-     *
      * @return - 0 - disable it, 1 - enable it
      */
     public int changeStatusOfTask() {
@@ -435,7 +412,7 @@ public class PrimaryView implements CoreViewable {
             taskStatus = Integer.parseInt(bufReader.readLine());
             if ((taskStatus < 0) || (taskStatus > Integer.MAX_VALUE)) {
                 System.out.println("This number can't be negative or bigger than Integer");
-                changeTypeOfTask();
+                changeStatusOfTask();
             }
         } catch (IOException exp_1) {
             logger.error("Error in input number to the console", exp_1);

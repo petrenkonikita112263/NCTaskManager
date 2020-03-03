@@ -203,6 +203,8 @@ public class MajorController implements CoreController {
         for (Task smth : listOfTasks) {
             switch (answer.toLowerCase()) {
                 case "yes":
+                    LocalDateTime dateTimeStart_1, dateTimeEnd_1, dateTime_1;
+                    int timeInterval_1;
                     displayDetailAboutTask(listOfTasks);
                     int taskIndex_1 = view.getTaskIndex();
                     listOfTasks.getTask(taskIndex_1);
@@ -226,24 +228,24 @@ public class MajorController implements CoreController {
                             processChangingTask();
                             break;
                         case 3:
-                            int taskType = view.changeTypeOfTask();
-                            switch (taskType) {
-                                case 0:
-                                    smth.setRepeated(false);
-                                    smth.setTime(LocalDateTime.now());
-                                    logger.info("The task is nonreptead now");
-                                    processSavingWork();
-                                    processChangingTask();
-                                    break;
-                                case 1:
-                                    smth.setRepeated(true);
-                                    smth.setTime(LocalDateTime.now(), LocalDateTime.now().plusDays(1), 0);
-                                    processSavingWork();
-                                    processChangingTask();
-                                    logger.info("The task is repetead now");
-                                    break;
-                                default:
-                                    runSecondaryMenu();
+                            if (smth.isRepeated()) {
+                                smth.setRepeated(false);
+                                dateTime_1 = view.inputDateTime();
+                                smth.setTime(dateTime_1);
+                                logger.info("The task is nonreptead now");
+                                processSavingWork();
+                                processChangingTask();
+                                break;
+                            } else {
+                                smth.setRepeated(true);
+                                dateTimeStart_1 = view.inputDateTime();
+                                dateTimeEnd_1 = view.inputDateTime();
+                                timeInterval_1 = view.addInterval();
+                                smth.setTime(dateTimeStart_1, dateTimeEnd_1, timeInterval_1);
+                                processSavingWork();
+                                processChangingTask();
+                                logger.info("The task is repetead now");
+                                break;
                             }
                         case 4:
                             int taskStatus = view.changeStatusOfTask();
@@ -278,6 +280,8 @@ public class MajorController implements CoreController {
                                     + " or more that 6");
                     }
                 case "no":
+                    LocalDateTime dateTimeStart_2, dateTimeEnd_2, dateTime_2;
+                    int timeInterval_2;
                     displayDetailAboutTask(listOfTasks);
                     int taskIndex_2 = view.getTaskIndex();
                     listOfTasks.getTask(taskIndex_2);
@@ -299,25 +303,24 @@ public class MajorController implements CoreController {
                             processChangingTask();
                             break;
                         case 3:
-                            int taskType = view.changeTypeOfTask();
-                            switch (taskType) {
-                                case 0:
-                                    smth.setRepeated(false);
-                                    smth.setTime(LocalDateTime.now());
-                                    logger.info("The task is nonreptead now");
-                                    processSavingWork();
-                                    processChangingTask();
-                                    break;
-                                case 1:
-                                    smth.setRepeated(true);
-                                    smth.setTime(LocalDateTime.now(), LocalDateTime.now().plusDays(1), 0);
-                                    processSavingWork();
-                                    processChangingTask();
-                                    logger.info("The task is repetead now");
-                                    break;
-                                default:
-                                    runSecondaryMenu();
-                                    break;
+                            if (smth.isRepeated()) {
+                                smth.setRepeated(false);
+                                dateTime_2 = view.inputDateTime();
+                                smth.setTime(dateTime_2);
+                                logger.info("The task is nonreptead now");
+                                processSavingWork();
+                                processChangingTask();
+                                break;
+                            } else {
+                                smth.setRepeated(true);
+                                dateTimeStart_2 = view.inputDateTime();
+                                dateTimeEnd_2 = view.inputDateTime();
+                                timeInterval_2 = view.addInterval();
+                                smth.setTime(dateTimeStart_2, dateTimeEnd_2, timeInterval_2);
+                                processSavingWork();
+                                processChangingTask();
+                                logger.info("The task is repetead now");
+                                break;
                             }
                         case 4:
                             int taskStatus = view.changeStatusOfTask();
