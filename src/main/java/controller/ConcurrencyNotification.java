@@ -61,21 +61,27 @@ public class ConcurrencyNotification extends Thread {
      */
     @Override
     public void run() {
-        while (true) {
-            LocalDateTime startNotify = (LocalDateTime.now());
-            LocalDateTime endNotify = LocalDateTime.now()
-                    .plusSeconds(DEFAULT_TIME);
-            SortedMap<LocalDateTime, Set<Task>>
-                    calendarContent = Tasks.calendar(listOfTasks, startNotify, endNotify);
-            for (SortedMap.Entry<LocalDateTime, Set<Task>> content : calendarContent.entrySet()) {
-                for (Task someTask : content.getValue()) {
-                    String taskTitle = someTask.getTitle();
-                    if (content.getKey().isEqual(startNotify)) {
-                        notificationView.displayMessageNotification(content.getKey(), taskTitle);
-                    }
-                }
-            }
+        boolean exit = false;
+        while ((!Thread.currentThread().isInterrupted()) && (!exit)) {
             try {
+                LocalDateTime startNotify = (LocalDateTime.now());
+                LocalDateTime endNotify = LocalDateTime.now()
+                        .plusSeconds(DEFAULT_TIME);
+                SortedMap<LocalDateTime, Set<Task>>
+                        calendarContent = Tasks.calendar(listOfTasks, startNotify, endNotify);
+                if (listOfTasks.size() == 0) {
+                    notificationView.displayMessage(startNotify);
+                    exit = true;
+                } else
+                    for (SortedMap.Entry<LocalDateTime, Set<Task>> content : calendarContent.entrySet()) {
+                        for (Task someTask : content.getValue()) {
+                            String taskTitle = someTask.getTitle();
+                            if (content.getKey().isEqual(startNotify)) {
+                                notificationView.displayMessageNotification(content.getKey(), taskTitle);
+                            }
+                        }
+                    }
+
                 sleep(SLEEP_THREAD);
             } catch (InterruptedException e) {
                 logger.error("The thread can't run", e);
@@ -83,3 +89,5 @@ public class ConcurrencyNotification extends Thread {
         }
     }
 }
+
+
