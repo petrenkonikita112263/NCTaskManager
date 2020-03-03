@@ -116,7 +116,7 @@ public class PrimaryView implements CoreViewable {
             bufReader = new BufferedReader(new InputStreamReader(System.in));
             return Integer.parseInt(bufReader.readLine());
         } catch (IOException e) {
-           logger.error("Can't get access to console by BufferedReader", e);
+            logger.error("Can't get access to console by BufferedReader", e);
         }
         return 0;
     }
@@ -186,7 +186,7 @@ public class PrimaryView implements CoreViewable {
         System.out.println("Enter the title for task: \r");
         try {
             title = bufReader.readLine();
-            checkStringValue(title);
+            checkAddedTaskTitle(title);
         } catch (IOException exp_1) {
             logger.error("Error in input word to the console", exp_1);
             addTaskTitle();
@@ -204,10 +204,51 @@ public class PrimaryView implements CoreViewable {
      * @param word - one word
      */
     private void checkStringValue(String word) {
-        if (word.equals(null)) {
-            System.out.println("You don't write any word. Please try again");
-            logger.error("Task can't exist with this String value");
+        if ((word != "yes" ) || (word != "no")) {
+            System.out.println("You write wrong word. You have only two option - yes or no");
             selectTheTypeForTask();
+        }
+    }
+
+    /**
+     * Private additional method that validate task title
+     * from user input.
+     *
+     * @param titleOfTask - task title that user try to add to Task
+     */
+    private void checkAddedTaskTitle(String titleOfTask) {
+        if ((titleOfTask == null) || (titleOfTask.trim().isEmpty())) {
+            System.out.println("Task can't exist with empty name or whitespaces\n"
+                    + "You don't write any word. Please try again");
+            addTaskTitle();
+        }
+    }
+
+    /**
+     * Private additional method that validate task title
+     * from user input.
+     *
+     * @param titleOfTask - task title that user try to add to Task
+     */
+    private void checkChangedTaskTitle(String titleOfTask) {
+        if ((titleOfTask == null) || (titleOfTask.trim().isEmpty())) {
+            System.out.println("Task can't exist with empty name or whitespaces\n"
+                    + "You don't write any word. Please try again");
+            changeTitleOfTask();
+        }
+    }
+
+    /**
+     * Private additional method that validate name of the file
+     * from user input.
+     *
+     * @param nameOfFile - name of the file that user type
+     */
+    private void checkFileName(String nameOfFile) {
+        if ((nameOfFile == null) || (nameOfFile.trim().isEmpty())) {
+            System.out.println("File can't exist with empty name or whitespaces\n"
+                    + "You don't write any word. Please try again");
+            getFileName();
         }
     }
 
@@ -295,7 +336,7 @@ public class PrimaryView implements CoreViewable {
                 + "it by title (only string type): \r");
         try {
             taskName = bufReader.readLine();
-            checkStringValue(taskName);
+            checkChangedTaskTitle(taskName);
         } catch (IOException exp_1) {
             logger.error("Error in input word to the console", exp_1);
         } catch (IllegalArgumentException exp_2) {
@@ -526,7 +567,7 @@ public class PrimaryView implements CoreViewable {
         System.out.println("Print the name of the file:\r");
         try {
             nameFile = bufReader.readLine();
-            checkStringValue(nameFile);
+            checkFileName(nameFile);
         } catch (IOException exp) {
             logger.error("Error in typing word to the console", exp);
             getFileName();
