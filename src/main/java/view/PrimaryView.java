@@ -33,7 +33,7 @@ public class PrimaryView implements CoreViewable {
     @Override
     public void displayInfo() {
         System.out.println("The application Task Manager is running. "
-                + "You have these options: \n");
+                + "You have these options, so type number in range(1,4): \n");
         System.out.println("\t 1 - To continue work with your app"
                 + " from previous savepoint");
         System.out.println("\t 2 - To load list of task");
@@ -47,6 +47,7 @@ public class PrimaryView implements CoreViewable {
      */
     @Override
     public void displayAdditionalInfo() {
+        System.out.println("You have these options, so type number in range(1,7):");
         System.out.println("\t1 - To add task to the list");
         System.out.println("\t2 - To change the task in the list");
         System.out.println("\t3 - To delete task from the list");
@@ -116,7 +117,7 @@ public class PrimaryView implements CoreViewable {
     public void getMessageAboutDontFind(String message) {
         System.out.println("Unfortunately the program couldn't find this file\n"
                 + " but your work continue the new default file was created "
-        + "by these path " + message);
+                + "by these path " + message);
     }
 
     /**
@@ -131,6 +132,10 @@ public class PrimaryView implements CoreViewable {
             return Integer.parseInt(bufReader.readLine());
         } catch (IOException e) {
             logger.error("Can't get access to console by BufferedReader", e);
+        } catch (NumberFormatException e) {
+            System.out.println("Required integer number, but your type isn't based on it");
+            logger.error("Wrong input type", e);
+            getUserInput();
         }
         return 0;
     }
@@ -149,8 +154,17 @@ public class PrimaryView implements CoreViewable {
     /**
      * Ask user to type one of these numbers (1-7)
      */
-    public int getNumberForFurtherAction() throws IOException {
-        return Integer.parseInt(bufReader.readLine());
+    public int getNumberForFurtherAction() {
+        try {
+            return Integer.parseInt(bufReader.readLine());
+        } catch (IOException e) {
+            logger.error("Can't get access to console by BufferedReader", e);
+        } catch (NumberFormatException e) {
+            System.out.println("Required integer number, but your type isn't based on it");
+            logger.error("Wrong input type", e);
+            getUserInput();
+        }
+        return 0;
     }
 
     /**
@@ -208,7 +222,7 @@ public class PrimaryView implements CoreViewable {
             addTaskTitle();
         } catch (IllegalArgumentException exp_2) {
             System.out.println("Required string, but your type isn't based on it");
-            logger.error("Task can't exist without title", exp_2);
+            logger.error("Task can't exist with this title", exp_2);
             addTaskTitle();
         }
         return title;
@@ -441,7 +455,7 @@ public class PrimaryView implements CoreViewable {
         try {
             taskStatus = Integer.parseInt(bufReader.readLine());
             if ((taskStatus < 0) || (taskStatus > Integer.MAX_VALUE)
-            || (taskStatus > 1)) {
+                    || (taskStatus > 1)) {
                 System.out.println("This number can't be negative or bigger than  option number or even Integer");
                 changeStatusOfTask();
             }

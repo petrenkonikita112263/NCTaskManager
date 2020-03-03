@@ -119,8 +119,7 @@ public class MajorController implements CoreController {
                 view.closeInput();
                 System.exit(0);
             default:
-                throw new AssertionError("Something went wrong, fatal error, user type negative numer"
-                        + " or more that 4");
+                runMainApplication();
         }
     }
 
@@ -158,8 +157,7 @@ public class MajorController implements CoreController {
                 view.closeInput();
                 System.exit(0);
             default:
-                throw new AssertionError("Something went wrong, fatal error, user type negative numer"
-                        + " or more that 7");
+                runSecondaryMenu();
         }
     }
 
@@ -193,7 +191,7 @@ public class MajorController implements CoreController {
                 runSecondaryMenu();
                 break;
             default:
-                runMainApplication();
+                runSecondaryMenu();
         }
     }
 
@@ -300,8 +298,7 @@ public class MajorController implements CoreController {
                             runSecondaryMenu();
                             break;
                         default:
-                            throw new AssertionError("Something went wrong, fatal error, user type negative numer"
-                                    + " or more that 6");
+                            processChangingTask();
                     }
                 case "no":
                     LocalDateTime dateTimeStart_2, dateTimeEnd_2, dateTime_2;
@@ -369,8 +366,7 @@ public class MajorController implements CoreController {
                             runSecondaryMenu();
                             break;
                         default:
-                            throw new AssertionError("Something went wrong, fatal error, user type negative numer"
-                                    + " number doesn'e equal to 1, 2, 3, 4 or 7");
+                            processChangingTask();
                     }
                 default:
                     runSecondaryMenu();
