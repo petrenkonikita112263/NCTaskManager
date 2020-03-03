@@ -255,9 +255,9 @@ public class Task implements Cloneable, Serializable {
      * @param interval - set interval
      */
     public void setTime(LocalDateTime start, LocalDateTime end, int interval) {
-        if ((start == null) || (end == null) || (interval < 0)) {
-            throw new IllegalArgumentException("These values can't be "
-                    + "negative. They must be positive");
+        if ((end == null) || (start.isAfter(end))) {
+            end = start;
+            setActive(false);
         }
         if (!this.repeated) {
             this.repeated = true;
