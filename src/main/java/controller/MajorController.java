@@ -64,32 +64,6 @@ public class MajorController implements CoreController {
     }
 
     /**
-     * Private method that display info message about
-     * new created list.
-     */
-    private void createEmptyTaskList() {
-        checkFileForContent();
-        view.getInfoAboutCreation();
-    }
-
-    private void checkFileForContent() {
-        File file = new File(pathToDefaultFileName);
-        if ((!file.exists()) || (file.length() == 0)) {
-            createFileWithFolder();
-        } else {
-            PrintWriter printWriter = null;
-            try {
-                printWriter = new PrintWriter(file);
-            } catch (FileNotFoundException e) {
-                logger.error("File doesn't exist", e);
-            }
-            printWriter.print("");
-            printWriter.close();
-        }
-    }
-
-
-    /**
      * Implementing (override) runMainApplication() method
      * from interface.
      *
@@ -374,6 +348,38 @@ public class MajorController implements CoreController {
         }
     }
 
+    /**
+     * Private method that display info message about
+     * new created list.
+     */
+    private void createEmptyTaskList() {
+        checkFileForContent();
+        view.getInfoAboutCreation();
+    }
+
+    /**
+     * Additional method that check defaul file for existing and
+     * remove content from it, if should one write to the file.
+     */
+    private void checkFileForContent() {
+        File file = new File(pathToDefaultFileName);
+        if ((!file.exists()) || (file.length() == 0)) {
+            createFileWithFolder();
+        } else {
+            PrintWriter printWriter = null;
+            try {
+                printWriter = new PrintWriter(file);
+            } catch (FileNotFoundException e) {
+                logger.error("File doesn't exist", e);
+            }
+            printWriter.print("");
+            printWriter.close();
+        }
+    }
+
+    /**
+     * Additional (private) method that creates file with subfolder.
+     */
     private void createFileWithFolder() {
         Path path = Paths.get("temp_test" + File.separatorChar + pathToDefaultFileName);
         try {

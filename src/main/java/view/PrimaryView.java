@@ -107,13 +107,16 @@ public class PrimaryView implements CoreViewable {
     }
 
     /**
-     * */
-    public  void getInfoAboutSavingFile(String savePath) {
+     * Print information about created file and show its location.
+     */
+    public void getInfoAboutSavingFile(String savePath) {
         System.out.println("The file with task was saved by this path: " + savePath);
     }
 
     /**
-     * */
+     * Print message if application can't find file.
+     * And create another one default file.
+     */
     public void getMessageAboutDontFind(String message) {
         System.out.println("Unfortunately the program couldn't find this file\n"
                 + " but your work continue the new default file was created "
@@ -153,6 +156,8 @@ public class PrimaryView implements CoreViewable {
 
     /**
      * Ask user to type one of these numbers (1-7)
+     *
+     * @return - get input integer number from console
      */
     public int getNumberForFurtherAction() {
         try {
