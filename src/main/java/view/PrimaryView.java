@@ -171,7 +171,6 @@ public class PrimaryView implements CoreViewable {
     private void checkIntValue(int number) {
         if ((number > 60) || (number < 0) || (number > Integer.MAX_VALUE)) {
             System.out.println("Time in seconds can't be negative or move than 60");
-            logger.error("Task can't exist with this value of Integer");
             addInterval();
         }
     }
@@ -262,7 +261,6 @@ public class PrimaryView implements CoreViewable {
         if ((time.isBefore(LocalDateTime.now())) || (time == null)
                 || (time.isEqual(LocalDateTime.now()))) {
             System.out.println("You enter wrong date, date can't be before today or equals now date");
-            logger.error("Task can't exist with this time");
             inputDateTime();
         }
     }
@@ -491,7 +489,6 @@ public class PrimaryView implements CoreViewable {
     private void checkCalendarDate_1(LocalDateTime time) {
         if ((time.isBefore(LocalDateTime.now())) || (time == null)) {
             System.out.println("You enter wrong date, date can't be before today or nothing info");
-            logger.error("Calendar can't exist with this time");
             addTimeLimit_1();
         }
     }
@@ -528,7 +525,6 @@ public class PrimaryView implements CoreViewable {
     private void checkCalendarDate_2(LocalDateTime time) {
         if ((time.isBefore(LocalDateTime.now())) || (time == null)) {
             System.out.println("You enter wrong date, date can't be before today or nothing info");
-            logger.error("Calendar can't exist with this time");
             addTimeLimit_2();
         }
     }
