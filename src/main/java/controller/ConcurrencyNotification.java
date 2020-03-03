@@ -26,12 +26,12 @@ public class ConcurrencyNotification extends Thread {
     /**
      * Time constant in seconds for time notification.
      */
-    private static final int DEFAULT_TIME = 100_000;
+    private static final int DEFAULT_TIME = 30;
 
     /**
      * Time constant in milliseconds how long the thread would sleep.
      */
-    private static final int SLEEP_THREAD = 10_000;
+    private static final int SLEEP_THREAD = 5_000;
 
     /**
      * The array list of tasks.
@@ -61,28 +61,22 @@ public class ConcurrencyNotification extends Thread {
      */
     @Override
     public void run() {
-        boolean exit = false;
-        while ((!Thread.currentThread().isInterrupted()) && (!exit)) {
-            try {
-                LocalDateTime startNotify = (LocalDateTime.now());
-                LocalDateTime endNotify = LocalDateTime.now()
-                        .plusSeconds(DEFAULT_TIME);
-                SortedMap<LocalDateTime, Set<Task>>
-                        calendarContent = Tasks.calendar(listOfTasks, startNotify, endNotify);
-                if (listOfTasks.size() == 0) {
-                    notificationView.displayMessage(startNotify);
-                    exit = true;
-                } else
-                    for (SortedMap.Entry<LocalDateTime, Set<Task>> content : calendarContent.entrySet()) {
-                        for (Task someTask : content.getValue()) {
-                            String taskTitle = someTask.getTitle();
-                            if (content.getKey().isEqual(startNotify)) {
-                                notificationView.displayMessageNotification(content.getKey(), taskTitle);
-                            }
-                        }
+        while (true) {
+            LocalDateTime startNotify = (LocalDateTime.now().withSecond(0).withNano(0));
+            LocalDateTime endNotify = LocalDateTime.now().withSecond(0).withNano(0)
+                    .plusSeconds(DEFAULT_TIME);
+            SortedMap<LocalDateTime, Set<Task>>
+                    calendarContent = Tasks.calendar(listOfTasks, startNotify, endNotify);
+            for (SortedMap.Entry<LocalDateTime, Set<Task>> content : calendarContent.entrySet()) {
+                for (Task someTask : content.getValue()) {
+                    String taskTitle = someTask.getTitle();
+                    if (content.getKey().isEqual(startNotify)) {
+                        notificationView.displayMessageNotification(content.getKey(), taskTitle);
                     }
-
-                sleep(SLEEP_THREAD);
+                }
+            }
+            try {
+                Thread.sleep(SLEEP_THREAD);
             } catch (InterruptedException e) {
                 logger.error("The thread can't run", e);
             }
