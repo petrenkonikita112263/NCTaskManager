@@ -109,25 +109,26 @@ public class PrimaryView implements CoreViewable {
      * Public method that allow user to input info in console.
      *
      * @return - get the input number from console
-     * @throws IOException - input|output exception, failure during reading,
-     *                     writing information
      */
-    public int getUserInput() throws IOException {
+    public int getUserInput() {
         logger.info("User start works with console");
-        bufReader = new BufferedReader(new InputStreamReader(System.in));
-        return Integer.parseInt(bufReader.readLine());
+        try {
+            bufReader = new BufferedReader(new InputStreamReader(System.in));
+            return Integer.parseInt(bufReader.readLine());
+        } catch (IOException e) {
+           logger.error("Can't get access to console by BufferedReader", e);
+        }
+        return 0;
     }
 
     /**
      * This method will close the Buffered Stream, if it's not empty the error writes to log.
      */
     public void closeInput() {
-        if (bufReader != null) {
-            try {
-                bufReader.close();
-            } catch (IOException e) {
-                logger.error("Can't close the BufferedReader ", e);
-            }
+        try {
+            bufReader.close();
+        } catch (IOException e) {
+            logger.error("Can't close the BufferedReader ", e);
         }
     }
 
