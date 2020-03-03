@@ -106,6 +106,20 @@ public class PrimaryView implements CoreViewable {
     }
 
     /**
+     * */
+    public  void getInfoAboutSavingFile(String savePath) {
+        System.out.println("The file with task was saved by this path: " + savePath);
+    }
+
+    /**
+     * */
+    public void getMessageAboutDontFind(String message) {
+        System.out.println("Unfortunately the program couldn't find this file\n"
+                + " but your work continue the new default file was created "
+        + "by these path " + message);
+    }
+
+    /**
      * Public method that allow user to input info in console.
      *
      * @return - get the input number from console
@@ -525,7 +539,7 @@ public class PrimaryView implements CoreViewable {
      */
     public String getFileName() {
         String nameFile = null;
-        System.out.println("Print the name of the file:\r");
+        System.out.println("Print the name of the file (without extension):\r");
         try {
             nameFile = bufReader.readLine();
             checkFileName(nameFile);

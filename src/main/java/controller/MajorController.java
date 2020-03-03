@@ -8,10 +8,11 @@ import org.apache.log4j.Logger;
 import view.NotificationView;
 import view.PrimaryView;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
+import java.nio.file.FileAlreadyExistsException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Set;
@@ -40,9 +41,14 @@ public class MajorController implements CoreController {
     private PrimaryView view;
 
     /**
-     * The name of the file that stores the session work.
+     * The name of the folder that stores file.
      */
     private String folderName = "savepoint";
+
+    /**
+     * The name of the default file for application.
+     */
+    private String pathToDefaultFileName = "test_manager";
 
     /**
      * EVC constructor.
@@ -62,8 +68,26 @@ public class MajorController implements CoreController {
      * new created list.
      */
     private void createEmptyTaskList() {
+        checkFileForContent();
         view.getInfoAboutCreation();
     }
+
+    private void checkFileForContent() {
+        File file = new File(pathToDefaultFileName);
+        if ((!file.exists()) || (file.length() == 0)) {
+            createFileWithFolder();
+        } else {
+            PrintWriter printWriter = null;
+            try {
+                printWriter = new PrintWriter(file);
+            } catch (FileNotFoundException e) {
+                logger.error("File doesn't exist", e);
+            }
+            printWriter.print("");
+            printWriter.close();
+        }
+    }
+
 
     /**
      * Implementing (override) runMainApplication() method
@@ -80,11 +104,11 @@ public class MajorController implements CoreController {
         logger.info("Console was called");
         switch (defaultNumber_1) {
             case 1:
-                readFileWithTasks();
+                continueWork();
                 runSecondaryMenu();
                 break;
             case 2:
-                continueWork();
+                readFromFile();
                 runSecondaryMenu();
                 break;
             case 3:
@@ -95,7 +119,7 @@ public class MajorController implements CoreController {
                 view.closeInput();
                 System.exit(0);
             default:
-                throw  new AssertionError("Something went wrong, fatal error, user type negative numer"
+                throw new AssertionError("Something went wrong, fatal error, user type negative numer"
                         + " or more that 4");
         }
     }
@@ -134,7 +158,7 @@ public class MajorController implements CoreController {
                 view.closeInput();
                 System.exit(0);
             default:
-                throw  new AssertionError("Something went wrong, fatal error, user type negative numer"
+                throw new AssertionError("Something went wrong, fatal error, user type negative numer"
                         + " or more that 7");
         }
     }
@@ -216,7 +240,7 @@ public class MajorController implements CoreController {
                             smth.setTitle(taskName);
                             logger.info("The title of the task was changed");
                             processSavingWork();
-                            processChangingTask();
+                            runSecondaryMenu();
                             break;
                         case 2:
                             LocalDateTime startTime = view.inputDateTime();
@@ -225,7 +249,7 @@ public class MajorController implements CoreController {
                             smth.setEnd(endTime);
                             logger.info("The start and end time was changed");
                             processSavingWork();
-                            processChangingTask();
+                            runSecondaryMenu();
                             break;
                         case 3:
                             if (smth.isRepeated()) {
@@ -234,7 +258,7 @@ public class MajorController implements CoreController {
                                 smth.setTime(dateTime_1);
                                 logger.info("The task is nonreptead now");
                                 processSavingWork();
-                                processChangingTask();
+                                runSecondaryMenu();
                                 break;
                             } else {
                                 smth.setRepeated(true);
@@ -243,7 +267,7 @@ public class MajorController implements CoreController {
                                 timeInterval_1 = view.addInterval();
                                 smth.setTime(dateTimeStart_1, dateTimeEnd_1, timeInterval_1);
                                 processSavingWork();
-                                processChangingTask();
+                                runSecondaryMenu();
                                 logger.info("The task is repetead now");
                                 break;
                             }
@@ -254,13 +278,13 @@ public class MajorController implements CoreController {
                                     smth.setActive(false);
                                     logger.info("The task isn't active");
                                     processSavingWork();
-                                    processChangingTask();
+                                    runSecondaryMenu();
                                     break;
                                 case 1:
                                     smth.setActive(true);
                                     logger.info("The task is active");
                                     processSavingWork();
-                                    processChangingTask();
+                                    runSecondaryMenu();
                                     break;
                                 default:
                                     runSecondaryMenu();
@@ -270,13 +294,13 @@ public class MajorController implements CoreController {
                             smth.setInterval(taskInterval * 60);
                             logger.info("The interval was changed");
                             processSavingWork();
-                            processChangingTask();
+                            runSecondaryMenu();
                             break;
                         case 6:
                             runSecondaryMenu();
                             break;
                         default:
-                            throw  new AssertionError("Something went wrong, fatal error, user type negative numer"
+                            throw new AssertionError("Something went wrong, fatal error, user type negative numer"
                                     + " or more that 6");
                     }
                 case "no":
@@ -293,14 +317,14 @@ public class MajorController implements CoreController {
                             smth.setTitle(taskName);
                             logger.info("The title of the task was changed");
                             processSavingWork();
-                            processChangingTask();
+                            runSecondaryMenu();
                             break;
                         case 2:
                             LocalDateTime time = view.inputDateTime();
                             smth.setTime(time);
                             logger.info("The time was changed");
                             processSavingWork();
-                            processChangingTask();
+                            runSecondaryMenu();
                             break;
                         case 3:
                             if (smth.isRepeated()) {
@@ -309,7 +333,7 @@ public class MajorController implements CoreController {
                                 smth.setTime(dateTime_2);
                                 logger.info("The task is nonreptead now");
                                 processSavingWork();
-                                processChangingTask();
+                                runSecondaryMenu();
                                 break;
                             } else {
                                 smth.setRepeated(true);
@@ -318,7 +342,7 @@ public class MajorController implements CoreController {
                                 timeInterval_2 = view.addInterval();
                                 smth.setTime(dateTimeStart_2, dateTimeEnd_2, timeInterval_2);
                                 processSavingWork();
-                                processChangingTask();
+                                runSecondaryMenu();
                                 logger.info("The task is repetead now");
                                 break;
                             }
@@ -329,13 +353,13 @@ public class MajorController implements CoreController {
                                     smth.setActive(false);
                                     logger.info("The task isn't active");
                                     processSavingWork();
-                                    processChangingTask();
+                                    runSecondaryMenu();
                                     break;
                                 case 1:
                                     smth.setActive(true);
                                     logger.info("The task is active");
                                     processSavingWork();
-                                    processChangingTask();
+                                    runSecondaryMenu();
                                     break;
                                 default:
                                     runSecondaryMenu();
@@ -345,8 +369,8 @@ public class MajorController implements CoreController {
                             runSecondaryMenu();
                             break;
                         default:
-                            throw  new AssertionError("Something went wrong, fatal error, user type negative numer"
-                            + " number doesn'e equal to 1, 2, 3, 4 or 7");
+                            throw new AssertionError("Something went wrong, fatal error, user type negative numer"
+                                    + " number doesn'e equal to 1, 2, 3, 4 or 7");
                     }
                 default:
                     runSecondaryMenu();
@@ -354,17 +378,20 @@ public class MajorController implements CoreController {
         }
     }
 
-    /**
-     * Private method that allow to write task list to GSON file.
-     *
-     * @param nameFile - file name that stores the task list
-     */
-    private void saveFileWithTasks(String nameFile) {
+    private void createFileWithFolder() {
+        Path path = Paths.get("temp_test" + File.separatorChar + pathToDefaultFileName);
         try {
-            TaskIO.writeText(listOfTasks,
-                    (new File(folderName + File.separatorChar + nameFile + ".json")));
+            Files.createDirectories(path.getParent());
         } catch (IOException e) {
-            logger.error("Error with writing process to the file", e);
+            logger.error("Can't create folder by path", e);
+            e.printStackTrace();
+        }
+        try {
+            Files.createFile(path);
+        } catch (FileAlreadyExistsException e) {
+            logger.error("Can't create file in folder", e);
+        } catch (IOException e) {
+            logger.error("Failure in reading path", e);
         }
     }
 
@@ -376,7 +403,7 @@ public class MajorController implements CoreController {
     public void readFileWithTasks(String nameFile) {
         try {
             TaskIO.read(listOfTasks,
-                    (new FileReader(folderName + File.separatorChar + nameFile + ".json")));
+                    (new FileReader("temp_test" + File.separatorChar + nameFile + ".json")));
         } catch (IOException e) {
             logger.error("Error with reading process from the file", e);
         }
@@ -414,73 +441,44 @@ public class MajorController implements CoreController {
      */
     @Override
     public void processSavingWork() throws IOException {
-        createFolder(folderName);
-        int optionNumber = view.getAction();
-        switch (optionNumber) {
-            case 1:
-                String fileName = view.getFileName();
-                saveFileWithTasks(fileName);
-                break;
-            default:
-                runMainApplication();
+        try {
+            TaskIO.writeText(listOfTasks,
+                    (new File("temp_test" + File.separatorChar + pathToDefaultFileName + ".json")));
+        } catch (IOException e) {
+            logger.error("Error with reading process from the file", e);
         }
+        String messageAboutPath = "temp_test" + File.separatorChar + pathToDefaultFileName + ".json";
+        view.getInfoAboutSavingFile(messageAboutPath);
+        runSecondaryMenu();
     }
 
     /**
      * Private additional method that read tasks from GSON file,
      * that name user input.
      */
-    private void readFileWithTasks() {
+    private void readFromFile() {
         String fileName = view.getFileName();
-        readFileWithTasks(fileName);
-    }
-
-    /**
-     * Private method that creates empty file and write the content to it.
-     *
-     * @throws IOException - failure during writing to the file
-     */
-    private void processCreatingFile() throws IOException {
-        try {
-            String defaultFile = view.getFileName();
-            File fileTxt = new File(defaultFile);
-            logger.info("The file starts creating.........");
-            if (fileTxt.createNewFile()) {
-                logger.info("Your file is created here '"
-                        + defaultFile + "'");
-            } else {
-                logger.info("File've already existed");
-                PrintWriter writer = new PrintWriter(defaultFile);
-                writer.print("");
-                writer.close();
+        File file = new File("temp_test" + File.separatorChar + fileName + ".json");
+        if (!file.exists()) {
+            Path path = Paths.get("temp_test" + File.separatorChar + fileName);
+            try {
+                Files.createDirectories(path.getParent());
+            } catch (IOException e) {
+                logger.error("Can't create folder by path", e);
+                e.printStackTrace();
             }
-        } catch (IOException e) {
-            logger.error("The error occurred ", e);
-        } finally {
-            logger.info("The process "
-                    + "of create default file was successfully completed");
-        }
-    }
-
-    /**
-     * Private static method that create empty folder by specified way.
-     *
-     * @param dirPath - path to the directory
-     */
-    private static void createFolder(String dirPath) {
-        logger.info("The process of creating folder was started");
-        File fileDirectory = new File(dirPath);
-        if (!fileDirectory.exists()) {
-            logger.info("The directory starts creating........");
-            if (fileDirectory.mkdir()) {
-                logger.info("The directory '"
-                        + dirPath + "' is created");
-            } else {
-                logger.error("Don't enough "
-                        + "permission to create directory");
+            try {
+                Files.createFile(path);
+            } catch (FileAlreadyExistsException e) {
+                logger.error("Can't create file in folder", e);
+            } catch (IOException e) {
+                logger.error("Failure in reading path", e);
             }
+            String message = "temp_test" + File.separatorChar + fileName;
+            view.getMessageAboutDontFind(message);
+        } else {
+            readFileWithTasks(fileName);
         }
-        logger.info("The process of creating folder was finished");
     }
 
     /**
@@ -492,7 +490,7 @@ public class MajorController implements CoreController {
      */
     @Override
     public void continueWork() throws IOException {
-        processCreatingFile();
+        createFileWithFolder();
     }
 
     /**
@@ -526,6 +524,7 @@ public class MajorController implements CoreController {
      */
     @Override
     public void displayDetailAboutTask(ArrayTaskList taskList) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         if (taskList.size() == 0) {
             view.getMessageAboutEmptiness();
             try {
@@ -538,14 +537,14 @@ public class MajorController implements CoreController {
             Task t = taskList.getTask(i);
             if (t.isRepeated()) {
                 String resultRepTask = i + "\tYou have the repetead tesk with title : " + t.getTitle()
-                        + "\nTask starts at " + t.getStartTime()
-                        + "\nTask ends at " + t.getEndTime()
+                        + "\nTask starts at " + formatter.format(t.getStartTime())
+                        + "\nTask ends at " + formatter.format(t.getEndTime())
                         + "\nthe interval between start and end time is "
                         + t.getRepeatInterval();
                 view.getViewForRepTask(resultRepTask);
             } else if (!t.isRepeated()) {
                 String resultNorTask = i + "\tYou have the non-repetead task with title : " + t.getTitle()
-                        + "\nTask starts at " + t.getTime();
+                        + "\nTask starts at " + formatter.format(t.getTime());
                 view.getViewForNorTask(resultNorTask);
             }
         }
