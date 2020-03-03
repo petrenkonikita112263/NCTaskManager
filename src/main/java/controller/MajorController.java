@@ -338,12 +338,12 @@ public class MajorController implements CoreController {
                                     runSecondaryMenu();
                                     break;
                             }
-                        case 5:
+                        case 7:
                             runSecondaryMenu();
                             break;
                         default:
                             throw  new AssertionError("Something went wrong, fatal error, user type negative numer"
-                            + " or more that 5");
+                            + " number doesn'e equal to 1, 2, 3, 4 or 7");
                     }
                 default:
                     runSecondaryMenu();

@@ -197,19 +197,6 @@ public class PrimaryView implements CoreViewable {
     }
 
     /**
-     * Private additional method that validate string value
-     * from user input.
-     *
-     * @param word - one word
-     */
-    private void checkStringValue(String word) {
-        if ((word != "yes" ) || (word != "no")) {
-            System.out.println("You write wrong word. You have only two option - yes or no");
-            selectTheTypeForTask();
-        }
-    }
-
-    /**
      * Private additional method that validate task title
      * from user input.
      *
@@ -315,12 +302,14 @@ public class PrimaryView implements CoreViewable {
      */
     public void changeFunctionalityOfTask() {
         System.out.println("For your task you can change these parameters:\n" +
-                "\t1 - Change title of the task" +
+                "If you're changing repetead task your options are 1, 2, 3, 4, 5."
+                + " \nBut if you're changing non-repeated task your options are 1, 2, 3, 4.\n"
+                + "\t1 - Change title of the task" +
                 "\t2 - Change time" +
                 "\t3 - Change type" +
                 "\t4 - Change status" +
                 "\t5 - Change interval"
-                + "\nBack to menu for repeteted task type\t - 6; for non-repetead type\t - 5");
+                + "\nBack to menu for repeteted task type\t - 6; for non-repetead type\t - 7");
     }
 
     /**
@@ -355,7 +344,6 @@ public class PrimaryView implements CoreViewable {
                 "\nP.S if you are in menu change task press Enter to back to additional menu from it: \r");
         try {
             answer = bufReader.readLine();
-            checkStringValue(answer);
         } catch (IOException exp) {
             logger.error("Error in input word to the console", exp);
         } catch (IllegalArgumentException exp_2) {
