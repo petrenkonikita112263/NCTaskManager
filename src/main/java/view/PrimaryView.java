@@ -170,8 +170,11 @@ public class PrimaryView implements CoreViewable {
             }
         } catch (IOException exp_1) {
             logger.error("Error in input number to the console", exp_1);
+            getTaskIndex();
         } catch (NumberFormatException exp_2) {
+            System.out.println("Required integer number, but your type isn't based on it");
             logger.error("Wrong type of id for task", exp_2);
+            getTaskIndex();
         }
         return id;
     }
@@ -204,6 +207,7 @@ public class PrimaryView implements CoreViewable {
             logger.error("Error in input word to the console", exp_1);
             addTaskTitle();
         } catch (IllegalArgumentException exp_2) {
+            System.out.println("Required string, but your type isn't based on it");
             logger.error("Task can't exist without title", exp_2);
             addTaskTitle();
         }
@@ -283,6 +287,7 @@ public class PrimaryView implements CoreViewable {
             addInterval();
         } catch (NumberFormatException exp_2) {
             logger.error("Wrong type of interval for task", exp_2);
+            System.out.println("Required integer number, but your type isn't based on it");
             addInterval();
         }
         return taskInterval;
@@ -305,8 +310,11 @@ public class PrimaryView implements CoreViewable {
             }
         } catch (IOException exp_1) {
             logger.error("Error in input number to the console", exp_1);
+            removeSomeTask();
         } catch (NumberFormatException exp_2) {
             logger.error("Wrong type of id for task", exp_2);
+            System.out.println("Required integer number, but your type isn't based on it");
+            removeSomeTask();
         }
         return id;
     }
@@ -340,8 +348,11 @@ public class PrimaryView implements CoreViewable {
             checkChangedTaskTitle(taskName);
         } catch (IOException exp_1) {
             logger.error("Error in input word to the console", exp_1);
+            changeTitleOfTask();
         } catch (IllegalArgumentException exp_2) {
             logger.error("Task can't exist without title", exp_2);
+            System.out.println("Required string, but your type isn't based on it");
+            changeTitleOfTask();
         }
         return taskName;
     }
@@ -360,8 +371,11 @@ public class PrimaryView implements CoreViewable {
             answer = bufReader.readLine();
         } catch (IOException exp) {
             logger.error("Error in input word to the console", exp);
+            selectTheTypeForTask();
         } catch (IllegalArgumentException exp_2) {
+            System.out.println("Required string, but your type isn't based on it");
             logger.error("Not String type", exp_2);
+            selectTheTypeForTask();
         }
         return answer;
     }
@@ -386,6 +400,7 @@ public class PrimaryView implements CoreViewable {
             logger.error("Error in input date to the console", exp);
             inputDateTime();
         } catch (DateTimeParseException otherExp) {
+            System.out.println("Input date isn't based on required format");
             logger.error("Error in formatting input date to LocalDateTime", otherExp);
             inputDateTime();
         }
@@ -407,6 +422,7 @@ public class PrimaryView implements CoreViewable {
             logger.error("Error in input number to the console", exp_1);
             changeIntervalOfTask();
         } catch (NumberFormatException exp_2) {
+            System.out.println("Required integer number, but your type isn't based on it");
             logger.error("Wrong type of interval for task", exp_2);
             changeIntervalOfTask();
         }
@@ -424,14 +440,18 @@ public class PrimaryView implements CoreViewable {
                 + "\n0 - disable task; \n1 - enable task; \npress Enter to back to additional menu: \r");
         try {
             taskStatus = Integer.parseInt(bufReader.readLine());
-            if ((taskStatus < 0) || (taskStatus > Integer.MAX_VALUE)) {
-                System.out.println("This number can't be negative or bigger than Integer");
+            if ((taskStatus < 0) || (taskStatus > Integer.MAX_VALUE)
+            || (taskStatus > 1)) {
+                System.out.println("This number can't be negative or bigger than  option number or even Integer");
                 changeStatusOfTask();
             }
         } catch (IOException exp_1) {
             logger.error("Error in input number to the console", exp_1);
+            changeStatusOfTask();
         } catch (NumberFormatException exp_2) {
+            System.out.println("Required integer number, but your type isn't based on it");
             logger.error("This integer number can't exist", exp_2);
+            changeStatusOfTask();
         }
         return taskStatus;
     }
@@ -456,6 +476,7 @@ public class PrimaryView implements CoreViewable {
             logger.error("Error in input date to the console", exp);
             addTimeLimit_1();
         } catch (DateTimeParseException otherExp) {
+            System.out.println("Input date isn't based on required format");
             logger.error("Error in formatting input date to LocalDateTime", otherExp);
             addTimeLimit_1();
         }
@@ -492,6 +513,7 @@ public class PrimaryView implements CoreViewable {
             logger.error("Error in input date to the console", exp);
             addTimeLimit_2();
         } catch (DateTimeParseException otherExp) {
+            System.out.println("Input date isn't based on required format");
             logger.error("Error in formatting input date to LocalDateTime", otherExp);
             addTimeLimit_2();
         }
@@ -509,30 +531,6 @@ public class PrimaryView implements CoreViewable {
     }
 
     /**
-     * Method that asks user for further action and return it number.
-     *
-     * @return - get int number that is responsible to action
-     */
-    public int getAction() {
-        System.out.println("Type what do you want to perform: ");
-        System.out.println("\t 1 - To saved task and exit"
-                + "\n\t Press ENTER - To return to main menu of application");
-        int inputNumber = 0;
-        try {
-            inputNumber = Integer.parseInt(bufReader.readLine());
-            if ((inputNumber < 0) || (inputNumber > Integer.MAX_VALUE)) {
-                System.out.println("This number can't be negative or bigger than Integer");
-                getAction();
-            }
-        } catch (IOException mainExp) {
-            logger.error("Error with typing number or wrong format for number", mainExp);
-        } catch (NumberFormatException otherExp) {
-            logger.error("This integer number can't exist", otherExp);
-        }
-        return inputNumber;
-    }
-
-    /**
      * Method that ask user to input name for the file and return it.
      *
      * @return - get the name of the file from the user input
@@ -547,6 +545,7 @@ public class PrimaryView implements CoreViewable {
             logger.error("Error in typing word to the console", exp);
             getFileName();
         } catch (IllegalArgumentException otherExp) {
+            System.out.println("Required string, but your type isn't based on it");
             logger.error("Not String type", otherExp);
             getFileName();
         }
