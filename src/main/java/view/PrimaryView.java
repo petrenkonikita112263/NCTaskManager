@@ -170,7 +170,7 @@ public class PrimaryView implements CoreViewable {
      */
     private void checkIntValue(int number) {
         if ((number > 60) || (number < 0) || (number > Integer.MAX_VALUE)) {
-            System.out.println("Time in minute can't be negative or move than 60");
+            System.out.println("Time in seconds can't be negative or move than 60");
             logger.error("Task can't exist with this value of Integer");
             addInterval();
         }
@@ -274,7 +274,7 @@ public class PrimaryView implements CoreViewable {
      */
     public int addInterval() {
         int taskInterval = 0;
-        System.out.println("At last enter the interval in minutes "
+        System.out.println("At last enter the interval in seconds "
                 + "for this task (integer value): \r");
         try {
             taskInterval = Integer.parseInt(bufReader.readLine());
@@ -399,7 +399,7 @@ public class PrimaryView implements CoreViewable {
      */
     public int changeIntervalOfTask() {
         int taskInterval = 0;
-        System.out.println("Enter the new interval in minutes for your task\r");
+        System.out.println("Enter the new interval in seconds for your task\r");
         try {
             taskInterval = Integer.parseInt(bufReader.readLine());
             checkIntValue(taskInterval);
