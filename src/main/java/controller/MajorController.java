@@ -18,6 +18,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.Set;
 import java.util.SortedMap;
 
+import static controller.ActionButton.*;
+
+
 /**
  * Class that implements interface of controller.
  *
@@ -28,7 +31,7 @@ public class MajorController implements CoreController {
     /**
      * Adding logger to the class.
      */
-    private static final Logger logger = Logger.getLogger(MajorController.class);
+    protected static final Logger LOGGER = Logger.getLogger(MajorController.class);
 
     /**
      * Instance of list.
@@ -60,36 +63,32 @@ public class MajorController implements CoreController {
                 new ConcurrencyNotification(listOfTasks, new NotificationView());
         notificationThread.setDaemon(true);
         notificationThread.start();
-        logger.info("The thread is running. Notification works");
+        LOGGER.info("The thread is running. Notification works");
     }
 
     /**
-     * Implementing (override) runMainApplication() method
-     * from interface.
-     *
-     * @throws IOException - input|output exception, failure during reading,
-     *                     writing information
+     * {@inheritDoc}
      */
     @Override
     public void runMainApplication() throws IOException {
         view.displayInfo();
-        logger.info("The main menu was called");
-        int defaultNumber_1 = view.getUserInput();
-        logger.info("Console was called");
-        switch (defaultNumber_1) {
-            case 1:
+        LOGGER.info("The main menu was called");
+        int mainMenuNumber = view.getUserInput();
+        LOGGER.info("Console was called");
+        switch (mainMenuNumber) {
+            case RESUME_APPLICATION_WORK:
                 continueWork();
                 runSecondaryMenu();
                 break;
-            case 2:
+            case LOAD_TASK_LIST:
                 readFromFile();
                 runSecondaryMenu();
                 break;
-            case 3:
+            case EMPTY_TASK_LIST:
                 createEmptyTaskList();
                 runSecondaryMenu();
                 break;
-            case 4:
+            case TERMINATE_APPLICATION:
                 view.closeInput();
                 System.exit(0);
             default:
@@ -98,36 +97,36 @@ public class MajorController implements CoreController {
     }
 
     /**
-     * Privatre method that run more duties in application.
+     * Private method that run more duties in application.
      *
      * @throws IOException - input|output exception, failure during reading,
      *                     writing information
      */
     private void runSecondaryMenu() throws IOException {
-        logger.info("The additional menu was called");
+        LOGGER.info("The additional menu was called");
         view.displayAdditionalInfo();
-        int defaultNumber = view.getNumberForFurtherAction();
-        logger.info("Console was called");
-        switch (defaultNumber) {
-            case 1:
+        int additionalNumber = view.getNumberForFurtherAction();
+        LOGGER.info("Console was called");
+        switch (additionalNumber) {
+            case ADD_TASK:
                 processAddingTask();
                 break;
-            case 2:
+            case CHANGE_EXISTED_TASK:
                 processChangingTask();
                 break;
-            case 3:
+            case DELETE_EXISTED_TASK:
                 processDeletingTask();
                 break;
-            case 4:
+            case PRINT_TASK_LIST:
                 displayListOfTasks(listOfTasks);
                 break;
-            case 5:
+            case PRINT_CALENDAR:
                 displayCalendar();
                 break;
-            case 6:
+            case SAVE_TASK:
                 processSavingWork();
                 break;
-            case 7:
+            case CLOSE_APP:
                 view.closeInput();
                 System.exit(0);
             default:
@@ -136,10 +135,7 @@ public class MajorController implements CoreController {
     }
 
     /**
-     * Implementing (override) addSomeTask() method
-     * from interface.
-     *
-     * @throws IOException - input exception
+     * {@inheritDoc}
      */
     @Override
     public void processAddingTask() throws IOException {
@@ -152,7 +148,7 @@ public class MajorController implements CoreController {
                 int interval = view.addInterval();
                 Task repTask = new Task(title, start, end, interval);
                 listOfTasks.add(repTask);
-                logger.info("The repetead task was added");
+                LOGGER.info("The repetead task was added");
                 processSavingWork();
                 runSecondaryMenu();
                 break;
@@ -160,7 +156,7 @@ public class MajorController implements CoreController {
                 LocalDateTime time = view.inputDateTime();
                 Task normalTask = new Task(title, time);
                 listOfTasks.add(normalTask);
-                logger.info("The non-repetead task was added");
+                LOGGER.info("The non-repetead task was added");
                 processSavingWork();
                 runSecondaryMenu();
                 break;
@@ -171,30 +167,25 @@ public class MajorController implements CoreController {
 
 
     /**
-     * Implementing (override) removeSomeTask() method
-     * from interface.
+     * {@inheritDoc}
      */
     @Override
     public void processDeletingTask() throws IOException {
         displayDetailAboutTask(listOfTasks);
         int id = view.removeSomeTask();
         listOfTasks.removeElement(id);
-        logger.info("Task was deleted");
+        LOGGER.info("Task was deleted");
         processSavingWork();
         runSecondaryMenu();
     }
 
     /**
-     * Implementing (override) changeTask() method
-     * from interface.
-     *
-     * @throws IOException - input|output exception, failure during reading,
-     *                     writing information
+     * {@inheritDoc}
      */
     @Override
     public void processChangingTask() throws IOException {
-        logger.info("The process of changing task was started");
-        logger.info("The console was called");
+        LOGGER.info("The process of changing task was started");
+        LOGGER.info("The console was called");
         String answer = view.selectTheTypeForTask();
         for (Task smth : listOfTasks) {
             switch (answer.toLowerCase()) {
@@ -210,7 +201,7 @@ public class MajorController implements CoreController {
                         case 1:
                             String taskName = view.changeTitleOfTask();
                             smth.setTitle(taskName);
-                            logger.info("The title of the task was changed");
+                            LOGGER.info("The title of the task was changed");
                             processSavingWork();
                             runSecondaryMenu();
                             break;
@@ -219,7 +210,7 @@ public class MajorController implements CoreController {
                             LocalDateTime endTime = view.inputDateTime();
                             smth.setStart(startTime);
                             smth.setEnd(endTime);
-                            logger.info("The start and end time was changed");
+                            LOGGER.info("The start and end time was changed");
                             processSavingWork();
                             runSecondaryMenu();
                             break;
@@ -228,7 +219,7 @@ public class MajorController implements CoreController {
                                 smth.setRepeated(false);
                                 dateTime_1 = view.inputDateTime();
                                 smth.setTime(dateTime_1);
-                                logger.info("The task is nonreptead now");
+                                LOGGER.info("The task is nonreptead now");
                                 processSavingWork();
                                 runSecondaryMenu();
                                 break;
@@ -240,7 +231,7 @@ public class MajorController implements CoreController {
                                 smth.setTime(dateTimeStart_1, dateTimeEnd_1, timeInterval_1);
                                 processSavingWork();
                                 runSecondaryMenu();
-                                logger.info("The task is repetead now");
+                                LOGGER.info("The task is repetead now");
                                 break;
                             }
                         case 4:
@@ -248,13 +239,13 @@ public class MajorController implements CoreController {
                             switch (taskStatus) {
                                 case 0:
                                     smth.setActive(false);
-                                    logger.info("The task isn't active");
+                                    LOGGER.info("The task isn't active");
                                     processSavingWork();
                                     runSecondaryMenu();
                                     break;
                                 case 1:
                                     smth.setActive(true);
-                                    logger.info("The task is active");
+                                    LOGGER.info("The task is active");
                                     processSavingWork();
                                     runSecondaryMenu();
                                     break;
@@ -264,7 +255,7 @@ public class MajorController implements CoreController {
                         case 5:
                             int taskInterval = view.changeIntervalOfTask();
                             smth.setInterval(taskInterval);
-                            logger.info("The interval was changed");
+                            LOGGER.info("The interval was changed");
                             processSavingWork();
                             runSecondaryMenu();
                             break;
@@ -286,14 +277,14 @@ public class MajorController implements CoreController {
                         case 1:
                             String taskName = view.changeTitleOfTask();
                             smth.setTitle(taskName);
-                            logger.info("The title of the task was changed");
+                            LOGGER.info("The title of the task was changed");
                             processSavingWork();
                             runSecondaryMenu();
                             break;
                         case 2:
                             LocalDateTime time = view.inputDateTime();
                             smth.setTime(time);
-                            logger.info("The time was changed");
+                            LOGGER.info("The time was changed");
                             processSavingWork();
                             runSecondaryMenu();
                             break;
@@ -302,7 +293,7 @@ public class MajorController implements CoreController {
                                 smth.setRepeated(false);
                                 dateTime_2 = view.inputDateTime();
                                 smth.setTime(dateTime_2);
-                                logger.info("The task is nonreptead now");
+                                LOGGER.info("The task is nonreptead now");
                                 processSavingWork();
                                 runSecondaryMenu();
                                 break;
@@ -314,7 +305,7 @@ public class MajorController implements CoreController {
                                 smth.setTime(dateTimeStart_2, dateTimeEnd_2, timeInterval_2);
                                 processSavingWork();
                                 runSecondaryMenu();
-                                logger.info("The task is repetead now");
+                                LOGGER.info("The task is repetead now");
                                 break;
                             }
                         case 4:
@@ -322,13 +313,13 @@ public class MajorController implements CoreController {
                             switch (taskStatus) {
                                 case 0:
                                     smth.setActive(false);
-                                    logger.info("The task isn't active");
+                                    LOGGER.info("The task isn't active");
                                     processSavingWork();
                                     runSecondaryMenu();
                                     break;
                                 case 1:
                                     smth.setActive(true);
-                                    logger.info("The task is active");
+                                    LOGGER.info("The task is active");
                                     processSavingWork();
                                     runSecondaryMenu();
                                     break;
@@ -370,7 +361,7 @@ public class MajorController implements CoreController {
             try {
                 printWriter = new PrintWriter(file);
             } catch (FileNotFoundException e) {
-                logger.error("File doesn't exist", e);
+                LOGGER.error("File doesn't exist", e);
             }
             printWriter.print("");
             printWriter.close();
@@ -385,15 +376,15 @@ public class MajorController implements CoreController {
         try {
             Files.createDirectories(path.getParent());
         } catch (IOException e) {
-            logger.error("Can't create folder by path", e);
+            LOGGER.error("Can't create folder by path", e);
             e.printStackTrace();
         }
         try {
             Files.createFile(path);
         } catch (FileAlreadyExistsException e) {
-            logger.error("Can't create file in folder", e);
+            LOGGER.error("Can't create file in folder", e);
         } catch (IOException e) {
-            logger.error("Failure in reading path", e);
+            LOGGER.error("Failure in reading path", e);
         }
     }
 
@@ -407,13 +398,12 @@ public class MajorController implements CoreController {
             TaskIO.read(listOfTasks,
                     (new FileReader("temp_test" + File.separatorChar + nameFile + ".json")));
         } catch (IOException e) {
-            logger.error("Error with reading process from the file", e);
+            LOGGER.error("Error with reading process from the file", e);
         }
     }
 
     /**
-     * Implementing (override) createCalendar() method
-     * from interface.
+     * {@inheritDoc}
      */
     @Override
     public void displayCalendar() throws IOException {
@@ -421,7 +411,7 @@ public class MajorController implements CoreController {
         LocalDateTime limitDate = view.addTimeLimit_2();
         SortedMap<LocalDateTime, Set<Task>> defaultCalendar =
                 Tasks.calendar(listOfTasks, startDate, limitDate);
-        logger.info("The calendar was created");
+        LOGGER.info("The calendar was created");
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         for (SortedMap.Entry<LocalDateTime, Set<Task>> content : defaultCalendar.entrySet()) {
             for (Task task : content.getValue()) {
@@ -435,11 +425,7 @@ public class MajorController implements CoreController {
     }
 
     /**
-     * Implementing (override) configApplication() method
-     * from interface.
-     *
-     * @throws IOException - input|output exception, failure during reading,
-     *                     writing text file
+     * {@inheritDoc}
      */
     @Override
     public void processSavingWork() throws IOException {
@@ -447,7 +433,7 @@ public class MajorController implements CoreController {
             TaskIO.writeText(listOfTasks,
                     (new File("temp_test" + File.separatorChar + pathToDefaultFileName + ".json")));
         } catch (IOException e) {
-            logger.error("Error with reading process from the file", e);
+            LOGGER.error("Error with reading process from the file", e);
         }
         String messageAboutPath = "temp_test" + File.separatorChar + pathToDefaultFileName + ".json";
         view.getInfoAboutSavingFile(messageAboutPath);
@@ -466,15 +452,15 @@ public class MajorController implements CoreController {
             try {
                 Files.createDirectories(path.getParent());
             } catch (IOException e) {
-                logger.error("Can't create folder by path", e);
+                LOGGER.error("Can't create folder by path", e);
                 e.printStackTrace();
             }
             try {
                 Files.createFile(path);
             } catch (FileAlreadyExistsException e) {
-                logger.error("Can't create file in folder", e);
+                LOGGER.error("Can't create file in folder", e);
             } catch (IOException e) {
-                logger.error("Failure in reading path", e);
+                LOGGER.error("Failure in reading path", e);
             }
             String message = "temp_test" + File.separatorChar + fileName;
             view.getMessageAboutDontFind(message);
@@ -484,11 +470,7 @@ public class MajorController implements CoreController {
     }
 
     /**
-     * Implementing (override) continueWork() method
-     * from interface.
-     *
-     * @throws IOException - input|output exception, failure during reading,
-     *                     writing text file
+     * {@inheritDoc}
      */
     @Override
     public void continueWork() throws IOException {
@@ -496,8 +478,7 @@ public class MajorController implements CoreController {
     }
 
     /**
-     * Implementation (override) displayListOfTasks() method from
-     * interface.
+     * {@inheritDoc}
      */
     @Override
     public void displayListOfTasks(ArrayTaskList taskList) {
@@ -506,7 +487,7 @@ public class MajorController implements CoreController {
             try {
                 runSecondaryMenu();
             } catch (IOException e) {
-                logger.error("Can't access to additional menu of application ", e);
+                LOGGER.error("Can't access to additional menu of application ", e);
             }
         }
         for (Task someTask : taskList) {
@@ -516,13 +497,12 @@ public class MajorController implements CoreController {
         try {
             runSecondaryMenu();
         } catch (IOException e) {
-            logger.error("Can't access to additional menu of application ", e);
+            LOGGER.error("Can't access to additional menu of application ", e);
         }
     }
 
     /**
-     * Implementation (override) displayDetailAboutTask() method from
-     * interface.
+     * {@inheritDoc}
      */
     @Override
     public void displayDetailAboutTask(ArrayTaskList taskList) {
@@ -532,7 +512,7 @@ public class MajorController implements CoreController {
             try {
                 runSecondaryMenu();
             } catch (IOException e) {
-                logger.error("Can't access to additional menu of application ", e);
+                LOGGER.error("Can't access to additional menu of application ", e);
             }
         }
         for (int i = 0; i < taskList.size(); i++) {

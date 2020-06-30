@@ -19,16 +19,15 @@ public class PrimaryView implements CoreViewable {
     /**
      * Adding logger to the class.
      */
-    private static final Logger logger = Logger.getLogger(PrimaryView.class);
+    protected static final Logger LOGGER = Logger.getLogger(PrimaryView.class);
 
     /**
      * Instead of using Scanner, use BufferedReader for input.
      */
-    private static BufferedReader bufReader;
+    protected static BufferedReader bufReader;
 
     /**
-     * Implementation (override) displayInfo() method from
-     * interface.
+     * {@inheritDoc}
      */
     @Override
     public void displayInfo() {
@@ -42,8 +41,7 @@ public class PrimaryView implements CoreViewable {
     }
 
     /**
-     * Implementation (override) displayAdditionalInfo() method from
-     * interface.
+     * {@inheritDoc}
      */
     @Override
     public void displayAdditionalInfo() {
@@ -129,15 +127,15 @@ public class PrimaryView implements CoreViewable {
      * @return - get the input number from console
      */
     public int getUserInput() {
-        logger.info("User start works with console");
+        LOGGER.info("User start works with console");
         try {
             bufReader = new BufferedReader(new InputStreamReader(System.in));
             return Integer.parseInt(bufReader.readLine());
         } catch (IOException e) {
-            logger.error("Can't get access to console by BufferedReader", e);
+            LOGGER.error("Can't get access to console by BufferedReader", e);
         } catch (NumberFormatException e) {
             System.out.println("Required integer number, but your type isn't based on it");
-            logger.error("Wrong input type", e);
+            LOGGER.error("Wrong input type", e);
             getUserInput();
         }
         return 0;
@@ -150,7 +148,7 @@ public class PrimaryView implements CoreViewable {
         try {
             bufReader.close();
         } catch (IOException e) {
-            logger.error("Can't close the BufferedReader ", e);
+            LOGGER.error("Can't close the BufferedReader ", e);
         }
     }
 
@@ -163,10 +161,10 @@ public class PrimaryView implements CoreViewable {
         try {
             return Integer.parseInt(bufReader.readLine());
         } catch (IOException e) {
-            logger.error("Can't get access to console by BufferedReader", e);
+            LOGGER.error("Can't get access to console by BufferedReader", e);
         } catch (NumberFormatException e) {
             System.out.println("Required integer number, but your type isn't based on it");
-            logger.error("Wrong input type", e);
+            LOGGER.error("Wrong input type", e);
             getUserInput();
         }
         return 0;
@@ -188,11 +186,11 @@ public class PrimaryView implements CoreViewable {
                 getTaskIndex();
             }
         } catch (IOException exp_1) {
-            logger.error("Error in input number to the console", exp_1);
+            LOGGER.error("Error in input number to the console", exp_1);
             getTaskIndex();
         } catch (NumberFormatException exp_2) {
             System.out.println("Required integer number, but your type isn't based on it");
-            logger.error("Wrong type of id for task", exp_2);
+            LOGGER.error("Wrong type of id for task", exp_2);
             getTaskIndex();
         }
         return id;
@@ -223,11 +221,11 @@ public class PrimaryView implements CoreViewable {
             title = bufReader.readLine();
             checkAddedTaskTitle(title);
         } catch (IOException exp_1) {
-            logger.error("Error in input word to the console", exp_1);
+            LOGGER.error("Error in input word to the console", exp_1);
             addTaskTitle();
         } catch (IllegalArgumentException exp_2) {
             System.out.println("Required string, but your type isn't based on it");
-            logger.error("Task can't exist with this title", exp_2);
+            LOGGER.error("Task can't exist with this title", exp_2);
             addTaskTitle();
         }
         return title;
@@ -302,10 +300,10 @@ public class PrimaryView implements CoreViewable {
             taskInterval = Integer.parseInt(bufReader.readLine());
             checkIntValue(taskInterval);
         } catch (IOException exp_1) {
-            logger.error("Error in input number to the console", exp_1);
+            LOGGER.error("Error in input number to the console", exp_1);
             addInterval();
         } catch (NumberFormatException exp_2) {
-            logger.error("Wrong type of interval for task", exp_2);
+            LOGGER.error("Wrong type of interval for task", exp_2);
             System.out.println("Required integer number, but your type isn't based on it");
             addInterval();
         }
@@ -328,10 +326,10 @@ public class PrimaryView implements CoreViewable {
                 removeSomeTask();
             }
         } catch (IOException exp_1) {
-            logger.error("Error in input number to the console", exp_1);
+            LOGGER.error("Error in input number to the console", exp_1);
             removeSomeTask();
         } catch (NumberFormatException exp_2) {
-            logger.error("Wrong type of id for task", exp_2);
+            LOGGER.error("Wrong type of id for task", exp_2);
             System.out.println("Required integer number, but your type isn't based on it");
             removeSomeTask();
         }
@@ -366,10 +364,10 @@ public class PrimaryView implements CoreViewable {
             taskName = bufReader.readLine();
             checkChangedTaskTitle(taskName);
         } catch (IOException exp_1) {
-            logger.error("Error in input word to the console", exp_1);
+            LOGGER.error("Error in input word to the console", exp_1);
             changeTitleOfTask();
         } catch (IllegalArgumentException exp_2) {
-            logger.error("Task can't exist without title", exp_2);
+            LOGGER.error("Task can't exist without title", exp_2);
             System.out.println("Required string, but your type isn't based on it");
             changeTitleOfTask();
         }
@@ -389,11 +387,11 @@ public class PrimaryView implements CoreViewable {
         try {
             answer = bufReader.readLine();
         } catch (IOException exp) {
-            logger.error("Error in input word to the console", exp);
+            LOGGER.error("Error in input word to the console", exp);
             selectTheTypeForTask();
         } catch (IllegalArgumentException exp_2) {
             System.out.println("Required string, but your type isn't based on it");
-            logger.error("Not String type", exp_2);
+            LOGGER.error("Not String type", exp_2);
             selectTheTypeForTask();
         }
         return answer;
@@ -416,11 +414,11 @@ public class PrimaryView implements CoreViewable {
             time = LocalDateTime.parse(date, timeFormatter);
             checkTime(time);
         } catch (IOException exp) {
-            logger.error("Error in input date to the console", exp);
+            LOGGER.error("Error in input date to the console", exp);
             inputDateTime();
         } catch (DateTimeParseException otherExp) {
             System.out.println("Input date isn't based on required format");
-            logger.error("Error in formatting input date to LocalDateTime", otherExp);
+            LOGGER.error("Error in formatting input date to LocalDateTime", otherExp);
             inputDateTime();
         }
         return time;
@@ -438,11 +436,11 @@ public class PrimaryView implements CoreViewable {
             taskInterval = Integer.parseInt(bufReader.readLine());
             checkIntValue(taskInterval);
         } catch (IOException exp_1) {
-            logger.error("Error in input number to the console", exp_1);
+            LOGGER.error("Error in input number to the console", exp_1);
             changeIntervalOfTask();
         } catch (NumberFormatException exp_2) {
             System.out.println("Required integer number, but your type isn't based on it");
-            logger.error("Wrong type of interval for task", exp_2);
+            LOGGER.error("Wrong type of interval for task", exp_2);
             changeIntervalOfTask();
         }
         return taskInterval;
@@ -465,11 +463,11 @@ public class PrimaryView implements CoreViewable {
                 changeStatusOfTask();
             }
         } catch (IOException exp_1) {
-            logger.error("Error in input number to the console", exp_1);
+            LOGGER.error("Error in input number to the console", exp_1);
             changeStatusOfTask();
         } catch (NumberFormatException exp_2) {
             System.out.println("Required integer number, but your type isn't based on it");
-            logger.error("This integer number can't exist", exp_2);
+            LOGGER.error("This integer number can't exist", exp_2);
             changeStatusOfTask();
         }
         return taskStatus;
@@ -492,11 +490,11 @@ public class PrimaryView implements CoreViewable {
             time = LocalDateTime.parse(date, timeFormatter);
             checkCalendarDate_1(time);
         } catch (IOException exp) {
-            logger.error("Error in input date to the console", exp);
+            LOGGER.error("Error in input date to the console", exp);
             addTimeLimit_1();
         } catch (DateTimeParseException otherExp) {
             System.out.println("Input date isn't based on required format");
-            logger.error("Error in formatting input date to LocalDateTime", otherExp);
+            LOGGER.error("Error in formatting input date to LocalDateTime", otherExp);
             addTimeLimit_1();
         }
         return time;
@@ -529,11 +527,11 @@ public class PrimaryView implements CoreViewable {
             time = LocalDateTime.parse(date, timeFormatter);
             checkCalendarDate_2(time);
         } catch (IOException exp) {
-            logger.error("Error in input date to the console", exp);
+            LOGGER.error("Error in input date to the console", exp);
             addTimeLimit_2();
         } catch (DateTimeParseException otherExp) {
             System.out.println("Input date isn't based on required format");
-            logger.error("Error in formatting input date to LocalDateTime", otherExp);
+            LOGGER.error("Error in formatting input date to LocalDateTime", otherExp);
             addTimeLimit_2();
         }
         return time;
@@ -561,11 +559,11 @@ public class PrimaryView implements CoreViewable {
             nameFile = bufReader.readLine();
             checkFileName(nameFile);
         } catch (IOException exp) {
-            logger.error("Error in typing word to the console", exp);
+            LOGGER.error("Error in typing word to the console", exp);
             getFileName();
         } catch (IllegalArgumentException otherExp) {
             System.out.println("Required string, but your type isn't based on it");
-            logger.error("Not String type", otherExp);
+            LOGGER.error("Not String type", otherExp);
             getFileName();
         }
         return nameFile;
