@@ -31,7 +31,7 @@ public class MajorController implements CoreController {
     /**
      * Adding logger to the class.
      */
-    protected static final Logger LOGGER = Logger.getLogger(MajorController.class);
+    private static final Logger LOGGER = Logger.getLogger(MajorController.class);
 
     /**
      * Instance of list.
@@ -99,7 +99,7 @@ public class MajorController implements CoreController {
     /**
      * Private method that run more duties in application.
      *
-     * @throws IOException - input|output exception, failure during reading,
+     * @throws IOException input|output exception, failure during reading,
      *                     writing information
      */
     private void runSecondaryMenu() throws IOException {
@@ -391,9 +391,9 @@ public class MajorController implements CoreController {
     /**
      * Private method that allow to read task list from GSON file.
      *
-     * @param nameFile - file name that stores the task list
+     * @param nameFile file name that stores the task list
      */
-    public void readFileWithTasks(String nameFile) {
+    private void readFileWithTasks(String nameFile) {
         try {
             TaskIO.read(listOfTasks,
                     (new FileReader("temp_test" + File.separatorChar + nameFile + ".json")));

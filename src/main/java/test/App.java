@@ -1,4 +1,4 @@
-package org.testing;
+package test;
 
 import controller.MajorController;
 
@@ -11,18 +11,14 @@ import java.io.IOException;
  */
 public class App {
     /**
-     * Main satic method of the class.
+     * Main static method of the class.
      *
-     * @param args - command-line arguments
-     * @throws IOException - input|output exception, failure during reading,
+     * @param args command-line arguments
+     * @throws IOException input|output exception, failure during reading,
      *                     writing information
      */
     public static void main(String[] args) throws IOException {
-
-//        create controller instance
         MajorController mc = new MajorController();
-
-        //        run main menu from controller
         mc.runMainApplication();
     }
 }

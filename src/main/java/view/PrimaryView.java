@@ -124,7 +124,7 @@ public class PrimaryView implements CoreViewable {
     /**
      * Public method that allow user to input info in console.
      *
-     * @return - get the input number from console
+     * @return get the input number from console
      */
     public int getUserInput() {
         LOGGER.info("User start works with console");
@@ -155,7 +155,7 @@ public class PrimaryView implements CoreViewable {
     /**
      * Ask user to type one of these numbers (1-7)
      *
-     * @return - get input integer number from console
+     * @return get input integer number from console
      */
     public int getNumberForFurtherAction() {
         try {
@@ -173,7 +173,7 @@ public class PrimaryView implements CoreViewable {
     /**
      * Method that allow user to input id for task.
      *
-     * @return - id of it
+     * @return id of it
      */
     public int getTaskIndex() {
         int id = 0;
@@ -200,7 +200,7 @@ public class PrimaryView implements CoreViewable {
      * Private additional method that validate int number
      * from user input.
      *
-     * @param number - any integer number in range of Integer
+     * @param number any integer number in range of Integer
      */
     private void checkIntValue(int number) {
         if ((number > 60) || (number < 0) || (number > Integer.MAX_VALUE)) {
@@ -212,7 +212,7 @@ public class PrimaryView implements CoreViewable {
     /**
      * Method that allow user to input title for task.
      *
-     * @return - title
+     * @return title of it
      */
     public String addTaskTitle() {
         String title = null;
@@ -235,7 +235,7 @@ public class PrimaryView implements CoreViewable {
      * Private additional method that validate task title
      * from user input.
      *
-     * @param titleOfTask - task title that user try to add to Task
+     * @param titleOfTask task title that user try to add to Task
      */
     private void checkAddedTaskTitle(String titleOfTask) {
         if ((titleOfTask == null) || (titleOfTask.trim().isEmpty())) {
@@ -249,7 +249,7 @@ public class PrimaryView implements CoreViewable {
      * Private additional method that validate task title
      * from user input.
      *
-     * @param titleOfTask - task title that user try to add to Task
+     * @param titleOfTask task title that user try to add to Task
      */
     private void checkChangedTaskTitle(String titleOfTask) {
         if ((titleOfTask == null) || (titleOfTask.trim().isEmpty())) {
@@ -263,7 +263,7 @@ public class PrimaryView implements CoreViewable {
      * Private additional method that validate name of the file
      * from user input.
      *
-     * @param nameOfFile - name of the file that user type
+     * @param nameOfFile name of the file that user type
      */
     private void checkFileName(String nameOfFile) {
         if ((nameOfFile == null) || (nameOfFile.trim().isEmpty())) {
@@ -277,7 +277,7 @@ public class PrimaryView implements CoreViewable {
      * Private additional method that validate LocalDateTime
      * from user input.
      *
-     * @param time - time value for task
+     * @param time time value for task
      */
     private void checkTime(LocalDateTime time) {
         if ((time.isBefore(LocalDateTime.now())) || (time == null)
@@ -290,7 +290,7 @@ public class PrimaryView implements CoreViewable {
     /**
      * Method that allow user to input interval for task.
      *
-     * @return - input interval
+     * @return input interval
      */
     public int addInterval() {
         int taskInterval = 0;
@@ -313,7 +313,7 @@ public class PrimaryView implements CoreViewable {
     /**
      * Method that ask user to set id of task that will be deleted.
      *
-     * @return - the id of task for which remove will be called
+     * @return the id of task for which remove will be called
      */
     public int removeSomeTask() {
         int id = 0;
@@ -354,7 +354,7 @@ public class PrimaryView implements CoreViewable {
     /**
      * Method that ask user to change title of the task.
      *
-     * @return - new title
+     * @return new title
      */
     public String changeTitleOfTask() {
         String taskName = null;
@@ -377,7 +377,7 @@ public class PrimaryView implements CoreViewable {
     /**
      * Method that ask user to change type of the task.
      *
-     * @return - new type repeated or not
+     * @return new type repeated or not
      */
     public String selectTheTypeForTask() {
         String answer = null;
@@ -400,7 +400,7 @@ public class PrimaryView implements CoreViewable {
     /**
      * Method that allow to input date|change date.
      *
-     * @return - LocalDateTime that user inputs
+     * @return LocalDateTime that user inputs
      */
     public LocalDateTime inputDateTime() {
         System.out.println("Please enter the time for task like in braces "
@@ -427,7 +427,7 @@ public class PrimaryView implements CoreViewable {
     /**
      * Method that ask user to change interval of the task.
      *
-     * @return - new interval
+     * @return new interval
      */
     public int changeIntervalOfTask() {
         int taskInterval = 0;
@@ -449,7 +449,7 @@ public class PrimaryView implements CoreViewable {
     /**
      * Method that ask user to change type of the task.
      *
-     * @return - 0 - disable it, 1 - enable it
+     * @return 0 - disable it, 1 - enable it
      */
     public int changeStatusOfTask() {
         int taskStatus = 0;
@@ -476,7 +476,7 @@ public class PrimaryView implements CoreViewable {
     /**
      * Method that asks user to start date from which calendar starts.
      *
-     * @return - get the start date
+     * @return get the start date
      */
     public LocalDateTime addTimeLimit_1() {
         System.out.println("Enter the date from which your calendar starts "
@@ -513,7 +513,7 @@ public class PrimaryView implements CoreViewable {
     /**
      * Method that asks user to end date to which calendar ends.
      *
-     * @return - get the end date of task
+     * @return get the end date of task
      */
     public LocalDateTime addTimeLimit_2() {
         System.out.println("Set the end time period for which you want "
@@ -550,7 +550,7 @@ public class PrimaryView implements CoreViewable {
     /**
      * Method that ask user to input name for the file and return it.
      *
-     * @return - get the name of the file from the user input
+     * @return get the name of the file from the user input
      */
     public String getFileName() {
         String nameFile = null;
