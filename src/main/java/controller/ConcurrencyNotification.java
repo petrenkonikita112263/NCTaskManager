@@ -9,6 +9,7 @@ import view.NotificationView;
 import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.SortedMap;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * Additional functionality of application. This class
@@ -34,6 +35,11 @@ public class ConcurrencyNotification extends Thread {
     private static final int SLEEP_THREAD = 5_000;
 
     /**
+     * This variable uses to set flag for killing thread.
+     */
+    private final AtomicBoolean running = new AtomicBoolean(false);
+
+    /**
      * The array list of tasks.
      */
     private ArrayTaskList listOfTasks;
@@ -46,8 +52,8 @@ public class ConcurrencyNotification extends Thread {
     /**
      * EVC constructor.
      *
-     * @param listOfTasks      - array list
-     * @param notificationView - instance of view
+     * @param listOfTasks array list
+     * @param notificationView instance of view
      */
     public ConcurrencyNotification(ArrayTaskList listOfTasks,
                                    NotificationView notificationView
@@ -57,11 +63,21 @@ public class ConcurrencyNotification extends Thread {
     }
 
     /**
-     * Override run() method to thread.
+     * {@inheritDoc}
+     */
+    @Override
+    public void interrupt() {
+        super.interrupt();
+        running.set(false);
+    }
+
+    /**
+     * {@inheritDoc}
      */
     @Override
     public void run() {
-        while (true) {
+        running.set(true);
+        while (running.get()) {
             LocalDateTime startNotify = (LocalDateTime.now().withSecond(0).withNano(0));
             LocalDateTime endNotify = LocalDateTime.now().withSecond(0).withNano(0)
                     .plusSeconds(DEFAULT_TIME);

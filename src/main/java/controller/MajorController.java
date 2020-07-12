@@ -5,8 +5,7 @@ import model.Task;
 import model.TaskIO;
 import model.Tasks;
 import org.apache.log4j.Logger;
-import view.NotificationView;
-import view.PrimaryView;
+import view.*;
 
 import java.io.*;
 import java.nio.file.FileAlreadyExistsException;
@@ -44,6 +43,43 @@ public class MajorController implements CoreController {
     private PrimaryView view;
 
     /**
+     * Instance of SecondaryView.
+     */
+    private SecondaryView secondaryView;
+    /**
+     * Instance of AddView.
+     */
+    private AddView addView;
+    /**
+     * Instance of DateView.
+     */
+    private DateView dateView;
+    /**
+     * Instance of SaveView.
+     */
+    private SaveView saveView;
+    /**
+     * Instance of ChangeView.
+     */
+    private ChangeView changeView;
+    /**
+     * Instance of DeleteView.
+     */
+    private DeleteView deleteView;
+    /**
+     * Instance of DisplayView.
+     */
+    private DisplayView displayView;
+    /**
+     * Instance of ReadView.
+     */
+    private ReadView readView;
+    /**
+     * Instance of Thread.
+     */
+    private ConcurrencyNotification notificationThread;
+
+    /**
      * The name of the folder that stores file.
      */
     private String folderName = "savepoint";
@@ -59,7 +95,15 @@ public class MajorController implements CoreController {
     public MajorController() {
         listOfTasks = new ArrayTaskList();
         view = new PrimaryView();
-        ConcurrencyNotification notificationThread =
+        secondaryView = new SecondaryView();
+        addView = new AddView();
+        dateView = new DateView();
+        saveView = new SaveView();
+        changeView = new ChangeView();
+        deleteView = new DeleteView();
+        displayView = new DisplayView();
+        readView = new ReadView();
+        notificationThread =
                 new ConcurrencyNotification(listOfTasks, new NotificationView());
         notificationThread.setDaemon(true);
         notificationThread.start();
@@ -90,6 +134,7 @@ public class MajorController implements CoreController {
                 break;
             case TERMINATE_APPLICATION:
                 view.closeInput();
+                notificationThread.interrupt();
                 System.exit(0);
             default:
                 runMainApplication();
@@ -104,8 +149,8 @@ public class MajorController implements CoreController {
      */
     private void runSecondaryMenu() throws IOException {
         LOGGER.info("The additional menu was called");
-        view.displayAdditionalInfo();
-        int additionalNumber = view.getNumberForFurtherAction();
+        secondaryView.displayInfo();
+        int additionalNumber = secondaryView.getIntegerValue();
         LOGGER.info("Console was called");
         switch (additionalNumber) {
             case ADD_TASK:
@@ -128,6 +173,7 @@ public class MajorController implements CoreController {
                 break;
             case CLOSE_APP:
                 view.closeInput();
+                notificationThread.interrupt();
                 System.exit(0);
             default:
                 runSecondaryMenu();
@@ -139,13 +185,13 @@ public class MajorController implements CoreController {
      */
     @Override
     public void processAddingTask() throws IOException {
-        String title = view.addTaskTitle();
-        String wordAnswer = view.selectTheTypeForTask();
+        String title = addView.addTaskTitle();
+        String wordAnswer = addView.selectTheTypeForTask();
         switch (wordAnswer.toLowerCase()) {
             case "yes":
-                LocalDateTime start = view.inputDateTime();
-                LocalDateTime end = view.inputDateTime();
-                int interval = view.addInterval();
+                LocalDateTime start = dateView.inputDateTime();
+                LocalDateTime end = dateView.inputDateTime();
+                int interval = addView.addInterval();
                 Task repTask = new Task(title, start, end, interval);
                 listOfTasks.add(repTask);
                 LOGGER.info("The repetead task was added");
@@ -153,7 +199,7 @@ public class MajorController implements CoreController {
                 runSecondaryMenu();
                 break;
             case "no":
-                LocalDateTime time = view.inputDateTime();
+                LocalDateTime time = dateView.inputDateTime();
                 Task normalTask = new Task(title, time);
                 listOfTasks.add(normalTask);
                 LOGGER.info("The non-repetead task was added");
@@ -172,7 +218,7 @@ public class MajorController implements CoreController {
     @Override
     public void processDeletingTask() throws IOException {
         displayDetailAboutTask(listOfTasks);
-        int id = view.removeSomeTask();
+        int id = deleteView.removeSomeTask();
         listOfTasks.removeElement(id);
         LOGGER.info("Task was deleted");
         processSavingWork();
@@ -186,28 +232,28 @@ public class MajorController implements CoreController {
     public void processChangingTask() throws IOException {
         LOGGER.info("The process of changing task was started");
         LOGGER.info("The console was called");
-        String answer = view.selectTheTypeForTask();
+        String answer = changeView.selectTheTypeForTask();
         for (Task smth : listOfTasks) {
             switch (answer.toLowerCase()) {
                 case "yes":
                     LocalDateTime dateTimeStart_1, dateTimeEnd_1, dateTime_1;
                     int timeInterval_1;
                     displayDetailAboutTask(listOfTasks);
-                    int taskIndex_1 = view.getTaskIndex();
+                    int taskIndex_1 = changeView.getTaskIndex();
                     listOfTasks.getTask(taskIndex_1);
-                    view.changeFunctionalityOfTask();
-                    int changeOption_1 = view.getNumberForFurtherAction();
+                    changeView.changeFunctionalityOfTask();
+                    int changeOption_1 = secondaryView.getIntegerValue();
                     switch (changeOption_1) {
                         case 1:
-                            String taskName = view.changeTitleOfTask();
+                            String taskName = addView.addTaskTitle();
                             smth.setTitle(taskName);
                             LOGGER.info("The title of the task was changed");
                             processSavingWork();
                             runSecondaryMenu();
                             break;
                         case 2:
-                            LocalDateTime startTime = view.inputDateTime();
-                            LocalDateTime endTime = view.inputDateTime();
+                            LocalDateTime startTime = dateView.inputDateTime();
+                            LocalDateTime endTime = dateView.inputDateTime();
                             smth.setStart(startTime);
                             smth.setEnd(endTime);
                             LOGGER.info("The start and end time was changed");
@@ -217,7 +263,7 @@ public class MajorController implements CoreController {
                         case 3:
                             if (smth.isRepeated()) {
                                 smth.setRepeated(false);
-                                dateTime_1 = view.inputDateTime();
+                                dateTime_1 = dateView.inputDateTime();
                                 smth.setTime(dateTime_1);
                                 LOGGER.info("The task is nonreptead now");
                                 processSavingWork();
@@ -225,9 +271,9 @@ public class MajorController implements CoreController {
                                 break;
                             } else {
                                 smth.setRepeated(true);
-                                dateTimeStart_1 = view.inputDateTime();
-                                dateTimeEnd_1 = view.inputDateTime();
-                                timeInterval_1 = view.addInterval();
+                                dateTimeStart_1 = dateView.inputDateTime();
+                                dateTimeEnd_1 = dateView.inputDateTime();
+                                timeInterval_1 = addView.addInterval();
                                 smth.setTime(dateTimeStart_1, dateTimeEnd_1, timeInterval_1);
                                 processSavingWork();
                                 runSecondaryMenu();
@@ -235,7 +281,7 @@ public class MajorController implements CoreController {
                                 break;
                             }
                         case 4:
-                            int taskStatus = view.changeStatusOfTask();
+                            int taskStatus = changeView.changeStatusOfTask();
                             switch (taskStatus) {
                                 case 0:
                                     smth.setActive(false);
@@ -253,7 +299,7 @@ public class MajorController implements CoreController {
                                     runSecondaryMenu();
                             }
                         case 5:
-                            int taskInterval = view.changeIntervalOfTask();
+                            int taskInterval = addView.addInterval();
                             smth.setInterval(taskInterval);
                             LOGGER.info("The interval was changed");
                             processSavingWork();
@@ -269,20 +315,20 @@ public class MajorController implements CoreController {
                     LocalDateTime dateTimeStart_2, dateTimeEnd_2, dateTime_2;
                     int timeInterval_2;
                     displayDetailAboutTask(listOfTasks);
-                    int taskIndex_2 = view.getTaskIndex();
+                    int taskIndex_2 = changeView.getTaskIndex();
                     listOfTasks.getTask(taskIndex_2);
-                    view.changeFunctionalityOfTask();
-                    int changeOption_2 = view.getNumberForFurtherAction();
+                    changeView.changeFunctionalityOfTask();
+                    int changeOption_2 = secondaryView.getIntegerValue();
                     switch (changeOption_2) {
                         case 1:
-                            String taskName = view.changeTitleOfTask();
+                            String taskName = addView.addTaskTitle();
                             smth.setTitle(taskName);
                             LOGGER.info("The title of the task was changed");
                             processSavingWork();
                             runSecondaryMenu();
                             break;
                         case 2:
-                            LocalDateTime time = view.inputDateTime();
+                            LocalDateTime time = dateView.inputDateTime();
                             smth.setTime(time);
                             LOGGER.info("The time was changed");
                             processSavingWork();
@@ -291,7 +337,7 @@ public class MajorController implements CoreController {
                         case 3:
                             if (smth.isRepeated()) {
                                 smth.setRepeated(false);
-                                dateTime_2 = view.inputDateTime();
+                                dateTime_2 = dateView.inputDateTime();
                                 smth.setTime(dateTime_2);
                                 LOGGER.info("The task is nonreptead now");
                                 processSavingWork();
@@ -299,9 +345,9 @@ public class MajorController implements CoreController {
                                 break;
                             } else {
                                 smth.setRepeated(true);
-                                dateTimeStart_2 = view.inputDateTime();
-                                dateTimeEnd_2 = view.inputDateTime();
-                                timeInterval_2 = view.addInterval();
+                                dateTimeStart_2 = dateView.inputDateTime();
+                                dateTimeEnd_2 = dateView.inputDateTime();
+                                timeInterval_2 = addView.addInterval();
                                 smth.setTime(dateTimeStart_2, dateTimeEnd_2, timeInterval_2);
                                 processSavingWork();
                                 runSecondaryMenu();
@@ -309,7 +355,7 @@ public class MajorController implements CoreController {
                                 break;
                             }
                         case 4:
-                            int taskStatus = view.changeStatusOfTask();
+                            int taskStatus = changeView.changeStatusOfTask();
                             switch (taskStatus) {
                                 case 0:
                                     smth.setActive(false);
@@ -345,7 +391,7 @@ public class MajorController implements CoreController {
      */
     private void createEmptyTaskList() {
         checkFileForContent();
-        view.getInfoAboutCreation();
+        displayView.getInfoAboutCreation();
     }
 
     /**
@@ -407,8 +453,8 @@ public class MajorController implements CoreController {
      */
     @Override
     public void displayCalendar() throws IOException {
-        LocalDateTime startDate = view.addTimeLimit_1();
-        LocalDateTime limitDate = view.addTimeLimit_2();
+        LocalDateTime startDate = displayView.addTimeLimit_1();
+        LocalDateTime limitDate = displayView.addTimeLimit_2();
         SortedMap<LocalDateTime, Set<Task>> defaultCalendar =
                 Tasks.calendar(listOfTasks, startDate, limitDate);
         LOGGER.info("The calendar was created");
@@ -416,10 +462,10 @@ public class MajorController implements CoreController {
         for (SortedMap.Entry<LocalDateTime, Set<Task>> content : defaultCalendar.entrySet()) {
             for (Task task : content.getValue()) {
                 String taskTitle = "Task title: " + task.getTitle();
-                view.displayTaskTitle(taskTitle);
+                displayView.displayTaskTitle(taskTitle);
             }
             String taskDate = "Its date: " + content.getKey().format(formatter);
-            view.displayTaskdate(taskDate);
+            displayView.displayTaskdate(taskDate);
         }
         runSecondaryMenu();
     }
@@ -436,7 +482,7 @@ public class MajorController implements CoreController {
             LOGGER.error("Error with reading process from the file", e);
         }
         String messageAboutPath = "temp_test" + File.separatorChar + pathToDefaultFileName + ".json";
-        view.getInfoAboutSavingFile(messageAboutPath);
+        saveView.getInfoAboutSavingFile(messageAboutPath);
         runSecondaryMenu();
     }
 
@@ -445,7 +491,7 @@ public class MajorController implements CoreController {
      * that name user input.
      */
     private void readFromFile() {
-        String fileName = view.getFileName();
+        String fileName = readView.getFileName();
         File file = new File("temp_test" + File.separatorChar + fileName + ".json");
         if (!file.exists()) {
             Path path = Paths.get("temp_test" + File.separatorChar + fileName);
@@ -463,7 +509,7 @@ public class MajorController implements CoreController {
                 LOGGER.error("Failure in reading path", e);
             }
             String message = "temp_test" + File.separatorChar + fileName;
-            view.getMessageAboutDontFind(message);
+            readView.getMessageAboutDontFind(message);
         } else {
             readFileWithTasks(fileName);
         }
@@ -483,7 +529,7 @@ public class MajorController implements CoreController {
     @Override
     public void displayListOfTasks(ArrayTaskList taskList) {
         if (taskList.size() == 0) {
-            view.getMessageAboutEmptiness();
+            displayView.getMessageAboutEmptiness();
             try {
                 runSecondaryMenu();
             } catch (IOException e) {
@@ -492,7 +538,7 @@ public class MajorController implements CoreController {
         }
         for (Task someTask : taskList) {
             String result = String.valueOf(someTask);
-            view.getViewForList(result);
+            displayView.getViewForList(result);
         }
         try {
             runSecondaryMenu();
@@ -508,7 +554,7 @@ public class MajorController implements CoreController {
     public void displayDetailAboutTask(ArrayTaskList taskList) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         if (taskList.size() == 0) {
-            view.getMessageAboutEmptiness();
+            displayView.getMessageAboutEmptiness();
             try {
                 runSecondaryMenu();
             } catch (IOException e) {
@@ -523,11 +569,11 @@ public class MajorController implements CoreController {
                         + "\nTask ends at " + formatter.format(t.getEndTime())
                         + "\nthe interval between start and end time is "
                         + t.getRepeatInterval();
-                view.getViewForRepTask(resultRepTask);
+                displayView.getViewForRepTask(resultRepTask);
             } else if (!t.isRepeated()) {
                 String resultNorTask = i + "\tYou have the non-repetead task with title : " + t.getTitle()
                         + "\nTask starts at " + formatter.format(t.getTime());
-                view.getViewForNorTask(resultNorTask);
+                displayView.getViewForNorTask(resultNorTask);
             }
         }
     }

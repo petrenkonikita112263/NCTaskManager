@@ -1,7 +1,7 @@
 package model;
 
 import org.apache.log4j.Logger;
-import view.PrimaryView;
+import view.DeleteView;
 
 import java.util.Arrays;
 import java.util.ConcurrentModificationException;
@@ -25,9 +25,9 @@ public class ArrayTaskList extends AbstractTaskList implements Cloneable {
     private static final Logger logger = Logger.getLogger(ArrayTaskList.class);
 
     /**
-     * Instance of PrimaryView.
+     * Instance of DeleteView.
      */
-    private PrimaryView view;
+    private DeleteView view;
 
     /**
      * initial cpacity of the array.
@@ -48,7 +48,7 @@ public class ArrayTaskList extends AbstractTaskList implements Cloneable {
      * DVC constructor create the array.
      */
     public ArrayTaskList() {
-        view = new PrimaryView();
+        view = new DeleteView();
         this.taskStore = new Task[DEFAULT_SIZE];
     }
 

@@ -13,9 +13,15 @@ public interface CoreViewable {
     void displayInfo();
 
     /**
-     * Method displays additional functionality of
-     * application.
+     * Public method that allow user to input info in console.
+     *
+     * @return get the input number from console
      */
-    void displayAdditionalInfo();
+    int getUserInput();
+
+    /**
+     * This method will close the Buffered Stream, if it's not empty the error writes to log.
+     */
+    public void closeInput();
 
 }
