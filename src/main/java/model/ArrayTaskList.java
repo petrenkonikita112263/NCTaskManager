@@ -1,6 +1,7 @@
 package model;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import view.DeleteView;
 
 import java.util.Arrays;
@@ -22,7 +23,7 @@ public class ArrayTaskList extends AbstractTaskList implements Cloneable {
     /**
      * Adding logger to the class.
      */
-    private static final Logger logger = Logger.getLogger(ArrayTaskList.class);
+    private static final Logger logger = LogManager.getLogger(ArrayTaskList.class);
 
     /**
      * Instance of DeleteView.

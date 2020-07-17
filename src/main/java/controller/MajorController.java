@@ -4,7 +4,8 @@ import model.ArrayTaskList;
 import model.Task;
 import model.TaskIO;
 import model.Tasks;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import view.*;
 
 import java.io.*;
@@ -30,7 +31,7 @@ public class MajorController implements CoreController {
     /**
      * Adding logger to the class.
      */
-    private static final Logger LOGGER = Logger.getLogger(MajorController.class);
+    private static final Logger LOGGER = LogManager.getLogger(MajorController.class);
 
     /**
      * Instance of list.

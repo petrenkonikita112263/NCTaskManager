@@ -1,7 +1,8 @@
 package model;
 
 import com.google.gson.Gson;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import java.io.*;
 import java.lang.reflect.Type;
@@ -21,13 +22,13 @@ public class TaskIO {
     /**
      * Adding logger to the class.
      */
-    private static final Logger logger = Logger.getLogger(TaskIO.class);
+    private static final Logger logger = LogManager.getLogger(TaskIO.class);
 
     /**
      * Static method that write list into the stream.
      *
-     * @param taskList     - list of the tasks
-     * @param outputStream - to where our task are saved
+     * @param taskList     list of the tasks
+     * @param outputStream to where our task are saved
      */
     public static void write(AbstractTaskList taskList,
                              OutputStream outputStream) {
@@ -95,8 +96,8 @@ public class TaskIO {
     /**
      * Static method that read list from the stream.
      *
-     * @param taskList    - list of the tasks
-     * @param inputStream - from input stream we get all our saved info
+     * @param taskList    list of the tasks
+     * @param inputStream from input stream we get all our saved info
      */
     public static void read(AbstractTaskList taskList,
                             InputStream inputStream) {
@@ -164,9 +165,9 @@ public class TaskIO {
     /**
      * Static method that write list into binary file.
      *
-     * @param taskList - list of the tasks
-     * @param file     - name of the file, which store our list
-     * @throws IOException - input|output exception, failure during reading,
+     * @param taskList list of the tasks
+     * @param file     name of the file, which store our list
+     * @throws IOException input|output exception, failure during reading,
      *                     writing and searching file
      */
     public static void writeBinary(AbstractTaskList taskList,
@@ -202,9 +203,9 @@ public class TaskIO {
     /**
      * Static method that write tasks to stream in GSON format.
      *
-     * @param taskList - list of the tasks
-     * @param writer   - writing text, that is based on characters
-     * @throws IOException - input|output exception, failure
+     * @param taskList list of the tasks
+     * @param writer   writing text, that is based on characters
+     * @throws IOException input|output exception, failure
      *                     during reading, writing and searching file
      */
     public static void write(AbstractTaskList taskList,
@@ -221,9 +222,9 @@ public class TaskIO {
     /**
      * Static method that read tasks from stream.
      *
-     * @param taskList - list of the tasks
-     * @param reader   - reading text, that is based on characters
-     * @throws IOException - input|output exception, failure
+     * @param taskList list of the tasks
+     * @param reader   reading text, that is based on characters
+     * @throws IOException input|output exception, failure
      *                     during reading, writing and searching file
      */
     public static void read(AbstractTaskList taskList,
@@ -243,9 +244,9 @@ public class TaskIO {
     /**
      * Static method that write tasks to GSON text file.
      *
-     * @param taskList - list of the tasks
-     * @param file     - to which file write the whole list
-     * @throws IOException - input|output exception, failure
+     * @param taskList list of the tasks
+     * @param file     to which file write the whole list
+     * @throws IOException input|output exception, failure
      *                     during reading, writing and searching file
      */
     public static void writeText(AbstractTaskList taskList,
@@ -272,9 +273,9 @@ public class TaskIO {
     /**
      * Static method that read tasks from GSON text file.
      *
-     * @param taskList - list of the tasks
-     * @param file     - from which file read the whole list
-     * @throws IOException - input|output exception, failure during reading,
+     * @param taskList list of the tasks
+     * @param file     from which file read the whole list
+     * @throws IOException input|output exception, failure during reading,
      *                     writing and searching file
      */
     public static void readText(AbstractTaskList taskList,
