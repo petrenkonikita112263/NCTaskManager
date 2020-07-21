@@ -419,7 +419,7 @@ public class MajorController implements CoreController {
      * Additional (private) method that creates file with subfolder.
      */
     private void createFileWithFolder() {
-        Path path = Paths.get("temp_test" + File.separatorChar + pathToDefaultFileName);
+        Path path = Paths.get("temp_test" + File.separatorChar + pathToDefaultFileName + ".json");
         try {
             Files.createDirectories(path.getParent());
         } catch (IOException e) {
@@ -495,7 +495,7 @@ public class MajorController implements CoreController {
         String fileName = readView.getFileName();
         File file = new File("temp_test" + File.separatorChar + fileName + ".json");
         if (!file.exists()) {
-            Path path = Paths.get("temp_test" + File.separatorChar + fileName);
+            Path path = Paths.get("temp_test" + File.separatorChar + fileName + ".json");
             try {
                 Files.createDirectories(path.getParent());
             } catch (IOException e) {
@@ -509,7 +509,7 @@ public class MajorController implements CoreController {
             } catch (IOException e) {
                 LOGGER.error("Failure in reading path", e);
             }
-            String message = "temp_test" + File.separatorChar + fileName;
+            String message = "temp_test" + File.separatorChar + fileName + ".json";
             readView.getMessageAboutDontFind(message);
         } else {
             readFileWithTasks(fileName);
