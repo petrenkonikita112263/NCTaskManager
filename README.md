@@ -11,7 +11,7 @@ This application was built based on MVC pattern, so this project consists of thr
 For storage the list of tasks, the application uses ArrayList that can be saved into json file after each actions (adding, changing or deleting task).
 
 The principle of operation for the application is shown on below picture.
-![The Digramm of Communications](diagram\Digramm_communications.jpg)
+![The Digramm of Communications](diagram/Digramm_communications.jpg)
 
 There're bat file that allow to *build* the project and also to run the jar file of main class.
 

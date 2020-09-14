@@ -38,7 +38,7 @@ public class ChangeView extends PrimaryView {
                 "\nP.S. Note and bring to the attention that ArrayList element starts from 0: \r");
         try {
             id = Integer.parseInt(bufReader.readLine());
-            if ((id < 0) || (id > Integer.MAX_VALUE)) {
+            if (id < 0) {
                 System.out.println("This number can't be negative or bigger than Integer");
                 getTaskIndex();
             }
@@ -79,8 +79,7 @@ public class ChangeView extends PrimaryView {
                 + "\n0 - disable task; \n1 - enable task; \npress Enter to back to additional menu: \r");
         try {
             taskStatus = Integer.parseInt(bufReader.readLine());
-            if ((taskStatus < 0) || (taskStatus > Integer.MAX_VALUE)
-                    || (taskStatus > 1)) {
+            if (taskStatus < 0 || taskStatus > 1) {
                 System.out.println("This number can't be negative or bigger than  option number or even Integer");
                 changeStatusOfTask();
             }

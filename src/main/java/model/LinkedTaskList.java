@@ -143,10 +143,9 @@ public class LinkedTaskList extends AbstractTaskList
      */
     @Override
     public String toString() {
-        String stringForList = new String();
-        Iterator iteratorForString = this.iterator();
-        while (iteratorForString.hasNext()) {
-            stringForList += iteratorForString.next().toString();
+        StringBuilder stringForList = new StringBuilder();
+        for (Task task : this) {
+            stringForList.append(task.toString());
         }
         return "LinkedTaskList: " + stringForList;
     }
@@ -235,6 +234,9 @@ public class LinkedTaskList extends AbstractTaskList
             callRemove = false;
         }
 
+        /**
+         * {@inheritDoc}
+         */
         @Override
         public boolean hasNext() {
 
@@ -242,6 +244,9 @@ public class LinkedTaskList extends AbstractTaskList
             return current != null;
         }
 
+        /**
+         * {@inheritDoc}
+         */
         @Override
         public Task next() {
             if (current == null) {
@@ -253,9 +258,9 @@ public class LinkedTaskList extends AbstractTaskList
             previous_2 = previous_1;
             previous_1 = current;
 
-// that's for remove method: which node we're gonna to delete,
-// so we need to know what node is it and the node before
-// it was previous, and finally which previous node should point to current
+            // that's for remove method: which node we're gonna to delete,
+            // so we need to know what node is it and the node before
+            // it was previous, and finally which previous node should point to current
 
             // point to the next node
             current = current.getNext();
@@ -267,6 +272,9 @@ public class LinkedTaskList extends AbstractTaskList
             return temp;
         }
 
+        /**
+         * {@inheritDoc}
+         */
         @Override
         public void remove() {
             if ((previous_1 == null) || (callRemove)) {
@@ -282,8 +290,8 @@ public class LinkedTaskList extends AbstractTaskList
                 // previous_2 was skipped
             } else {
 
-// previous_2 isn't null, next node after previous_2
-// -> current (skipping the node we're trying to delete)
+                // previous_2 isn't null, next node after previous_2
+                // -> current (skipping the node we're trying to delete)
                 previous_2.setNext(current);
             }
             size--;
@@ -326,9 +334,6 @@ public class LinkedTaskList extends AbstractTaskList
     @Override
     public Stream<Task> getStream() {
         Task[] arrayOfTask = this.toArray();
-
-        // convert Array to stream -> Sequential Stream
-        Stream<Task> stream = Arrays.stream(arrayOfTask);
-        return stream;
+        return Arrays.stream(arrayOfTask);
     }
 }

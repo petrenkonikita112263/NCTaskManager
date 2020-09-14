@@ -41,8 +41,7 @@ public class DateView extends PrimaryView {
      * @param time time value for task
      */
     private void checkTime(LocalDateTime time) {
-        if ((time.isBefore(LocalDateTime.now())) || (time == null)
-                || (time.isEqual(LocalDateTime.now()))) {
+        if (time.isBefore(LocalDateTime.now()) || time.isEqual(LocalDateTime.now())) {
             System.out.println("You enter wrong date, date can't be before today or equals now date");
             inputDateTime();
         }

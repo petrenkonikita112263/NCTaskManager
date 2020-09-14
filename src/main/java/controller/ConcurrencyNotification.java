@@ -3,8 +3,8 @@ package controller;
 import model.ArrayTaskList;
 import model.Task;
 import model.Tasks;
-import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import view.NotificationView;
 
 import java.time.LocalDateTime;
@@ -93,7 +93,7 @@ public class ConcurrencyNotification extends Thread {
                 }
             }
             try {
-                Thread.sleep(SLEEP_THREAD);
+                sleep(SLEEP_THREAD);
             } catch (InterruptedException e) {
                 logger.error("The thread can't run", e);
             }

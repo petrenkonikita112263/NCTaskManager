@@ -22,11 +22,6 @@ import java.util.Objects;
  */
 public class Task implements Cloneable, Serializable {
 
-//    /**
-//     * id - number of the task.
-//     */
-//    private int id;
-
     /**
      * title - name of the task.
      */

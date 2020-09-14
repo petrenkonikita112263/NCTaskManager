@@ -31,7 +31,7 @@ public class ArrayTaskList extends AbstractTaskList implements Cloneable {
     private DeleteView view;
 
     /**
-     * initial cpacity of the array.
+     * initial capacity of the array.
      */
     private static final int DEFAULT_SIZE = 10;
 
@@ -120,8 +120,8 @@ public class ArrayTaskList extends AbstractTaskList implements Cloneable {
             logger.error("The main error of array list - out of the size ", e);
         }
         Task removedTask = taskStore[index];
-        for (int i = index; i < size - 1; i++) {
-            taskStore[i] = taskStore[i + 1];
+        if (size - 1 - index >= 0) {
+            System.arraycopy(taskStore, index + 1, taskStore, index, size - 1 - index);
         }
         size--;
         return removedTask;
@@ -275,8 +275,7 @@ public class ArrayTaskList extends AbstractTaskList implements Cloneable {
     @Override
     public Stream<Task> getStream() {
         Task[] arrayOfTask = this.toArray();
-        Stream<Task> stream = Stream.of(arrayOfTask);
-        return stream;
+        return Stream.of(arrayOfTask);
     }
 }
 

@@ -93,7 +93,7 @@ public class AddView extends PrimaryView {
      * @param number any integer number in range of Integer
      */
     private void checkIntValue(int number) {
-        if ((number > 60) || (number < 0) || (number > Integer.MAX_VALUE)) {
+        if (number > 60 || number < 0) {
             System.out.println("Time in minutes can't be negative or move than 60");
             addInterval();
         }

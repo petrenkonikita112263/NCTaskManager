@@ -155,7 +155,9 @@ public class TaskIO {
             logger.error("Error in reading data information about task ", mainExp);
         } finally {
             try {
-                dataInputStream.close();
+                if (dataInputStream != null) {
+                    dataInputStream.close();
+                }
             } catch (IOException e) {
                 logger.error("Error in closing the input stream ", e);
             }
@@ -172,11 +174,8 @@ public class TaskIO {
      */
     public static void writeBinary(AbstractTaskList taskList,
                                    File file) throws IOException {
-        FileOutputStream fileOutputStream = new FileOutputStream(file);
-        try {
+        try (FileOutputStream fileOutputStream = new FileOutputStream(file)) {
             write(taskList, fileOutputStream);
-        } finally {
-            fileOutputStream.close();
         }
     }
 
@@ -195,8 +194,10 @@ public class TaskIO {
             bufferedOutputStream =
                     new BufferedOutputStream(new FileOutputStream(file));
         } finally {
-            bufferedOutputStream.flush();
-            bufferedOutputStream.close();
+            if (bufferedOutputStream != null) {
+                bufferedOutputStream.flush();
+                bufferedOutputStream.close();
+            }
         }
     }
 
@@ -262,11 +263,15 @@ public class TaskIO {
             logger.error("Error writing content to the file ", e);
         }
         try {
-            printWriter.write(gson
-                    .toJson(arrayTaskList, ArrayTaskList.class));
+            if (printWriter != null) {
+                printWriter.write(gson
+                        .toJson(arrayTaskList, ArrayTaskList.class));
+            }
         } finally {
-            printWriter.flush();
-            printWriter.close();
+            if (printWriter != null) {
+                printWriter.flush();
+                printWriter.close();
+            }
         }
     }
 
@@ -290,7 +295,9 @@ public class TaskIO {
                 taskList.add(smth);
             }
         } finally {
-            fileReader.close();
+            if (fileReader != null) {
+                fileReader.close();
+            }
         }
     }
 }

@@ -2,10 +2,9 @@ package controller;
 
 import model.ArrayTaskList;
 import model.Task;
-import model.TaskIO;
 import model.Tasks;
-import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import view.*;
 
 import java.io.*;
@@ -19,6 +18,8 @@ import java.util.Set;
 import java.util.SortedMap;
 
 import static controller.ActionButton.*;
+import static model.TaskIO.read;
+import static model.TaskIO.writeText;
 
 
 /**
@@ -79,12 +80,6 @@ public class MajorController implements CoreController {
      * Instance of Thread.
      */
     private ConcurrencyNotification notificationThread;
-
-    /**
-     * The name of the folder that stores file.
-     */
-    private String folderName = "savepoint";
-
     /**
      * The name of the default file for application.
      */
@@ -410,8 +405,10 @@ public class MajorController implements CoreController {
             } catch (FileNotFoundException e) {
                 LOGGER.error("File doesn't exist", e);
             }
-            printWriter.print("");
-            printWriter.close();
+            if (printWriter != null) {
+                printWriter.print("");
+                printWriter.close();
+            }
         }
     }
 
@@ -442,7 +439,7 @@ public class MajorController implements CoreController {
      */
     private void readFileWithTasks(String nameFile) {
         try {
-            TaskIO.read(listOfTasks,
+            read(listOfTasks,
                     (new FileReader("temp_test" + File.separatorChar + nameFile + ".json")));
         } catch (IOException e) {
             LOGGER.error("Error with reading process from the file", e);
@@ -477,7 +474,7 @@ public class MajorController implements CoreController {
     @Override
     public void processSavingWork() throws IOException {
         try {
-            TaskIO.writeText(listOfTasks,
+            writeText(listOfTasks,
                     (new File("temp_test" + File.separatorChar + pathToDefaultFileName + ".json")));
         } catch (IOException e) {
             LOGGER.error("Error with reading process from the file", e);
@@ -520,7 +517,7 @@ public class MajorController implements CoreController {
      * {@inheritDoc}
      */
     @Override
-    public void continueWork() throws IOException {
+    public void continueWork() {
         createFileWithFolder();
     }
 

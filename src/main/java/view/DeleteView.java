@@ -15,7 +15,7 @@ public class DeleteView extends PrimaryView {
                 + "that you want to delete");
         try {
             id = Integer.parseInt(bufReader.readLine());
-            if ((id < 0) || (id > Integer.MAX_VALUE)) {
+            if (id < 0) {
                 System.out.println("This number can't be negative or bigger than Integer");
                 removeSomeTask();
             }

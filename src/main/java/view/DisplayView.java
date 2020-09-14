@@ -52,7 +52,7 @@ public class DisplayView extends PrimaryView {
      * Additional method that check local date time - it can't be past date.
      */
     private void checkCalendarDate_1(LocalDateTime time) {
-        if ((time.isBefore(LocalDateTime.now())) || (time == null)) {
+        if (time.isBefore(LocalDateTime.now())) {
             System.out.println("You enter wrong date, date can't be before today or nothing info");
             addTimeLimit_1();
         }
@@ -89,7 +89,7 @@ public class DisplayView extends PrimaryView {
      * Additional method that check local date time - it can't be past date.
      */
     private void checkCalendarDate_2(LocalDateTime time) {
-        if ((time.isBefore(LocalDateTime.now())) || (time == null)) {
+        if (time.isBefore(LocalDateTime.now())) {
             System.out.println("You enter wrong date, date can't be before today or nothing info");
             addTimeLimit_2();
         }
