@@ -1,7 +1,6 @@
 package model;
 
 import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.LogManager;
 import view.DeleteView;
 
 import java.util.Arrays;
@@ -9,6 +8,10 @@ import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.stream.Stream;
+
+import static java.util.Arrays.*;
+import static java.util.stream.Stream.*;
+import static org.apache.logging.log4j.LogManager.getLogger;
 
 /**
  * The ArrayTaskList class creates a array from the tasks, that
@@ -23,7 +26,7 @@ public class ArrayTaskList extends AbstractTaskList implements Cloneable {
     /**
      * Adding logger to the class.
      */
-    private static final Logger logger = LogManager.getLogger(ArrayTaskList.class);
+    private static final Logger logger = getLogger(ArrayTaskList.class);
 
     /**
      * Instance of DeleteView.
@@ -54,9 +57,7 @@ public class ArrayTaskList extends AbstractTaskList implements Cloneable {
     }
 
     /**
-     * Add method, that add task to the ArrayList.
-     *
-     * @param task - the task that adds to the array
+     * {@inheritDoc}
      */
     @Override
     public void add(Task task) {
@@ -71,16 +72,13 @@ public class ArrayTaskList extends AbstractTaskList implements Cloneable {
      * Method that multiples the length by 2.
      */
     public void increaseCapacity() {
-        taskStore = Arrays.copyOf(taskStore, taskStore.length * 2);
+        taskStore = copyOf(taskStore, taskStore.length * 2);
     }
 
     /**
-     * getTask() method.
-     *
-     * @param index - the index of the task in the array
-     * @return taskStore[index] - return task from the array by index
+     * {@inheritDoc}
      */
-
+    @Override
     public Task getTask(int index) {
         if (index < size) {
             return taskStore[index];
@@ -95,20 +93,19 @@ public class ArrayTaskList extends AbstractTaskList implements Cloneable {
     }
 
     /**
-     * Getter for size.
-     *
-     * @return size
+     * {@inheritDoc}
      */
+    @Override
     public int size() {
         return this.size;
     }
 
     /**
-     * Private method removeElement().
+     * Public method removeElement().
      *
-     * @param index - the index of the element, that
+     * @param index the index of the element, that
      *              will be removed from the array
-     * @return removedTask - return removed task
+     * @return removedTask return removed task
      */
     public Task removeElement(int index) {
         try {
@@ -128,12 +125,9 @@ public class ArrayTaskList extends AbstractTaskList implements Cloneable {
     }
 
     /**
-     * Main remove() method.
-     *
-     * @param task - the task which we want to remove
-     * @return boolean - if this task is existed = true
-     * else = false
+     * {@inheritDoc}
      */
+    @Override
     public boolean remove(Task task) {
         for (int i = 0; i < size(); i++) {
             if (task.equals(taskStore[i])) {
@@ -145,9 +139,7 @@ public class ArrayTaskList extends AbstractTaskList implements Cloneable {
     }
 
     /**
-     * Override toString() method from Object class.
-     *
-     * @return - String type of message
+     * {@inheritDoc}
      */
     @Override
     public String toString() {
@@ -156,21 +148,7 @@ public class ArrayTaskList extends AbstractTaskList implements Cloneable {
     }
 
     /**
-     * Override hashCode() method from Object class.
-     *
-     * @return - int number based on size of the list
-     */
-    @Override
-    public int hashCode() {
-        return this.size;
-    }
-
-    /**
-     * Override equals() method from Object class.
-     *
-     * @param o - object of the class
-     * @return - get true if this object is the object of ArrayTaskList
-     * elsewhere get false
+     * {@inheritDoc}
      */
     @Override
     public boolean equals(Object o) {
@@ -208,16 +186,16 @@ public class ArrayTaskList extends AbstractTaskList implements Cloneable {
         private int currentPosition;
 
         /**
-         * Override hasNext method from Iterator interface.
-         *
-         * @return - true if there's next elements,
-         * elsewhere - get false
+         * {@inheritDoc}
          */
         @Override
         public boolean hasNext() {
             return currentPosition < size();
         }
 
+        /**
+         * {@inheritDoc}
+         */
         @Override
         public Task next() {
             if (!hasNext()) {
@@ -227,7 +205,7 @@ public class ArrayTaskList extends AbstractTaskList implements Cloneable {
         }
 
         /**
-         * Override remove method from Iterator interface.
+         * {@inheritDoc}
          */
         @Override
         public void remove() {
@@ -245,10 +223,7 @@ public class ArrayTaskList extends AbstractTaskList implements Cloneable {
     }
 
     /**
-     * Override clone() method.
-     * Deep cloning of the class ArrayTaskList.
-     *
-     * @return - copy of the task
+     * {@inheritDoc}
      */
     @Override
     public ArrayTaskList clone() throws CloneNotSupportedException {
@@ -260,22 +235,19 @@ public class ArrayTaskList extends AbstractTaskList implements Cloneable {
     /**
      * Implementing toArray method for ArrayList.
      *
-     * @return - return the array of the tasks
+     * @return return the array of the tasks
      */
     public Task[] toArray() {
-        return Arrays.copyOf(taskStore, size());
+        return copyOf(taskStore, size());
     }
 
     /**
-     * Override method getStream() from Tasks class.
-     * Run getStream() instead of incoming().
-     *
-     * @return - get stream
+     * {@inheritDoc}
      */
     @Override
     public Stream<Task> getStream() {
         Task[] arrayOfTask = this.toArray();
-        return Stream.of(arrayOfTask);
+        return of(arrayOfTask);
     }
 }
 

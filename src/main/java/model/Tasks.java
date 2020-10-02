@@ -9,42 +9,20 @@ import java.util.TreeMap;
 
 /**
  * This class implementing calendar and create static method that
- * can works with both type of the list (array and linked).
+ * can works with both type of the list.
  *
  * @author Nikita
  */
 public class Tasks implements Serializable {
 
     /**
-     * Static incoming method that can work as with ArrayList and
-     * LinkedList as well.
-     *
-     * @param tasks -
-     * @param start - start time
-     * @param end   - end time
-     * @return -
-     */
-    public static Iterable<Task> incoming(Iterable<Task> tasks,
-                                          LocalDateTime start,
-                                          LocalDateTime end) {
-        AbstractTaskList tempListTask = new ArrayTaskList();
-        LocalDateTime dateOfTask;
-        for (Task smth : tasks) {
-            dateOfTask = smth.nextTimeAfter(start);
-            if ((dateOfTask != null) && (dateOfTask.compareTo(end) <= 0)) {
-                tempListTask.add(smth);
-            }
-        }
-        return tempListTask;
-    }
-
-    /**
      * Static method that creates calendar for a set period of time.
      *
-     * @param tasks -
-     * @param start - start time
-     * @param end   - end time
-     * @return -
+     * @param tasks list of tasks
+     * @param start start time
+     * @param end   end time
+     * @return portion of map where keys are in range from {@code LocalDateTime} inclusive to
+     * {@code Set<Task>} exclusive
      */
     public static SortedMap<LocalDateTime, Set<Task>>
     calendar(Iterable<Task> tasks, LocalDateTime start,
@@ -52,13 +30,12 @@ public class Tasks implements Serializable {
         SortedMap<LocalDateTime, Set<Task>> sortedMap = new TreeMap<>();
         Set<Task> set;
         LocalDateTime current;
-        for (Task task:tasks) {
+        for (Task task : tasks) {
             current = task.nextTimeAfter(start.minusNanos(1));
             while (current != null && !current.isAfter(end)) {
                 if (sortedMap.containsKey(current)) {
                     sortedMap.get(current).add(task);
-                }
-                else {
+                } else {
                     set = new HashSet<>();
                     set.add(task);
                     sortedMap.put(current, set);

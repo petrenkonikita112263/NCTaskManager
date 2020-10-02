@@ -1,11 +1,3 @@
-/**
- * Provides the classes necessary to create an
- * app and the classes on uses to work
- *
- * @ author petrenko
- * @ version 1
- * @since 1.0
- */
 package model;
 
 import java.io.Serializable;
@@ -67,12 +59,10 @@ public class Task implements Cloneable, Serializable {
     /**
      * EVC 2nd constructor for nonrepeative task.
      *
-//     * @param id    - number of the task
-     * @param title - title of task
-     * @param time  - time for this task
+     * @param title title of task
+     * @param time  time for this task
      */
     public Task(String title, LocalDateTime time) {
-//        this.id = id;
         this.title = title;
         if (time == null) {
             throw new IllegalArgumentException("Time can't be negative");
@@ -81,18 +71,16 @@ public class Task implements Cloneable, Serializable {
         active = true;
     }
 
-        /**
+    /**
      * EVC 3th constructor for repeative task.
      *
-//     * @param id       - number of the task
-     * @param title    - title of task
-     * @param start    - start time for this task
-     * @param end      - end time for task
-     * @param interval - interval of time (from start to end)
+     * @param title    title of task
+     * @param start    start time for this task
+     * @param end      end time for task
+     * @param interval interval of time (from start to end)
      */
     public Task(String title, LocalDateTime start, LocalDateTime end,
                 int interval) {
-//        this.id = id;
         this.title = title;
         if (start == null) {
             throw new IllegalArgumentException("Start time can't be negative");
@@ -114,7 +102,7 @@ public class Task implements Cloneable, Serializable {
     /**
      * Getter for the title variable.
      *
-     * @return title - get the title of task
+     * @return title get the title of task
      */
     public String getTitle() {
         return title;
@@ -123,7 +111,7 @@ public class Task implements Cloneable, Serializable {
     /**
      * Setter for the title variable.
      *
-     * @param title - set the title of task
+     * @param title set the title of task
      */
     public void setTitle(String title) {
         this.title = title;
@@ -141,7 +129,7 @@ public class Task implements Cloneable, Serializable {
     /**
      * Setter for the status task: active or isn't active.
      *
-     * @param active - set boolean type
+     * @param active set boolean type
      */
     public void setActive(boolean active) {
         this.active = active;
@@ -159,7 +147,7 @@ public class Task implements Cloneable, Serializable {
     /**
      * Setter for the status: repeative or nonrepeative task.
      *
-     * @param repeated - set boolean type
+     * @param repeated set boolean type
      */
     public void setRepeated(boolean repeated) {
         this.repeated = repeated;
@@ -180,7 +168,7 @@ public class Task implements Cloneable, Serializable {
     /**
      * Getter time for the nonrepeative task.
      *
-     * @return LocalDateTime - get the whole time
+     * @return LocalDateTime get the whole time
      */
     public LocalDateTime getTime() {
         if (this.repeated) {
@@ -193,7 +181,7 @@ public class Task implements Cloneable, Serializable {
     /**
      * Setter time for the nonrepeative task.
      *
-     * @param time - set time for task
+     * @param time set time for task
      */
     public void setTime(LocalDateTime time) {
         if (this.repeated) {
@@ -205,7 +193,7 @@ public class Task implements Cloneable, Serializable {
     /**
      * Getters start, end and interval for repeative task.
      *
-     * @return LocalDateTime - get the whole time or start time
+     * @return LocalDateTime get the whole time or start time
      */
     public LocalDateTime getStartTime() {
         if (this.repeated) {
@@ -218,7 +206,7 @@ public class Task implements Cloneable, Serializable {
     /**
      * Getter for end time of task
      *
-     * @return LocalDateTime - get end time for repeated or the whole time for
+     * @return LocalDateTime get end time for repeated or the whole time for
      * no repeated task
      */
     public LocalDateTime getEndTime() {
@@ -232,7 +220,7 @@ public class Task implements Cloneable, Serializable {
     /**
      * Getter for interval value
      *
-     * @return int - get interval of task or get 0 if this not repeated
+     * @return int get interval of task or get 0 if this not repeated
      */
     public int getRepeatInterval() {
         if (this.repeated) {
@@ -245,9 +233,9 @@ public class Task implements Cloneable, Serializable {
     /**
      * Setter for repeative task.
      *
-     * @param start    - set start time
-     * @param end      - set end time
-     * @param interval - set interval
+     * @param start    set start time
+     * @param end      set end time
+     * @param interval set interval
      */
     public void setTime(LocalDateTime start, LocalDateTime end, int interval) {
         if ((end == null) || (start.isAfter(end))) {
@@ -266,8 +254,8 @@ public class Task implements Cloneable, Serializable {
     /**
      * Public method that returns int value.
      *
-     * @param current - value of pointed time
-     * @return tempTime - get the time for repeated task
+     * @param current value of pointed time
+     * @return tempTime get the time for repeated task
      */
     public LocalDateTime nextTimeAfter(LocalDateTime current) {
         if (current == null) {
@@ -296,7 +284,7 @@ public class Task implements Cloneable, Serializable {
     }
 
     /**
-     * The toString() returns a string description of this instance.
+     * {@inheritDoc}
      */
     @Override
     public String toString() {
@@ -314,9 +302,7 @@ public class Task implements Cloneable, Serializable {
     }
 
     /**
-     * Override hashCode() method from Object class.
-     *
-     * @return - int number based on 31 * titleTask(in hashCode)
+     * {@inheritDoc}
      */
     @Override
     public int hashCode() {
@@ -325,11 +311,7 @@ public class Task implements Cloneable, Serializable {
     }
 
     /**
-     * Override equals() method from Object class.
-     *
-     * @param o - object of the class
-     * @return - get true if this o is the object of Task class
-     * elsewhere get false
+     * {@inheritDoc}
      */
     @Override
     public boolean equals(Object o) {
@@ -350,10 +332,7 @@ public class Task implements Cloneable, Serializable {
     }
 
     /**
-     * Override clone() method.
-     * Shallow cloning of the class Task.
-     *
-     * @return - copy of the class
+     * {@inheritDoc}
      */
     @Override
     public Task clone() throws CloneNotSupportedException {

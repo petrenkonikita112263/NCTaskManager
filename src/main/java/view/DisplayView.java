@@ -5,6 +5,9 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
+import static java.time.LocalDateTime.now;
+import static java.time.format.DateTimeFormatter.ofPattern;
+
 public class DisplayView extends PrimaryView {
 
     /**
@@ -32,7 +35,7 @@ public class DisplayView extends PrimaryView {
                 + " and change numbers \r");
         String date = "";
         LocalDateTime time = null;
-        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        DateTimeFormatter timeFormatter = ofPattern("yyyy-MM-dd HH:mm");
         try {
             date = bufReader.readLine();
             time = LocalDateTime.parse(date, timeFormatter);
@@ -52,7 +55,7 @@ public class DisplayView extends PrimaryView {
      * Additional method that check local date time - it can't be past date.
      */
     private void checkCalendarDate_1(LocalDateTime time) {
-        if (time.isBefore(LocalDateTime.now())) {
+        if (time.isBefore(now())) {
             System.out.println("You enter wrong date, date can't be before today or nothing info");
             addTimeLimit_1();
         }
@@ -69,7 +72,7 @@ public class DisplayView extends PrimaryView {
                 + "or just copy this (2022-02-18 20:14) without braces:\r");
         String date = "";
         LocalDateTime time = null;
-        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        DateTimeFormatter timeFormatter = ofPattern("yyyy-MM-dd HH:mm");
         try {
             date = bufReader.readLine();
             time = LocalDateTime.parse(date, timeFormatter);
@@ -89,7 +92,7 @@ public class DisplayView extends PrimaryView {
      * Additional method that check local date time - it can't be past date.
      */
     private void checkCalendarDate_2(LocalDateTime time) {
-        if (time.isBefore(LocalDateTime.now())) {
+        if (time.isBefore(now())) {
             System.out.println("You enter wrong date, date can't be before today or nothing info");
             addTimeLimit_2();
         }

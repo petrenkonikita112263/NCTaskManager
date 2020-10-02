@@ -2,14 +2,13 @@ package model;
 
 import com.google.gson.Gson;
 import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.LogManager;
 
 import java.io.*;
 import java.lang.reflect.Type;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
-import java.time.ZoneOffset;
+
+import static java.time.ZoneOffset.UTC;
+import static org.apache.logging.log4j.LogManager.getLogger;
 
 /**
  * This class prevent you to save and read your task list
@@ -22,7 +21,7 @@ public class TaskIO {
     /**
      * Adding logger to the class.
      */
-    private static final Logger logger = LogManager.getLogger(TaskIO.class);
+    private static final Logger logger = getLogger(TaskIO.class);
 
     /**
      * Static method that write list into the stream.
@@ -32,51 +31,25 @@ public class TaskIO {
      */
     public static void write(AbstractTaskList taskList,
                              OutputStream outputStream) {
-
-//        create binary stream to write information
         DataOutputStream dataOutputStream = new DataOutputStream(outputStream);
         try {
-
-//            write how many tasks in our list (taskList)
             dataOutputStream.writeInt(taskList.size());
-
-//            run thoough the taskList
             for (Task smth : taskList) {
-
-//                dataOutputStream.writeInt(smth.getId());
-
-//                write the int number of length of the title
                 dataOutputStream.writeInt(smth.getTitle().length());
-
-//                write the whole title of the task
                 dataOutputStream.writeUTF(smth.getTitle());
-
-//                use lambdas to write 1 - if task is active, alternatively - 0
                 dataOutputStream.writeInt(smth.isActive() ? 1 : 0);
-
-//                write int number of the value of the interval
                 dataOutputStream.writeInt(smth.getRepeatInterval());
-
-//                write the startDate of task: date -> milliseconds
                 dataOutputStream.writeLong(smth.getStartTime()
-                        .toEpochSecond(ZoneOffset.UTC));
-
-//                if task is repeated
+                        .toEpochSecond(UTC));
                 if (smth.isRepeated()) {
-
-//                    write the endDate as startDate
                     dataOutputStream.writeLong(smth.getEndTime()
-                            .toEpochSecond(ZoneOffset.UTC));
+                            .toEpochSecond(UTC));
                 }
             }
-
-//            catch clauses - or add exception to the main method
         } catch (Exception mainExp) {
             logger.error("Error in writing data information about task ", mainExp);
         } finally {
             try {
-
-//                clear the buffer
                 dataOutputStream.flush();
             } catch (IOException e_1) {
                 logger.error("Error in flushing the content of the buffer "
@@ -84,8 +57,6 @@ public class TaskIO {
                 e_1.printStackTrace();
             }
             try {
-
-//                close the stream
                 dataOutputStream.close();
             } catch (IOException e_2) {
                 logger.error("Error in closing the output stream ", e_2);
@@ -101,49 +72,26 @@ public class TaskIO {
      */
     public static void read(AbstractTaskList taskList,
                             InputStream inputStream) {
-
-//        create binary input stream
         DataInputStream dataInputStream = null;
         try {
             dataInputStream = new DataInputStream(inputStream);
-
-//            read how many tasks are there
             int quantityOfTask = dataInputStream.readInt();
-
-//            run throught the collection
             for (int i = 0; i < quantityOfTask; i++) {
-
                 int idTask = dataInputStream.readInt();
-
-//                read how long is title
                 int titleLength = dataInputStream.readInt();
-
-//                read the title of the task
                 String titleOfTask = dataInputStream.readUTF();
-
-//                read task is active if 1 == 1 -> true
                 boolean statusActive = dataInputStream.readInt() == 1;
-
-//                read the interval of the task
                 int valueOfInterval = dataInputStream.readInt();
-
-//                read time, and transform milliseconds -> LocalDateTime
                 LocalDateTime startDateTime = LocalDateTime
                         .ofEpochSecond(dataInputStream.readLong(),
-                                0, ZoneOffset.UTC);
-
-//                if task is repeated
+                                0, UTC);
                 if (valueOfInterval != 0) {
                     LocalDateTime endDateTime = LocalDateTime
                             .ofEpochSecond(dataInputStream.readLong(),
-                                    0, ZoneOffset.UTC);
+                                    0, UTC);
                     Task newTask = new Task(titleOfTask, startDateTime,
                             endDateTime, valueOfInterval);
-
-//                    set the status of the task UNNECESSARY
                     newTask.setActive(statusActive);
-
-//                    add task to the list
                     taskList.add(newTask);
                 } else {
                     Task newTask = new Task(titleOfTask, startDateTime);
@@ -182,9 +130,9 @@ public class TaskIO {
     /**
      * Static method that read list from binary file.
      *
-     * @param taskList - list of the tasks
-     * @param file     - name of the file, from which read the list
-     * @throws IOException - input|output exception, failure during reading,
+     * @param taskList list of the tasks
+     * @param file     name of the file, from which read the list
+     * @throws IOException input|output exception, failure during reading,
      *                     writing and searching file
      */
     public static void readBinary(AbstractTaskList taskList,
@@ -247,12 +195,9 @@ public class TaskIO {
      *
      * @param taskList list of the tasks
      * @param file     to which file write the whole list
-     * @throws IOException input|output exception, failure
-     *                     during reading, writing and searching file
      */
     public static void writeText(AbstractTaskList taskList,
-                                 File file) throws IOException {
-        Charset utf8 = StandardCharsets.UTF_8;
+                                 File file) {
         PrintWriter printWriter = null;
         Gson gson = new Gson();
         ArrayTaskList arrayTaskList = (ArrayTaskList) taskList;

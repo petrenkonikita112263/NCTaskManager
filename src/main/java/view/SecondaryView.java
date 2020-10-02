@@ -2,6 +2,8 @@ package view;
 
 import java.io.IOException;
 
+import static java.lang.Integer.parseInt;
+
 public class SecondaryView extends PrimaryView {
 
     /**
@@ -26,7 +28,7 @@ public class SecondaryView extends PrimaryView {
      */
     public int getIntegerValue() {
         try {
-            return Integer.parseInt(bufReader.readLine());
+            return parseInt(bufReader.readLine());
         } catch (IOException e) {
             LOGGER.error("Can't get access to console by BufferedReader", e);
         } catch (NumberFormatException e) {

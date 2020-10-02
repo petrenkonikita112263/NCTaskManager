@@ -1,5 +1,6 @@
 package test;
 
+import controller.CoreController;
 import controller.MajorController;
 
 import java.io.IOException;
@@ -10,15 +11,13 @@ import java.io.IOException;
  * @author Nikita
  */
 public class App {
-    /**
+    /**3
      * Main static method of the class.
      *
      * @param args command-line arguments
-     * @throws IOException input|output exception, failure during reading,
-     *                     writing information
      */
     public static void main(String[] args) throws IOException {
-        MajorController mc = new MajorController();
-        mc.runMainApplication();
+        CoreController controller = new MajorController();
+        controller.runMainApplication();
     }
 }

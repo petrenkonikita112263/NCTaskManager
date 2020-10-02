@@ -5,6 +5,9 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
+import static java.time.LocalDateTime.now;
+import static java.time.format.DateTimeFormatter.ofPattern;
+
 public class DateView extends PrimaryView {
 
     /**
@@ -18,7 +21,7 @@ public class DateView extends PrimaryView {
                 + " and change numbers \r");
         String date = "";
         LocalDateTime time = null;
-        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        DateTimeFormatter timeFormatter = ofPattern("yyyy-MM-dd HH:mm");
         try {
             date = bufReader.readLine();
             time = LocalDateTime.parse(date, timeFormatter);
@@ -41,7 +44,7 @@ public class DateView extends PrimaryView {
      * @param time time value for task
      */
     private void checkTime(LocalDateTime time) {
-        if (time.isBefore(LocalDateTime.now()) || time.isEqual(LocalDateTime.now())) {
+        if (time.isBefore(now()) || time.isEqual(now())) {
             System.out.println("You enter wrong date, date can't be before today or equals now date");
             inputDateTime();
         }

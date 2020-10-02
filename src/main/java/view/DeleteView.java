@@ -2,6 +2,8 @@ package view;
 
 import java.io.IOException;
 
+import static java.lang.Integer.parseInt;
+
 public class DeleteView extends PrimaryView {
 
     /**
@@ -14,7 +16,7 @@ public class DeleteView extends PrimaryView {
         System.out.println("Please write the id number of your task, "
                 + "that you want to delete");
         try {
-            id = Integer.parseInt(bufReader.readLine());
+            id = parseInt(bufReader.readLine());
             if (id < 0) {
                 System.out.println("This number can't be negative or bigger than Integer");
                 removeSomeTask();

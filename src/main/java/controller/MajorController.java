@@ -3,23 +3,26 @@ package controller;
 import model.ArrayTaskList;
 import model.Task;
 import model.Tasks;
-import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import view.*;
 
 import java.io.*;
 import java.nio.file.FileAlreadyExistsException;
-import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Set;
 import java.util.SortedMap;
+import java.util.StringJoiner;
 
 import static controller.ActionButton.*;
+import static java.nio.file.Files.createDirectories;
+import static java.nio.file.Files.createFile;
+import static java.nio.file.Paths.get;
+import static java.time.format.DateTimeFormatter.ofPattern;
 import static model.TaskIO.read;
 import static model.TaskIO.writeText;
+import static org.apache.logging.log4j.LogManager.getLogger;
 
 
 /**
@@ -32,7 +35,7 @@ public class MajorController implements CoreController {
     /**
      * Adding logger to the class.
      */
-    private static final Logger LOGGER = LogManager.getLogger(MajorController.class);
+    private static final Logger LOGGER = getLogger(MajorController.class);
 
     /**
      * Instance of list.
@@ -42,48 +45,48 @@ public class MajorController implements CoreController {
     /**
      * Instance of PrimaryView.
      */
-    private PrimaryView view;
+    private final PrimaryView view;
 
     /**
      * Instance of SecondaryView.
      */
-    private SecondaryView secondaryView;
+    private final SecondaryView secondaryView;
     /**
      * Instance of AddView.
      */
-    private AddView addView;
+    private final AddView addView;
     /**
      * Instance of DateView.
      */
-    private DateView dateView;
+    private final DateView dateView;
     /**
      * Instance of SaveView.
      */
-    private SaveView saveView;
+    private final SaveView saveView;
     /**
      * Instance of ChangeView.
      */
-    private ChangeView changeView;
+    private final ChangeView changeView;
     /**
      * Instance of DeleteView.
      */
-    private DeleteView deleteView;
+    private final DeleteView deleteView;
     /**
      * Instance of DisplayView.
      */
-    private DisplayView displayView;
+    private final DisplayView displayView;
     /**
      * Instance of ReadView.
      */
-    private ReadView readView;
+    private final ReadView readView;
     /**
      * Instance of Thread.
      */
-    private ConcurrencyNotification notificationThread;
+    private final ConcurrencyNotification notificationThread;
     /**
      * The name of the default file for application.
      */
-    private String pathToDefaultFileName = "test_manager";
+    private final String pathToDefaultFileName = "test_manager";
 
     /**
      * EVC constructor.
@@ -416,15 +419,17 @@ public class MajorController implements CoreController {
      * Additional (private) method that creates file with subfolder.
      */
     private void createFileWithFolder() {
-        Path path = Paths.get("temp_test" + File.separatorChar + pathToDefaultFileName + ".json");
+        StringJoiner stringJoiner = new StringJoiner(File.separator);
+        stringJoiner.add("temp_test").add(pathToDefaultFileName + ".json");
+        String joinedString = stringJoiner.toString();
+        Path path = get(joinedString);
         try {
-            Files.createDirectories(path.getParent());
+            createDirectories(path.getParent());
         } catch (IOException e) {
             LOGGER.error("Can't create folder by path", e);
-            e.printStackTrace();
         }
         try {
-            Files.createFile(path);
+            createFile(path);
         } catch (FileAlreadyExistsException e) {
             LOGGER.error("Can't create file in folder", e);
         } catch (IOException e) {
@@ -438,9 +443,12 @@ public class MajorController implements CoreController {
      * @param nameFile file name that stores the task list
      */
     private void readFileWithTasks(String nameFile) {
+        StringJoiner stringJoiner = new StringJoiner(File.separator);
+        stringJoiner.add("temp_test").add(nameFile + ".json");
+        String joinedString = stringJoiner.toString();
         try {
             read(listOfTasks,
-                    (new FileReader("temp_test" + File.separatorChar + nameFile + ".json")));
+                    (new FileReader(joinedString)));
         } catch (IOException e) {
             LOGGER.error("Error with reading process from the file", e);
         }
@@ -456,7 +464,7 @@ public class MajorController implements CoreController {
         SortedMap<LocalDateTime, Set<Task>> defaultCalendar =
                 Tasks.calendar(listOfTasks, startDate, limitDate);
         LOGGER.info("The calendar was created");
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        DateTimeFormatter formatter = ofPattern("yyyy-MM-dd HH:mm");
         for (SortedMap.Entry<LocalDateTime, Set<Task>> content : defaultCalendar.entrySet()) {
             for (Task task : content.getValue()) {
                 String taskTitle = "Task title: " + task.getTitle();
@@ -473,14 +481,11 @@ public class MajorController implements CoreController {
      */
     @Override
     public void processSavingWork() throws IOException {
-        try {
-            writeText(listOfTasks,
-                    (new File("temp_test" + File.separatorChar + pathToDefaultFileName + ".json")));
-        } catch (IOException e) {
-            LOGGER.error("Error with reading process from the file", e);
-        }
-        String messageAboutPath = "temp_test" + File.separatorChar + pathToDefaultFileName + ".json";
-        saveView.getInfoAboutSavingFile(messageAboutPath);
+        StringJoiner stringJoiner = new StringJoiner(File.separator);
+        stringJoiner.add("temp_test").add(pathToDefaultFileName + ".json");
+        String joinedString = stringJoiner.toString();
+        writeText(listOfTasks, (new File(joinedString)));
+        saveView.getInfoAboutSavingFile(joinedString);
         runSecondaryMenu();
     }
 
@@ -490,24 +495,25 @@ public class MajorController implements CoreController {
      */
     private void readFromFile() {
         String fileName = readView.getFileName();
-        File file = new File("temp_test" + File.separatorChar + fileName + ".json");
+        StringJoiner stringJoiner = new StringJoiner(File.separator);
+        stringJoiner.add("temp_test").add(fileName + ".json");
+        String joinedString = stringJoiner.toString();
+        File file = new File(joinedString);
         if (!file.exists()) {
-            Path path = Paths.get("temp_test" + File.separatorChar + fileName + ".json");
+            Path path = get(joinedString);
             try {
-                Files.createDirectories(path.getParent());
+                createDirectories(path.getParent());
             } catch (IOException e) {
                 LOGGER.error("Can't create folder by path", e);
-                e.printStackTrace();
             }
             try {
-                Files.createFile(path);
+                createFile(path);
             } catch (FileAlreadyExistsException e) {
                 LOGGER.error("Can't create file in folder", e);
             } catch (IOException e) {
                 LOGGER.error("Failure in reading path", e);
             }
-            String message = "temp_test" + File.separatorChar + fileName + ".json";
-            readView.getMessageAboutDontFind(message);
+            readView.getMessageAboutDontFind(joinedString);
         } else {
             readFileWithTasks(fileName);
         }
@@ -550,7 +556,7 @@ public class MajorController implements CoreController {
      */
     @Override
     public void displayDetailAboutTask(ArrayTaskList taskList) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        DateTimeFormatter formatter = ofPattern("yyyy-MM-dd HH:mm");
         if (taskList.size() == 0) {
             displayView.getMessageAboutEmptiness();
             try {

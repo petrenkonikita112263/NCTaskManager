@@ -2,6 +2,8 @@ package view;
 
 import java.io.IOException;
 
+import static java.lang.Integer.parseInt;
+
 public class ChangeView extends PrimaryView {
 
     /**
@@ -37,7 +39,7 @@ public class ChangeView extends PrimaryView {
         System.out.println("Enter the id of the task " +
                 "\nP.S. Note and bring to the attention that ArrayList element starts from 0: \r");
         try {
-            id = Integer.parseInt(bufReader.readLine());
+            id = parseInt(bufReader.readLine());
             if (id < 0) {
                 System.out.println("This number can't be negative or bigger than Integer");
                 getTaskIndex();
@@ -78,7 +80,7 @@ public class ChangeView extends PrimaryView {
         System.out.println("Change status of task"
                 + "\n0 - disable task; \n1 - enable task; \npress Enter to back to additional menu: \r");
         try {
-            taskStatus = Integer.parseInt(bufReader.readLine());
+            taskStatus = parseInt(bufReader.readLine());
             if (taskStatus < 0 || taskStatus > 1) {
                 System.out.println("This number can't be negative or bigger than  option number or even Integer");
                 changeStatusOfTask();

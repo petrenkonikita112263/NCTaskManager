@@ -1,11 +1,12 @@
 package view;
 
 import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.LogManager;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+
+import static org.apache.logging.log4j.LogManager.getLogger;
 
 /**
  * View class that implements interface of Core class.
@@ -17,7 +18,7 @@ public class PrimaryView implements CoreViewable {
     /**
      * Adding logger to the class.
      */
-    protected static final Logger LOGGER = LogManager.getLogger(PrimaryView.class);
+    protected static final Logger LOGGER = getLogger(PrimaryView.class);
 
     /**
      * Instead of using Scanner, use BufferedReader for input.

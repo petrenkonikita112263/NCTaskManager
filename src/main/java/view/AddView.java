@@ -2,6 +2,8 @@ package view;
 
 import java.io.IOException;
 
+import static java.lang.Integer.parseInt;
+
 public class AddView extends PrimaryView {
 
     /**
@@ -73,7 +75,7 @@ public class AddView extends PrimaryView {
         System.out.println("At last enter the interval in minutes "
                 + "for this task (integer value): \r");
         try {
-            taskInterval = Integer.parseInt(bufReader.readLine());
+            taskInterval = parseInt(bufReader.readLine());
             checkIntValue(taskInterval);
         } catch (IOException exp_1) {
             LOGGER.error("Error in input number to the console", exp_1);
