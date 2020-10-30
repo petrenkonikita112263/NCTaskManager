@@ -1,5 +1,7 @@
 package view;
 
+import java.io.BufferedReader;
+
 /**
  * Main interface of View part of MVC project.
  *
@@ -17,11 +19,5 @@ public interface CoreViewable {
      *
      * @return get the input number from console
      */
-    int getUserInput();
-
-    /**
-     * This method will close the Buffered Stream, if it's not empty the error writes to log.
-     */
-    public void closeInput();
-
+    int getUserInput(BufferedReader bufferedReader);
 }

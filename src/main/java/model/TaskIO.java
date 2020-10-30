@@ -6,6 +6,7 @@ import org.apache.logging.log4j.Logger;
 import java.io.*;
 import java.lang.reflect.Type;
 import java.time.LocalDateTime;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import static java.time.ZoneOffset.UTC;
 import static org.apache.logging.log4j.LogManager.getLogger;
@@ -29,7 +30,7 @@ public class TaskIO {
      * @param taskList     list of the tasks
      * @param outputStream to where our task are saved
      */
-    public static void write(AbstractTaskList taskList,
+    public static void write(CopyOnWriteArrayList<Task> taskList,
                              OutputStream outputStream) {
         DataOutputStream dataOutputStream = new DataOutputStream(outputStream);
         try {
@@ -70,7 +71,7 @@ public class TaskIO {
      * @param taskList    list of the tasks
      * @param inputStream from input stream we get all our saved info
      */
-    public static void read(AbstractTaskList taskList,
+    public static void read(CopyOnWriteArrayList<Task> taskList,
                             InputStream inputStream) {
         DataInputStream dataInputStream = null;
         try {
@@ -120,7 +121,7 @@ public class TaskIO {
      * @throws IOException input|output exception, failure during reading,
      *                     writing and searching file
      */
-    public static void writeBinary(AbstractTaskList taskList,
+    public static void writeBinary(CopyOnWriteArrayList<Task> taskList,
                                    File file) throws IOException {
         try (FileOutputStream fileOutputStream = new FileOutputStream(file)) {
             write(taskList, fileOutputStream);
@@ -135,7 +136,7 @@ public class TaskIO {
      * @throws IOException input|output exception, failure during reading,
      *                     writing and searching file
      */
-    public static void readBinary(AbstractTaskList taskList,
+    public static void readBinary(CopyOnWriteArrayList<Task> taskList,
                                   File file) throws IOException {
         BufferedOutputStream bufferedOutputStream = null;
         try {
@@ -157,7 +158,7 @@ public class TaskIO {
      * @throws IOException input|output exception, failure
      *                     during reading, writing and searching file
      */
-    public static void write(AbstractTaskList taskList,
+    public static void write(CopyOnWriteArrayList<Task> taskList,
                              Writer writer) throws IOException {
         Gson gson = new Gson();
         try {
@@ -176,15 +177,13 @@ public class TaskIO {
      * @throws IOException input|output exception, failure
      *                     during reading, writing and searching file
      */
-    public static void read(AbstractTaskList taskList,
+    public static void read(CopyOnWriteArrayList<Task> taskList,
                             Reader reader) throws IOException {
         Gson gson = new Gson();
-        AbstractTaskList abstractTaskList = gson
+        CopyOnWriteArrayList arrayList = gson
                 .fromJson(reader, taskList.getClass());
         try {
-            for (Task smth : abstractTaskList) {
-                taskList.add(smth);
-            }
+            taskList.addAll(arrayList);
         } finally {
             reader.close();
         }
@@ -196,11 +195,10 @@ public class TaskIO {
      * @param taskList list of the tasks
      * @param file     to which file write the whole list
      */
-    public static void writeText(AbstractTaskList taskList,
+    public static void writeText(CopyOnWriteArrayList<Task> taskList,
                                  File file) {
         PrintWriter printWriter = null;
         Gson gson = new Gson();
-        ArrayTaskList arrayTaskList = (ArrayTaskList) taskList;
         try {
             printWriter = new PrintWriter(
                     new BufferedWriter(new FileWriter(file)));
@@ -210,7 +208,7 @@ public class TaskIO {
         try {
             if (printWriter != null) {
                 printWriter.write(gson
-                        .toJson(arrayTaskList, ArrayTaskList.class));
+                        .toJson(taskList, CopyOnWriteArrayList.class));
             }
         } finally {
             if (printWriter != null) {
@@ -228,17 +226,14 @@ public class TaskIO {
      * @throws IOException input|output exception, failure during reading,
      *                     writing and searching file
      */
-    public static void readText(AbstractTaskList taskList,
+    public static void readText(CopyOnWriteArrayList<Task> taskList,
                                 File file) throws IOException {
         FileReader fileReader = null;
         Gson gson = new Gson();
-        ArrayTaskList arrayTaskList;
         try {
             BufferedReader in = new BufferedReader(new FileReader(file));
-            arrayTaskList = gson.fromJson(in, (Type) taskList);
-            for (Task smth : arrayTaskList) {
-                taskList.add(smth);
-            }
+            taskList = gson.fromJson(in, (Type) taskList);
+            taskList.addAll(taskList);
         } finally {
             if (fileReader != null) {
                 fileReader.close();

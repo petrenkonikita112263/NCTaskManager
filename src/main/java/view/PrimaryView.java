@@ -4,7 +4,6 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 
 import static org.apache.logging.log4j.LogManager.getLogger;
 
@@ -19,11 +18,6 @@ public class PrimaryView implements CoreViewable {
      * Adding logger to the class.
      */
     protected static final Logger LOGGER = getLogger(PrimaryView.class);
-
-    /**
-     * Instead of using Scanner, use BufferedReader for input.
-     */
-    protected static BufferedReader bufReader;
 
     /**
      * {@inheritDoc}
@@ -41,28 +35,17 @@ public class PrimaryView implements CoreViewable {
 
     /**{@inheritDoc}*/
     @Override
-    public int getUserInput() {
+    public int getUserInput(BufferedReader bufferedReader) {
         LOGGER.info("User start works with console");
         try {
-            bufReader = new BufferedReader(new InputStreamReader(System.in));
-            return Integer.parseInt(bufReader.readLine());
+            return Integer.parseInt(bufferedReader.readLine());
         } catch (IOException e) {
             LOGGER.error("Can't get access to console by BufferedReader", e);
         } catch (NumberFormatException e) {
             System.out.println("Required integer number, but your type isn't based on it");
             LOGGER.error("Wrong input type", e);
-            getUserInput();
+            getUserInput(bufferedReader);
         }
         return 0;
-    }
-
-    /**{@inheritDoc}*/
-    @Override
-    public void closeInput() {
-        try {
-            bufReader.close();
-        } catch (IOException e) {
-            LOGGER.error("Can't close the BufferedReader ", e);
-        }
     }
 }
