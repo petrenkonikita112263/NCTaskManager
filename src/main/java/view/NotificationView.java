@@ -21,4 +21,12 @@ public class NotificationView {
         System.out.println("Hi, you've upcoming event in "
                 + formatter.format(time) + " don't forget about it  - |" + title + "|");
     }
+
+    public void displayHint() {
+        System.out.println("Notifier is waiting, list is empty. Please add the task to the list");
+    }
+
+    public void getWaitMessage(int timeWaiting) {
+        System.out.println("Notifier waits: " + timeWaiting);
+    }
 }

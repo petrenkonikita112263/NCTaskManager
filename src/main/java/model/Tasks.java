@@ -2,10 +2,9 @@ package model;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.SortedMap;
-import java.util.TreeMap;
+import java.util.concurrent.ConcurrentNavigableMap;
+import java.util.concurrent.ConcurrentSkipListMap;
+import java.util.concurrent.CopyOnWriteArraySet;
 
 /**
  * This class implementing calendar and create static method that
@@ -24,11 +23,12 @@ public class Tasks implements Serializable {
      * @return portion of map where keys are in range from {@code LocalDateTime} inclusive to
      * {@code Set<Task>} exclusive
      */
-    public static SortedMap<LocalDateTime, Set<Task>>
+    public static ConcurrentNavigableMap<LocalDateTime, CopyOnWriteArraySet<Task>>
     calendar(Iterable<Task> tasks, LocalDateTime start,
              LocalDateTime end) {
-        SortedMap<LocalDateTime, Set<Task>> sortedMap = new TreeMap<>();
-        Set<Task> set;
+        ConcurrentNavigableMap<LocalDateTime, CopyOnWriteArraySet<Task>> sortedMap =
+                new ConcurrentSkipListMap<>();
+        CopyOnWriteArraySet<Task> set;
         LocalDateTime current;
         for (Task task : tasks) {
             current = task.nextTimeAfter(start.minusNanos(1));
@@ -36,7 +36,7 @@ public class Tasks implements Serializable {
                 if (sortedMap.containsKey(current)) {
                     sortedMap.get(current).add(task);
                 } else {
-                    set = new HashSet<>();
+                    set = new CopyOnWriteArraySet<>();
                     set.add(task);
                     sortedMap.put(current, set);
                 }

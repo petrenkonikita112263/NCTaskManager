@@ -64,9 +64,6 @@ public class Task implements Cloneable, Serializable {
      */
     public Task(String title, LocalDateTime time) {
         this.title = title;
-        if (time == null) {
-            throw new IllegalArgumentException("Time can't be negative");
-        }
         this.time = time;
         active = true;
     }
@@ -82,18 +79,8 @@ public class Task implements Cloneable, Serializable {
     public Task(String title, LocalDateTime start, LocalDateTime end,
                 int interval) {
         this.title = title;
-        if (start == null) {
-            throw new IllegalArgumentException("Start time can't be negative");
-        }
         this.start = start;
-        if (end == null) {
-            throw new IllegalArgumentException("End time can't be negative");
-        }
         this.end = end;
-        if (interval < 0) {
-            throw new IllegalArgumentException("Interval time "
-                    + "can't be negative");
-        }
         this.interval = interval;
         repeated = true;
         active = true;
@@ -258,9 +245,7 @@ public class Task implements Cloneable, Serializable {
      * @return tempTime get the time for repeated task
      */
     public LocalDateTime nextTimeAfter(LocalDateTime current) {
-        if (current == null) {
-            throw new IllegalArgumentException("Wrong value for the date");
-        } else if (!isActive()) {
+        if (!isActive()) {
             return null;
         } else if ((!isRepeated()) && (isActive())
                 && (getTime().isAfter(current))) {
@@ -292,12 +277,10 @@ public class Task implements Cloneable, Serializable {
         if (!repeated) {
             return "[The nonrepeative task " + "(" + title + ")\n"
                     + "with time " + time.format(formatter) + " .Is it active? " + isActive() + "]";
-        } else if (repeated) {
+        } else {
             return "[The repeative task " + "(" + title + ")\n"
                     + "starts at " + start.format(formatter) + " and ends at " + end.format(formatter)
                     + " with interval = " + interval + " in minutes" + " .Is it active? " + isActive() + "]";
-        } else {
-            return "[Sorry we don't have another task]";
         }
     }
 

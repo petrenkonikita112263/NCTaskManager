@@ -33,18 +33,19 @@ public class PrimaryView implements CoreViewable {
         System.out.println("\t 4 - To terminate your work with Task Manager");
     }
 
-    /**{@inheritDoc}*/
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getUserInput(BufferedReader bufferedReader) {
         LOGGER.info("User start works with console");
         try {
             return Integer.parseInt(bufferedReader.readLine());
-        } catch (IOException e) {
-            LOGGER.error("Can't get access to console by BufferedReader", e);
         } catch (NumberFormatException e) {
             System.out.println("Required integer number, but your type isn't based on it");
-            LOGGER.error("Wrong input type", e);
-            getUserInput(bufferedReader);
+            LOGGER.error("The number is out of the limit", e);
+        } catch (IOException e) {
+            LOGGER.error("Can't get access to console by BufferedReader", e);
         }
         return 0;
     }
