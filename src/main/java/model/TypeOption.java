@@ -1,0 +1,49 @@
+package model;
+
+public enum TypeOption {
+
+    RESUME_APPLICATION_WORK(1),
+    LOAD_TASK_LIST(2),
+    EMPTY_TASK_LIST(3),
+    TERMINATE_APPLICATION(4),
+
+    ADD_TASK(1),
+    CHANGE_EXISTED_TASK(2),
+    DELETE_EXISTED_TASK(3),
+    PRINT_TASK_LIST(4),
+    PRINT_CALENDAR(5),
+    SAVE_TASK(6),
+    CLOSE_APP(7),
+
+    ADD_SCHEDULED_TASK(1),
+    ADD_ORDINARY_TASK(2),
+
+    CHANGE_SCHEDULED_TASK(1),
+    CHANGE_ORDINARY_TASK(2),
+
+    CHANGE_TITLE_SCHEDULED_TASK(1),
+    CHANGE_TIME_SCHEDULED_TASK(2),
+    CHANGE_FORM_SCHEDULED_TASK_TO_ORDINARY(3),
+    CHANGE_STATUS_SCHEDULED_TASK(4),
+    DISABLE_SCHEDULED_TASK(1),
+    ENABLE_SCHEDULED_TASK(2),
+    CHANGE_INTERVAL_SCHEDULED_TASK(5),
+
+    CHANGE_TITLE_ORDINARY_TASK(1),
+    CHANGE_TIME_ORDINARY_TASK(2),
+    CHANGE_FROM_ORDINARY_TO_SCHEDULED(3),
+    CHANGE_STATUS_ORDINARY_TASK(4),
+    DISABLE_ORDINARY_TASK(1),
+    ENABLE_ORDINARY_TASK(2);
+
+    private final int numberCode;
+
+    TypeOption(int numberCode) {
+        this.numberCode = numberCode;
+    }
+
+    public int getNumberCode() {
+        return this.numberCode;
+    }
+
+}
