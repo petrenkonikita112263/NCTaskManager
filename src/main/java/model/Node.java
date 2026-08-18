@@ -5,27 +5,27 @@ package model;
  * Implementing of single-linked list. Fields are public,
  * because they're used in LinkedTaskList class.
  *
- * @param <Task> - generic type for LinkedList
+ * @param <T> - generic type for LinkedList
  * @author Nikita
  */
-public class Node<Task> {
+public class Node<T> {
 
     /**
      * Contents of the current list item.
      */
-    public Task task;
+    public T task;
 
     /**
      * Points to the next list item.
      */
-    public Node<Task> next;
+    public Node<T> next;
 
     /**
      * EVC.
      *
      * @param task - task
      */
-    public Node(Task task) {
+    public Node(T task) {
         this.task = task;
         next = null;
     }
@@ -42,7 +42,7 @@ public class Node<Task> {
      *
      * @return next - get the pointer
      */
-    public Node<Task> getNext() {
+    public Node<T> getNext() {
         return next;
     }
 
@@ -51,7 +51,7 @@ public class Node<Task> {
      *
      * @param next - set next node for task
      */
-    public void setNext(Node<Task> next) {
+    public void setNext(Node<T> next) {
         this.next = next;
     }
 
@@ -60,7 +60,7 @@ public class Node<Task> {
      *
      * @return task - get the task
      */
-    public Task getTask() {
+    public T getTask() {
         return task;
     }
 }

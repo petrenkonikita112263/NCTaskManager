@@ -11,7 +11,7 @@ public class ListTypes {
     /**
      * Types of list that can be created in application.
      */
-    public enum types {
+    public enum Type {
 
         /**
          * Array list.

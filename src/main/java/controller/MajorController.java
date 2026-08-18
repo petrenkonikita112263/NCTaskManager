@@ -190,7 +190,7 @@ public class MajorController implements CoreController {
                 int interval = addView.addInterval();
                 Task repTask = new Task(title, start, end, interval);
                 listOfTasks.add(repTask);
-                LOGGER.info("The repetead task was added");
+                LOGGER.info("The repeated task was added");
                 processSavingWork();
                 runSecondaryMenu();
                 break;
@@ -198,7 +198,7 @@ public class MajorController implements CoreController {
                 LocalDateTime time = dateView.inputDateTime();
                 Task normalTask = new Task(title, time);
                 listOfTasks.add(normalTask);
-                LOGGER.info("The non-repetead task was added");
+                LOGGER.info("The non-repeated task was added");
                 processSavingWork();
                 runSecondaryMenu();
                 break;
@@ -229,155 +229,139 @@ public class MajorController implements CoreController {
         LOGGER.info("The process of changing task was started");
         LOGGER.info("The console was called");
         String answer = changeView.selectTheTypeForTask();
-        for (Task smth : listOfTasks) {
-            switch (answer.toLowerCase()) {
-                case "yes":
-                    LocalDateTime dateTimeStart_1, dateTimeEnd_1, dateTime_1;
-                    int timeInterval_1;
-                    displayDetailAboutTask(listOfTasks);
-                    int taskIndex_1 = changeView.getTaskIndex();
-                    listOfTasks.getTask(taskIndex_1);
-                    changeView.changeFunctionalityOfTask();
-                    int changeOption_1 = secondaryView.getIntegerValue();
-                    switch (changeOption_1) {
-                        case 1:
-                            String taskName = addView.addTaskTitle();
-                            smth.setTitle(taskName);
-                            LOGGER.info("The title of the task was changed");
-                            processSavingWork();
-                            runSecondaryMenu();
-                            break;
-                        case 2:
-                            LocalDateTime startTime = dateView.inputDateTime();
-                            LocalDateTime endTime = dateView.inputDateTime();
-                            smth.setStart(startTime);
-                            smth.setEnd(endTime);
-                            LOGGER.info("The start and end time was changed");
-                            processSavingWork();
-                            runSecondaryMenu();
-                            break;
-                        case 3:
-                            if (smth.isRepeated()) {
-                                smth.setRepeated(false);
-                                dateTime_1 = dateView.inputDateTime();
-                                smth.setTime(dateTime_1);
-                                LOGGER.info("The task is nonreptead now");
-                                processSavingWork();
-                                runSecondaryMenu();
+        displayDetailAboutTask(listOfTasks);
+        int taskIndex = changeView.getTaskIndex();
+        Task smth = listOfTasks.getTask(taskIndex);
+        changeView.changeFunctionalityOfTask();
+        int changeOption = secondaryView.getIntegerValue();
+        switch (answer.toLowerCase()) {
+            case "yes":
+                switch (changeOption) {
+                    case 1:
+                        String taskName = addView.addTaskTitle();
+                        smth.setTitle(taskName);
+                        LOGGER.info("The title of the task was changed");
+                        processSavingWork();
+                        runSecondaryMenu();
+                        break;
+                    case 2:
+                        LocalDateTime startTime = dateView.inputDateTime();
+                        LocalDateTime endTime = dateView.inputDateTime();
+                        smth.setStart(startTime);
+                        smth.setEnd(endTime);
+                        LOGGER.info("The start and end time was changed");
+                        processSavingWork();
+                        runSecondaryMenu();
+                        break;
+                    case 3:
+                        if (smth.isRepeated()) {
+                            smth.setRepeated(false);
+                            LocalDateTime dateTime = dateView.inputDateTime();
+                            smth.setTime(dateTime);
+                            LOGGER.info("The task is non-repetitive now");
+                        } else {
+                            smth.setRepeated(true);
+                            LocalDateTime dateTimeStart = dateView.inputDateTime();
+                            LocalDateTime dateTimeEnd = dateView.inputDateTime();
+                            int timeInterval = addView.addInterval();
+                            smth.setTime(dateTimeStart, dateTimeEnd, timeInterval);
+                            LOGGER.info("The task is repetitive now");
+                        }
+                        processSavingWork();
+                        runSecondaryMenu();
+                        break;
+                    case 4:
+                        int taskStatus = changeView.changeStatusOfTask();
+                        switch (taskStatus) {
+                            case 0:
+                                smth.setActive(false);
+                                LOGGER.info("The task isn't active");
                                 break;
-                            } else {
-                                smth.setRepeated(true);
-                                dateTimeStart_1 = dateView.inputDateTime();
-                                dateTimeEnd_1 = dateView.inputDateTime();
-                                timeInterval_1 = addView.addInterval();
-                                smth.setTime(dateTimeStart_1, dateTimeEnd_1, timeInterval_1);
-                                processSavingWork();
-                                runSecondaryMenu();
-                                LOGGER.info("The task is repetead now");
+                            case 1:
+                                smth.setActive(true);
+                                LOGGER.info("The task is active");
                                 break;
-                            }
-                        case 4:
-                            int taskStatus = changeView.changeStatusOfTask();
-                            switch (taskStatus) {
-                                case 0:
-                                    smth.setActive(false);
-                                    LOGGER.info("The task isn't active");
-                                    processSavingWork();
-                                    runSecondaryMenu();
-                                    break;
-                                case 1:
-                                    smth.setActive(true);
-                                    LOGGER.info("The task is active");
-                                    processSavingWork();
-                                    runSecondaryMenu();
-                                    break;
-                                default:
-                                    runSecondaryMenu();
-                            }
-                        case 5:
-                            int taskInterval = addView.addInterval();
-                            smth.setInterval(taskInterval);
-                            LOGGER.info("The interval was changed");
-                            processSavingWork();
-                            runSecondaryMenu();
-                            break;
-                        case 6:
-                            runSecondaryMenu();
-                            break;
-                        default:
-                            processChangingTask();
-                    }
-                case "no":
-                    LocalDateTime dateTimeStart_2, dateTimeEnd_2, dateTime_2;
-                    int timeInterval_2;
-                    displayDetailAboutTask(listOfTasks);
-                    int taskIndex_2 = changeView.getTaskIndex();
-                    listOfTasks.getTask(taskIndex_2);
-                    changeView.changeFunctionalityOfTask();
-                    int changeOption_2 = secondaryView.getIntegerValue();
-                    switch (changeOption_2) {
-                        case 1:
-                            String taskName = addView.addTaskTitle();
-                            smth.setTitle(taskName);
-                            LOGGER.info("The title of the task was changed");
-                            processSavingWork();
-                            runSecondaryMenu();
-                            break;
-                        case 2:
-                            LocalDateTime time = dateView.inputDateTime();
-                            smth.setTime(time);
-                            LOGGER.info("The time was changed");
-                            processSavingWork();
-                            runSecondaryMenu();
-                            break;
-                        case 3:
-                            if (smth.isRepeated()) {
-                                smth.setRepeated(false);
-                                dateTime_2 = dateView.inputDateTime();
-                                smth.setTime(dateTime_2);
-                                LOGGER.info("The task is nonreptead now");
-                                processSavingWork();
+                            default:
                                 runSecondaryMenu();
+                                return;
+                        }
+                        processSavingWork();
+                        runSecondaryMenu();
+                        break;
+                    case 5:
+                        int taskInterval = addView.addInterval();
+                        smth.setInterval(taskInterval);
+                        LOGGER.info("The interval was changed");
+                        processSavingWork();
+                        runSecondaryMenu();
+                        break;
+                    case 6:
+                        runSecondaryMenu();
+                        break;
+                    default:
+                        processChangingTask();
+                }
+                break;
+            case "no":
+                switch (changeOption) {
+                    case 1:
+                        String taskName = addView.addTaskTitle();
+                        smth.setTitle(taskName);
+                        LOGGER.info("The title of the task was changed");
+                        processSavingWork();
+                        runSecondaryMenu();
+                        break;
+                    case 2:
+                        LocalDateTime time = dateView.inputDateTime();
+                        smth.setTime(time);
+                        LOGGER.info("The time was changed");
+                        processSavingWork();
+                        runSecondaryMenu();
+                        break;
+                    case 3:
+                        if (smth.isRepeated()) {
+                            smth.setRepeated(false);
+                            LocalDateTime dateTime = dateView.inputDateTime();
+                            smth.setTime(dateTime);
+                            LOGGER.info("The task is non-repetitive now");
+                        } else {
+                            smth.setRepeated(true);
+                            LocalDateTime dateTimeStart = dateView.inputDateTime();
+                            LocalDateTime dateTimeEnd = dateView.inputDateTime();
+                            int timeInterval = addView.addInterval();
+                            smth.setTime(dateTimeStart, dateTimeEnd, timeInterval);
+                            LOGGER.info("The task is repetitive now");
+                        }
+                        processSavingWork();
+                        runSecondaryMenu();
+                        break;
+                    case 4:
+                        int taskStatus = changeView.changeStatusOfTask();
+                        switch (taskStatus) {
+                            case 0:
+                                smth.setActive(false);
+                                LOGGER.info("The task isn't active");
                                 break;
-                            } else {
-                                smth.setRepeated(true);
-                                dateTimeStart_2 = dateView.inputDateTime();
-                                dateTimeEnd_2 = dateView.inputDateTime();
-                                timeInterval_2 = addView.addInterval();
-                                smth.setTime(dateTimeStart_2, dateTimeEnd_2, timeInterval_2);
-                                processSavingWork();
+                            case 1:
+                                smth.setActive(true);
+                                LOGGER.info("The task is active");
+                                break;
+                            default:
                                 runSecondaryMenu();
-                                LOGGER.info("The task is repetead now");
-                                break;
-                            }
-                        case 4:
-                            int taskStatus = changeView.changeStatusOfTask();
-                            switch (taskStatus) {
-                                case 0:
-                                    smth.setActive(false);
-                                    LOGGER.info("The task isn't active");
-                                    processSavingWork();
-                                    runSecondaryMenu();
-                                    break;
-                                case 1:
-                                    smth.setActive(true);
-                                    LOGGER.info("The task is active");
-                                    processSavingWork();
-                                    runSecondaryMenu();
-                                    break;
-                                default:
-                                    runSecondaryMenu();
-                                    break;
-                            }
-                        case 7:
-                            runSecondaryMenu();
-                            break;
-                        default:
-                            processChangingTask();
-                    }
-                default:
-                    runSecondaryMenu();
-            }
+                                return;
+                        }
+                        processSavingWork();
+                        runSecondaryMenu();
+                        break;
+                    case 7:
+                        runSecondaryMenu();
+                        break;
+                    default:
+                        processChangingTask();
+                }
+                break;
+            default:
+                runSecondaryMenu();
         }
     }
 
@@ -562,14 +546,14 @@ public class MajorController implements CoreController {
         for (int i = 0; i < taskList.size(); i++) {
             Task t = taskList.getTask(i);
             if (t.isRepeated()) {
-                String resultRepTask = i + "\tYou have the repetead tesk with title : " + t.getTitle()
+                String resultRepTask = i + "\tYou have the repeated task with title : " + t.getTitle()
                         + "\nTask starts at " + formatter.format(t.getStartTime())
                         + "\nTask ends at " + formatter.format(t.getEndTime())
                         + "\nthe interval between start and end time is "
                         + t.getRepeatInterval();
                 displayView.getViewForRepTask(resultRepTask);
             } else if (!t.isRepeated()) {
-                String resultNorTask = i + "\tYou have the non-repetead task with title : " + t.getTitle()
+                String resultNorTask = i + "\tYou have the non-repeated task with title : " + t.getTitle()
                         + "\nTask starts at " + formatter.format(t.getTime());
                 displayView.getViewForNorTask(resultNorTask);
             }

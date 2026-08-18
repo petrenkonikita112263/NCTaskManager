@@ -40,7 +40,7 @@ public class TaskIO {
 //            write how many tasks in our list (taskList)
             dataOutputStream.writeInt(taskList.size());
 
-//            run thoough the taskList
+//            run through the taskList
             for (Task smth : taskList) {
 
 //                dataOutputStream.writeInt(smth.getId());
@@ -110,10 +110,8 @@ public class TaskIO {
 //            read how many tasks are there
             int quantityOfTask = dataInputStream.readInt();
 
-//            run throught the collection
+//            run through the collection
             for (int i = 0; i < quantityOfTask; i++) {
-
-                int idTask = dataInputStream.readInt();
 
 //                read how long is title
                 int titleLength = dataInputStream.readInt();
@@ -189,15 +187,9 @@ public class TaskIO {
      */
     public static void readBinary(AbstractTaskList taskList,
                                   File file) throws IOException {
-        BufferedOutputStream bufferedOutputStream = null;
-        try {
-            bufferedOutputStream =
-                    new BufferedOutputStream(new FileOutputStream(file));
-        } finally {
-            if (bufferedOutputStream != null) {
-                bufferedOutputStream.flush();
-                bufferedOutputStream.close();
-            }
+        try (BufferedInputStream bufferedInputStream =
+                     new BufferedInputStream(new FileInputStream(file))) {
+            read(taskList, bufferedInputStream);
         }
     }
 
@@ -285,18 +277,12 @@ public class TaskIO {
      */
     public static void readText(AbstractTaskList taskList,
                                 File file) throws IOException {
-        FileReader fileReader = null;
         Gson gson = new Gson();
         ArrayTaskList arrayTaskList;
-        try {
-            BufferedReader in = new BufferedReader(new FileReader(file));
+        try (BufferedReader in = new BufferedReader(new FileReader(file))) {
             arrayTaskList = gson.fromJson(in, (Type) taskList);
             for (Task smth : arrayTaskList) {
                 taskList.add(smth);
-            }
-        } finally {
-            if (fileReader != null) {
-                fileReader.close();
             }
         }
     }

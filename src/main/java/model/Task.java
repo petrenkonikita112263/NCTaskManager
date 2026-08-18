@@ -2,8 +2,8 @@
  * Provides the classes necessary to create an
  * app and the classes on uses to work
  *
- * @ author petrenko
- * @ version 1
+ * @author petrenko
+ * @version 1
  * @since 1.0
  */
 package model;
@@ -65,14 +65,12 @@ public class Task implements Cloneable, Serializable {
     }
 
     /**
-     * EVC 2nd constructor for nonrepeative task.
+     * EVC 2nd constructor for non-repetitive task.
      *
-//     * @param id    - number of the task
      * @param title - title of task
      * @param time  - time for this task
      */
     public Task(String title, LocalDateTime time) {
-//        this.id = id;
         this.title = title;
         if (time == null) {
             throw new IllegalArgumentException("Time can't be negative");
@@ -81,10 +79,9 @@ public class Task implements Cloneable, Serializable {
         active = true;
     }
 
-        /**
-     * EVC 3th constructor for repeative task.
+    /**
+     * EVC 3rd constructor for repetitive task.
      *
-//     * @param id       - number of the task
      * @param title    - title of task
      * @param start    - start time for this task
      * @param end      - end time for task
@@ -92,7 +89,6 @@ public class Task implements Cloneable, Serializable {
      */
     public Task(String title, LocalDateTime start, LocalDateTime end,
                 int interval) {
-//        this.id = id;
         this.title = title;
         if (start == null) {
             throw new IllegalArgumentException("Start time can't be negative");
@@ -148,7 +144,7 @@ public class Task implements Cloneable, Serializable {
     }
 
     /**
-     * Getter for the status: repeative or nonrepeative task.
+     * Getter for the status: repetitive or non-repetitive task.
      *
      * @return repeated
      */
@@ -157,7 +153,7 @@ public class Task implements Cloneable, Serializable {
     }
 
     /**
-     * Setter for the status: repeative or nonrepeative task.
+     * Setter for the status: repetitive or non-repetitive task.
      *
      * @param repeated - set boolean type
      */
@@ -178,7 +174,7 @@ public class Task implements Cloneable, Serializable {
     }
 
     /**
-     * Getter time for the nonrepeative task.
+     * Getter time for the non-repetitive task.
      *
      * @return LocalDateTime - get the whole time
      */
@@ -191,7 +187,7 @@ public class Task implements Cloneable, Serializable {
     }
 
     /**
-     * Setter time for the nonrepeative task.
+     * Setter time for the non-repetitive task.
      *
      * @param time - set time for task
      */
@@ -203,7 +199,7 @@ public class Task implements Cloneable, Serializable {
     }
 
     /**
-     * Getters start, end and interval for repeative task.
+     * Getters start, end and interval for repetitive task.
      *
      * @return LocalDateTime - get the whole time or start time
      */
@@ -243,7 +239,7 @@ public class Task implements Cloneable, Serializable {
     }
 
     /**
-     * Setter for repeative task.
+     * Setter for repetitive task.
      *
      * @param start    - set start time
      * @param end      - set end time
@@ -256,11 +252,10 @@ public class Task implements Cloneable, Serializable {
         }
         if (!this.repeated) {
             this.repeated = true;
-        } else {
-            this.start = start;
-            this.end = end;
-            this.interval = interval;
         }
+        this.start = start;
+        this.end = end;
+        this.interval = interval;
     }
 
     /**
@@ -286,7 +281,7 @@ public class Task implements Cloneable, Serializable {
                 } else if (current.isBefore(tempTime)) {
                     return tempTime;
                 }
-                tempTime = tempTime.plusSeconds(getRepeatInterval());
+                tempTime = tempTime.plusMinutes(getRepeatInterval());
             }
             if (current.isAfter(getEndTime())) {
                 return null;
@@ -302,10 +297,10 @@ public class Task implements Cloneable, Serializable {
     public String toString() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         if (!repeated) {
-            return "[The nonrepeative task " + "(" + title + ")\n"
+            return "[The non-repetitive task " + "(" + title + ")\n"
                     + "with time " + time.format(formatter) + " .Is it active? " + isActive() + "]";
         } else if (repeated) {
-            return "[The repeative task " + "(" + title + ")\n"
+            return "[The repetitive task " + "(" + title + ")\n"
                     + "starts at " + start.format(formatter) + " and ends at " + end.format(formatter)
                     + " with interval = " + interval + " in minutes" + " .Is it active? " + isActive() + "]";
         } else {

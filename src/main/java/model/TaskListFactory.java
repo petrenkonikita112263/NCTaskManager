@@ -14,11 +14,11 @@ public class TaskListFactory {
      * @param type - use Array or Linked type
      * @return - get array or linked list or null if type not equals
      */
-    public static AbstractTaskList createTaskList(ListTypes type) {
-        if (type.equals(ListTypes.types.ARRAY)) {
+    public static AbstractTaskList createTaskList(ListTypes.Type type) {
+        if (type.equals(ListTypes.Type.ARRAY)) {
             return new ArrayTaskList();
         }
-        if (type.equals(ListTypes.types.LINKED)) {
+        if (type.equals(ListTypes.Type.LINKED)) {
             return new LinkedTaskList();
         }
         return null;

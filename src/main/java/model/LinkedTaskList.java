@@ -41,7 +41,7 @@ public class LinkedTaskList extends AbstractTaskList
     public void add(Task task) {
 
         // create new element
-        Node tempNode = new Node(task);
+        Node<Task> tempNode = new Node<>(task);
 
         // pointed to the old "first" element
         tempNode.next = head;
@@ -172,11 +172,11 @@ public class LinkedTaskList extends AbstractTaskList
      */
     @Override
     public boolean equals(Object templLink) {
-        if (getClass() != templLink.getClass()) {
-            return false;
-        }
         if (templLink == this) {
             return true;
+        }
+        if (templLink == null || getClass() != templLink.getClass()) {
+            return false;
         }
         LinkedTaskList link = (LinkedTaskList) templLink;
         return size == link.size;
@@ -193,7 +193,7 @@ public class LinkedTaskList extends AbstractTaskList
     }
 
     /**
-     * Addtiotnal private class for implementing iterator for
+     * Additional private class for implementing iterator for
      * single-node LinkedList.
      *
      * @author Nikita

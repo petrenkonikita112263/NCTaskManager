@@ -117,7 +117,7 @@ public class DisplayView extends PrimaryView {
     }
 
     /**
-     * Print content of repetead task.
+     * Print content of repeated task.
      */
     public void getViewForRepTask(String textTask) {
         System.out.println(textTask);

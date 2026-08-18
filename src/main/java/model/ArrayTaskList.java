@@ -2,7 +2,6 @@ package model;
 
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
-import view.DeleteView;
 
 import java.util.Arrays;
 import java.util.ConcurrentModificationException;
@@ -26,11 +25,6 @@ public class ArrayTaskList extends AbstractTaskList implements Cloneable {
     private static final Logger logger = LogManager.getLogger(ArrayTaskList.class);
 
     /**
-     * Instance of DeleteView.
-     */
-    private DeleteView view;
-
-    /**
      * initial capacity of the array.
      */
     private static final int DEFAULT_SIZE = 10;
@@ -49,7 +43,6 @@ public class ArrayTaskList extends AbstractTaskList implements Cloneable {
      * DVC constructor create the array.
      */
     public ArrayTaskList() {
-        view = new DeleteView();
         this.taskStore = new Task[DEFAULT_SIZE];
     }
 
@@ -82,11 +75,11 @@ public class ArrayTaskList extends AbstractTaskList implements Cloneable {
      */
 
     public Task getTask(int index) {
-        if (index < size) {
-            return taskStore[index];
-        } else if (index < 0) {
+        if (index < 0) {
             throw new IllegalArgumentException(index + " "
                     + "is a negative value, it can't be");
+        } else if (index < size) {
+            return taskStore[index];
         } else {
             throw new ArrayIndexOutOfBoundsException("The number of index "
                     + index + " bigger than size " + size
@@ -111,13 +104,11 @@ public class ArrayTaskList extends AbstractTaskList implements Cloneable {
      * @return removedTask - return removed task
      */
     public Task removeElement(int index) {
-        try {
-            if (index < 0 || index >= size) {
-                System.out.println("The index can't be bigger that size of the array or even negative");
-                view.removeSomeTask();
-            }
-        } catch (IndexOutOfBoundsException e) {
-            logger.error("The main error of array list - out of the size ", e);
+        if (index < 0 || index >= size) {
+            IndexOutOfBoundsException ex = new IndexOutOfBoundsException("The index " + index
+                    + " can't be negative or bigger than size " + size + " of the array");
+            logger.error("The main error of array list - out of the size ", ex);
+            throw ex;
         }
         Task removedTask = taskStore[index];
         if (size - 1 - index >= 0) {
